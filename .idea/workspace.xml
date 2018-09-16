@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59bd24de-7908-4982-927f-6d236db7e416" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/秒杀设计.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/miaosha.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,6 +40,7 @@
           <entry key="js" value="1" />
           <entry key="md" value="1" />
           <entry key="properties" value="6" />
+          <entry key="sql" value="1" />
           <entry key="ts" value="1" />
           <entry key="txt" value="9" />
           <entry key="xml" value="3" />
@@ -53,6 +55,7 @@
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="10" />
           <entry key="Properties" value="6" />
+          <entry key="SQL" value="1" />
           <entry key="TypeScript" value="1" />
           <entry key="UML" value="1" />
           <entry key="XML" value="3" />
@@ -64,6 +67,7 @@
           <entry key="dummy" value="18" />
           <entry key="html" value="7" />
           <entry key="java" value="6929" />
+          <entry key="md" value="48" />
           <entry key="properties" value="55" />
           <entry key="regexp" value="11" />
           <entry key="txt" value="615" />
@@ -75,6 +79,7 @@
           <entry key="CLASS" value="1" />
           <entry key="HTML" value="7" />
           <entry key="JAVA" value="6929" />
+          <entry key="Markdown" value="48" />
           <entry key="PLAIN_TEXT" value="633" />
           <entry key="Properties" value="55" />
           <entry key="RegExp" value="11" />
@@ -144,6 +149,15 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-562">
+              <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/miaosha.sql">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
@@ -201,7 +215,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/Userkey.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/DemoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/Md5Utils/MD5Utils.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/LoginVO.java" />
@@ -252,6 +265,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/UserContext.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/MiaoshaController.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -272,7 +286,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="130" />
     <option name="y" value="36" />
     <option name="width" value="1384" />
@@ -327,7 +341,7 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537109038994" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537109432291" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -437,12 +451,12 @@
       <workItem from="1536888067376" duration="7843000" />
       <workItem from="1536918768483" duration="15837000" />
       <workItem from="1536975289539" duration="26867000" />
-      <workItem from="1537060950052" duration="23741000" />
+      <workItem from="1537060950052" duration="24114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84710000" />
+    <option name="totallyTimeSpent" value="85083000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -455,6 +469,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="29" width="1922" height="1025" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24813631" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -618,9 +633,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/miaosha_fail.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/order_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-594" />
@@ -1006,8 +1018,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/miaosha.sql">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-562">
+          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
