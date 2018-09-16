@@ -59,18 +59,4 @@ public class MiaoshaUser {
 	public void setLoginCount(Integer loginCount) {
 		this.loginCount = loginCount;
 	}
-
-	@Override
-	public String toString() {
-		return "MiaoshaUser{" +
-				"id=" + id +
-				", nickname='" + nickname + '\'' +
-				", password='" + password + '\'' +
-				", salt='" + salt + '\'' +
-				", head='" + head + '\'' +
-				", registerDate=" + registerDate +
-				", lastLoginDate=" + lastLoginDate +
-				", loginCount=" + loginCount +
-				'}';
-	}
 }
