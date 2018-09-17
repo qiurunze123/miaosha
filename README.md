@@ -45,5 +45,14 @@
 
 6.限流算法　令牌桶，漏桶算法－－待更新
 
+7.Nginx优化（前端缓存）
+①并发优化<br>
+②keepAlive长链接（nginx,tomcat默认没有配置长链接）<br>
+③压缩优化.配置缓存<br>
+监控工具：１.nginx_status并发统计,Ngxtop缓存统计
+### ngin负载均衡
+![整体流程](http://i2.bvimg.com/601558/23f54a389b2b23e8.png)
+
+
 
  

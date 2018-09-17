@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59bd24de-7908-4982-927f-6d236db7e416" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/miaosha.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -19,14 +19,14 @@
     <session id="-262413793">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.10" value="3" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -67,7 +67,7 @@
           <entry key="dummy" value="18" />
           <entry key="html" value="7" />
           <entry key="java" value="6929" />
-          <entry key="md" value="48" />
+          <entry key="md" value="206" />
           <entry key="properties" value="55" />
           <entry key="regexp" value="11" />
           <entry key="txt" value="615" />
@@ -79,7 +79,7 @@
           <entry key="CLASS" value="1" />
           <entry key="HTML" value="7" />
           <entry key="JAVA" value="6929" />
-          <entry key="Markdown" value="48" />
+          <entry key="Markdown" value="206" />
           <entry key="PLAIN_TEXT" value="633" />
           <entry key="Properties" value="55" />
           <entry key="RegExp" value="11" />
@@ -93,7 +93,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/GoodsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1315">
+            <state relative-caret-position="1122">
               <caret line="74" selection-start-line="74" selection-end-line="74" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -114,11 +114,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/MiaoshaController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-524">
+            <state relative-caret-position="726">
               <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
-              <folding>
-                <element signature="e#1518#1533#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -126,7 +123,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoshaService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
+            <state relative-caret-position="704">
               <caret line="48" selection-start-line="48" selection-end-line="48" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -138,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoShaUserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="103" column="19" lean-forward="true" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
+            <state relative-caret-position="1958">
+              <caret line="103" column="19" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -150,8 +147,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-562">
-              <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+            <state relative-caret-position="352">
+              <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -165,7 +162,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessLimit.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -173,8 +170,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessInterceptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+            <state relative-caret-position="814">
+              <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -183,11 +180,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessKey.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="88">
-              <caret line="4" column="43" lean-forward="true" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-              <folding>
-                <element signature="e#227#228#0" expanded="true" />
-                <element signature="e#279#280#0" expanded="true" />
-              </folding>
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -287,10 +280,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="130" />
-    <option name="y" value="36" />
-    <option name="width" value="1384" />
-    <option name="height" value="994" />
+    <option name="x" value="247" />
+    <option name="y" value="29" />
+    <option name="width" value="1376" />
+    <option name="height" value="999" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -313,6 +306,7 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -329,7 +323,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -341,7 +334,7 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537109432291" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537111194354" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -451,12 +444,13 @@
       <workItem from="1536888067376" duration="7843000" />
       <workItem from="1536918768483" duration="15837000" />
       <workItem from="1536975289539" duration="26867000" />
-      <workItem from="1537060950052" duration="24114000" />
+      <workItem from="1537060950052" duration="25966000" />
+      <workItem from="1537148890283" duration="2774000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85083000" />
+    <option name="totallyTimeSpent" value="89709000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -471,7 +465,7 @@
     <frame x="-1" y="29" width="1922" height="1025" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24813631" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25079873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -731,9 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -748,10 +739,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
-          <folding>
-            <element signature="e#1049#1050#0" expanded="true" />
-            <element signature="e#1073#1074#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -787,10 +774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="22">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding>
-            <element signature="e#264#265#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -826,12 +809,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-          <folding>
-            <element signature="e#333#334#0" expanded="true" />
-            <element signature="e#362#363#0" expanded="true" />
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#457#458#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -874,10 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="71" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="71" />
-          <folding>
-            <element signature="e#114#115#0" expanded="true" />
-            <element signature="e#144#145#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -885,12 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding>
-            <element signature="e#401#402#0" expanded="true" />
-            <element signature="e#437#438#0" expanded="true" />
-            <element signature="e#490#491#0" expanded="true" />
-            <element signature="e#541#542#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -933,47 +900,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-          <folding>
-            <element signature="e#179#192#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessLimit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="43" lean-forward="true" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-          <folding>
-            <element signature="e#227#228#0" expanded="true" />
-            <element signature="e#279#280#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="121" column="11" lean-forward="true" selection-end-line="137" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.txt" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/GoodsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1315">
+        <state relative-caret-position="1122">
           <caret line="74" selection-start-line="74" selection-end-line="74" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -990,17 +923,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/MiaoshaController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-524">
+        <state relative-caret-position="726">
           <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
-          <folding>
-            <element signature="e#1518#1533#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoshaService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
+        <state relative-caret-position="704">
           <caret line="48" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1010,8 +940,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoShaUserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="103" column="19" lean-forward="true" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
+        <state relative-caret-position="1958">
+          <caret line="103" column="19" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1021,10 +951,31 @@
     <entry file="file://$PROJECT_DIR$/miaosha.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessLimit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="814">
+          <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/access/AccessKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-562">
-          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        <state relative-caret-position="352">
+          <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
         </state>
       </provider>
     </entry>
