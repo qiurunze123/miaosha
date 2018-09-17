@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59bd24de-7908-4982-927f-6d236db7e416" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -67,7 +66,7 @@
           <entry key="dummy" value="18" />
           <entry key="html" value="7" />
           <entry key="java" value="6929" />
-          <entry key="md" value="206" />
+          <entry key="md" value="210" />
           <entry key="properties" value="55" />
           <entry key="regexp" value="11" />
           <entry key="txt" value="615" />
@@ -79,7 +78,7 @@
           <entry key="CLASS" value="1" />
           <entry key="HTML" value="7" />
           <entry key="JAVA" value="6929" />
-          <entry key="Markdown" value="206" />
+          <entry key="Markdown" value="210" />
           <entry key="PLAIN_TEXT" value="633" />
           <entry key="Properties" value="55" />
           <entry key="RegExp" value="11" />
@@ -147,8 +146,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+            <state relative-caret-position="-584">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -313,10 +312,6 @@
           <expand>
             <path>
               <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
           </expand>
@@ -445,12 +440,12 @@
       <workItem from="1536918768483" duration="15837000" />
       <workItem from="1536975289539" duration="26867000" />
       <workItem from="1537060950052" duration="25966000" />
-      <workItem from="1537148890283" duration="2774000" />
+      <workItem from="1537148890283" duration="3488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89709000" />
+    <option name="totallyTimeSpent" value="90423000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -974,8 +969,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+        <state relative-caret-position="-584">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
