@@ -82,12 +82,12 @@ public class MiaoshaController implements InitializingBean {
 		if(over) {
 			return Result.error(CodeMsg.MIAO_SHA_OVER);
 		}
-		//预见库存
-		long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock,""+goodsId) ;
-		if(stock <0){
-			localOverMap.put(goodsId, true);
-			return Result.error(CodeMsg.MIAO_SHA_OVER);
-		}
+			//预见库存
+			long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock,""+goodsId) ;
+			if(stock <0){
+				localOverMap.put(goodsId, true);
+				return Result.error(CodeMsg.MIAO_SHA_OVER);
+			}
 		MiaoshaMessage mm = new MiaoshaMessage();
 		mm.setGoodsId(goodsId);
 		mm.setUser(user);
