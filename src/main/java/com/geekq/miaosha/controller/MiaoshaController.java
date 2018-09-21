@@ -66,11 +66,21 @@ public class MiaoshaController implements InitializingBean {
 			return Result.error(CodeMsg.SESSION_ERROR);
 		}
 
+
 		//验证path
 		boolean check = miaoshaService.checkPath(user, goodsId, path);
 		if(!check){
 			return Result.error(CodeMsg.REQUEST_ILLEGAL);
 		}
+
+//		//使用RateLimiter 限流
+//		RateLimiter rateLimiter = RateLimiter.create(10);
+//		//判断能否在1秒内得到令牌，如果不能则立即返回false，不会阻塞程序
+//		if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
+//			System.out.println("短期无法获取令牌，真不幸，排队也瞎排");
+//			return Result.error(CodeMsg.MIAOSHA_FAIL);
+//
+//		}
 
 		//是否已经秒杀到
 		MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);

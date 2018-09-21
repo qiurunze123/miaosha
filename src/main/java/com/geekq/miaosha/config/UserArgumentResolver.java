@@ -1,8 +1,8 @@
 package com.geekq.miaosha.config;
 
+import com.geekq.miaosha.access.UserContext;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.service.MiaoShaUserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
@@ -28,16 +27,18 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest webRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
-
-        String paramToken = request.getParameter(MiaoShaUserService.COOKIE_NAME_TOKEN);
-        String cookieToken = getCookieValue(request, MiaoShaUserService.COOKIE_NAME_TOKEN);
-        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
-            return null;
-        }
-        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
-        return userService.getByToken(response, token);
+//        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+//        HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
+//
+//        String paramToken = request.getParameter(MiaoShaUserService.COOKIE_NAME_TOKEN);
+//        String cookieToken = getCookieValue(request, MiaoShaUserService.COOKIE_NAME_TOKEN);
+//        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
+//            return null;
+//        }
+//        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+//        return userService.getByToken(response, token);
+        //threadlocal 存储线程副本 保证线程不冲突
+        return UserContext.getUser();
     }
 
     private String getCookieValue(HttpServletRequest request, String cookiName) {
