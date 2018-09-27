@@ -21,6 +21,8 @@ public interface UserMapper {
 
     public Long insertMiaoShaUser(MiaoshaUser user);
 
+    void insertMiaoShaUserValues(List<MiaoshaUser> miaoshaUsers);
+
     //更改表数据
     void updateMiaoShaUser(MiaoshaUser user) ;
 

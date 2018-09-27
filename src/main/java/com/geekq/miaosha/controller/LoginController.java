@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/login")
@@ -63,12 +65,24 @@ public class LoginController {
 //        miaoshaUser.setNickname("test");
 //        Long num = userMapper.insertMiaoShaUser(miaoshaUser);
 
+//        MiaoshaUser upmiaoshaUser =new MiaoshaUser();
+//        upmiaoshaUser.setId(Long.valueOf("1234569879"));
+//        upmiaoshaUser.setNickname("test1");
+//        userMapper.updateMiaoShaUser(upmiaoshaUser);
+//
+//        userMapper.deleteMiaoShaUser(Long.valueOf("1234569879"));
+
+        List<MiaoshaUser> lists = new ArrayList<MiaoshaUser>();
         MiaoshaUser upmiaoshaUser =new MiaoshaUser();
         upmiaoshaUser.setId(Long.valueOf("1234569879"));
         upmiaoshaUser.setNickname("test1");
-        userMapper.updateMiaoShaUser(upmiaoshaUser);
+        MiaoshaUser upmiaoshaUser1 =new MiaoshaUser();
+        upmiaoshaUser1.setId(Long.valueOf("1234569872"));
+        upmiaoshaUser1.setNickname("test1");
+        lists.add(upmiaoshaUser);
+        lists.add(upmiaoshaUser1);
 
-        userMapper.deleteMiaoShaUser(Long.valueOf("1234569879"));
+        userMapper.insertMiaoShaUserValues(lists);
     }
 
 }

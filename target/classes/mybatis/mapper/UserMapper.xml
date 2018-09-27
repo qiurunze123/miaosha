@@ -24,6 +24,18 @@
         #{loginCount,jdbcType=INTEGER}
         )
     </insert>
+
+    <!--批量插入-->
+    <insert id="insertMiaoShaUserValues" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into miaosha_user (id, nickname, salt, register_date,last_login_date,login_Count ) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.id,jdbcType=BIGINT},#{item.nickname,jdbcType=VARCHAR},
+            #{item.salt,jdbcType=VARCHAR},#{item.registerDate,jdbcType=DATE},#{item.lastLoginDate,jdbcType=DATE},
+            #{item.loginCount,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
     
     <!--更新一条数据-->
     
