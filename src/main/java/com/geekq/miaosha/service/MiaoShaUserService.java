@@ -7,8 +7,10 @@ import com.geekq.miaosha.exception.GlobleException;
 import com.geekq.miaosha.redis.MiaoShaUserKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.result.CodeMsg;
+import com.geekq.miaosha.result.Result;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.LoginVo;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,17 @@ public class MiaoShaUserService {
         user.setPassword(toBeUpdate.getPassword());
         redisService.set(MiaoShaUserKey.token, token, user);
         return true;
+    }
+
+    public Result<String> insertMiaoShaUser(MiaoshaUser miaoshaUser){
+
+        long resultRegister  = miaoShaUserDao.insertMiaoShaUser(miaoshaUser);
+
+        if(resultRegister == 0){
+            throw new GlobleException(CodeMsg.RESIGETER_FAIL);
+        }
+
+        return Result.success(CodeMsg.SUCCESS_RESIGETER);
     }
 
     public boolean login(HttpServletResponse response , LoginVo loginVo) {

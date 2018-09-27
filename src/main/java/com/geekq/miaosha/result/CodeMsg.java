@@ -7,6 +7,11 @@ public class CodeMsg {
 	
 	//通用的错误码
 	public static CodeMsg SUCCESS = new CodeMsg(0, "success");
+
+	public static CodeMsg SUCCESS_RESIGETER = new CodeMsg(200,"注册成功！");
+
+	public static CodeMsg RESIGETER_FAIL = new CodeMsg(300,"注册失败！");
+
 	public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务端异常");
 	public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常：%s");
 	public static CodeMsg REQUEST_ILLEGAL = new CodeMsg(500102, "请求非法");

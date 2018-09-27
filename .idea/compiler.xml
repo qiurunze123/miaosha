@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="miaosha" target="1.6" />
+      <module name="springcloud-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
