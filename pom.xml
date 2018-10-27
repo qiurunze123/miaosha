@@ -169,7 +169,7 @@
                 <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>application.properties</exclude>
+                    <exclude>application-local.properties</exclude>
                     <exclude>application-dev.properties</exclude>
                     <exclude>application-prod.properties</exclude>
                     <exclude>application-test.properties</exclude>
@@ -194,13 +194,19 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>local</id>
             <properties> <!-- 环境标识，需要与配置文件的名称相对应 -->
-                <activatedProperties>dev</activatedProperties>
+                <activatedProperties>local</activatedProperties>
             </properties>
             <activation> <!-- 默认环境 -->
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties> <!-- 环境标识，需要与配置文件的名称相对应 -->
+                <activatedProperties>dev</activatedProperties>
+            </properties>
         </profile>
         <profile>
             <id>test</id>
