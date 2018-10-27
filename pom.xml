@@ -19,7 +19,33 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
 
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -96,6 +122,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <!--lombook引用-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -105,6 +139,23 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.2.RELEASE</version>
+                <configuration>
+                    <mainClass>com.geekq.miaosha.GeekQMainApplication</mainClass><!--springboot启动类目录-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals> <!--创建一个自动可执行的jar或war文件 -->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
         <resources>
             <resource>
@@ -113,7 +164,55 @@
                     <include>**/*.xml</include>
                 </includes>
             </resource>
+
+            <resource> <!--配置文件路径 -->
+                <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>application.properties</exclude>
+                    <exclude>application-dev.properties</exclude>
+                    <exclude>application-prod.properties</exclude>
+                    <exclude>application-test.properties</exclude>
+                </excludes>
+            </resource>
+
+            <resource> <!--配置文件路径 -->
+                <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
+                <filtering>true</filtering>
+               <includes>
+                   <include>application-${activatedProperties}.properties</include>
+                   <include>application.properties</include>
+               </includes>
+            </resource>
+
+
+
         </resources>
+
+
     </build>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties> <!-- 环境标识，需要与配置文件的名称相对应 -->
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+            <activation> <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <activatedProperties>test</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
 </project>

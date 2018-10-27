@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ＧeekQMainApplication {
+public class GeekQMainApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(ＧeekQMainApplication.class, args);
+        SpringApplication.run(GeekQMainApplication.class, args);
     }
 
 
