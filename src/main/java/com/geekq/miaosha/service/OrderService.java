@@ -6,12 +6,17 @@ import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.GoodsVo;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
+
+import static com.geekq.miaosha.common.Constanst.orderStaus.ORDER_NOT_PAY;
 
 @Service
 public class OrderService {
@@ -52,6 +57,13 @@ public class OrderService {
 		return orderInfo;
 	}
 
+	public void closeOrder(int hour){
+		Date closeDateTime = DateUtils.addHours(new Date(),-hour);
+		List<OrderInfo> orderInfoList = orderDao.selectOrderStatusByCreateTime(Integer.valueOf(ORDER_NOT_PAY.ordinal()), DateTimeUtils.dateToStr(closeDateTime));
+		for (OrderInfo orderInfo:orderInfoList){
+			System.out.println("orderinfo  infomation "+orderInfo.getGoodsName());
+		}
+	}
 
 	
 }

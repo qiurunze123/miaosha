@@ -2,15 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59bd24de-7908-4982-927f-6d236db7e416" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/Constanst.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/DistributedLocker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissLockUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonAutoConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonDistributedLocker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/utils/DateTimeUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miaosha.iml" beforeDir="false" afterPath="$PROJECT_DIR$/miaosha.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/OrderDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/OrderDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prod.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/GeekQMainApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/GeekQMainApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/dao/OrderDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/dao/OrderDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/redis/RedisService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/redis/RedisService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/service/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/geekq/miaosha/service/OrderService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/miaosha.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/miaosha.jar.original" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/springcloud-server/target/" />
@@ -131,86 +150,65 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1202398100">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="1821" />
+          <entry key="md" value="566" />
+          <entry key="properties" value="31" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="1821" />
+          <entry key="Markdown" value="566" />
+          <entry key="Properties" value="31" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="8" />
+          <entry key="java" value="33" />
+          <entry key="md" value="1" />
+          <entry key="properties" value="3" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="8" />
+          <entry key="JAVA" value="33" />
+          <entry key="Markdown" value="1" />
+          <entry key="Properties" value="3" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/1.5.8.RELEASE/spring-boot-autoconfigure-1.5.8.RELEASE.jar!/org/springframework/boot/autoconfigure/amqp/RabbitProperties.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="159" column="16" selection-start-line="159" selection-start-column="16" selection-end-line="159" selection-end-column="16" />
-              <folding>
-                <element signature="e#5253#5254#0" expanded="true" />
-                <element signature="e#5330#5331#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-test.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
-              <caret line="137" column="67" selection-start-line="137" selection-start-column="67" selection-end-line="137" selection-end-column="67" />
+              <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application-prod.properties">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="73" column="26" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gitignore">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1144">
-              <caret line="222" column="4" selection-start-line="194" selection-start-column="14" selection-end-line="222" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/Test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+            <state relative-caret-position="22">
+              <caret line="56" column="15" lean-forward="true" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -218,11 +216,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoshaService.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            <state relative-caret-position="498">
+              <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
             </state>
           </provider>
         </entry>
@@ -256,6 +254,9 @@
       <find>maxActive</find>
       <find>qiu</find>
       <find>port</find>
+      <find>joda</find>
+      <find>expire</find>
+      <find>redssionProperties</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -265,22 +266,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/MiaoshaController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/config/UserArgumentResolver.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/Demo1.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/DemoTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/impl/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/ResponseCOde.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/ResponseCode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/ServerResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/IUserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/Swagger.java" />
-        <option value="$PROJECT_DIR$/gitignore" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/login.html" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/MiaoshaUserDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/result/Result.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/result/CodeMsg.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoShaUserService.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/userMapper.xml" />
@@ -307,14 +292,30 @@
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/MiaoshaUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/OrderInfo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/MiaoShaUserDao.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application-local.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/application-prod.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/application-test.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mmall/util/DateTimeUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/utils/DateTimeUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/OrderDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/Constanst.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisService.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonProperties.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application-dev.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/redissonService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/DistributedLocker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonDistributedLocker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissLockUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedssionProperties.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonAutoConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -353,7 +354,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="29" />
+    <option name="x" value="184" />
+    <option name="y" value="118" />
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -587,112 +589,102 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
               <item name="miaosha" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="redis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="timeTask" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="miaosha" type="b2602c69:ProjectViewProjectNode" />
+              <item name="miaosha" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miaosha_1" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="lombok-1.18.2.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="lombok-1.18.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="lombok" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="lombok-1.18.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="lombok" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="lombok-1.18.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="lombok" type="462c0819:PsiDirectoryNode" />
-              <item name="extern" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miaosha_1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Maven: org.projectlombok:lombok:1.18.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="lombok-1.18.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="lombok" type="462c0819:PsiDirectoryNode" />
-              <item name="javac" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -704,8 +696,8 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540654937074" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../xiaoju" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541903737533" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mmallv4.0" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -714,11 +706,8 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/mybatis/mapper" />
-      <recent name="$PROJECT_DIR$/src/main/resources/mybatis" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.geekq.miaosha.result" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/config" />
@@ -728,10 +717,15 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.geekq.miaosha.redis" />
+      <recent name="com.geekq.miaosha.utils" />
       <recent name="com.geekq.miaosha.domain" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.geekq.miaosha.result" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/mybatis/mapper" />
+      <recent name="$PROJECT_DIR$/src/main/resources/mybatis" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -892,11 +886,12 @@
       <workItem from="1540602008996" duration="3658000" />
       <workItem from="1540606982230" duration="4826000" />
       <workItem from="1540650366969" duration="4401000" />
+      <workItem from="1541773616591" duration="21851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201375000" />
+    <option name="totallyTimeSpent" value="223226000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -909,9 +904,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="29" width="1922" height="1025" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25612354" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23375931" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -921,15 +915,15 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.6996805" weight="0.26815644" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.89243877" visible="true" weight="0.35642457" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7838126" weight="0.36536312" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.89243877" weight="0.35642457" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7838126" visible="true" weight="0.36536312" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32960895" />
       <window_info anchor="bottom" id="Spring" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49733758" weight="0.32960895" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5026624" side_tool="true" weight="0.32960895" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4978701" weight="0.32960895" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4978701" weight="0.37988827" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
@@ -996,7 +990,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java</url>
-          <line>34</line>
+          <line>39</line>
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
@@ -1020,7 +1014,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java</url>
-          <line>50</line>
+          <line>55</line>
           <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
@@ -1065,6 +1059,30 @@
           <line>45</line>
           <properties />
           <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java</url>
+          <line>105</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java</url>
+          <line>109</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1111,210 +1129,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar!/org/apache/ibatis/session/SqlSessionFactoryBuilder.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar!/org/apache/ibatis/builder/xml/XMLMapperBuilder.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/MiaoshaController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-264">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/UserMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="3" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="2" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/DemoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.12.RELEASE/spring-web-4.3.12.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2332">
-          <caret line="123" selection-start-line="123" selection-end-line="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/mybatis/controller/MessageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/mybatis/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$MAVEN_REPOSITORY$/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6.pom">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/dubbo/springmvc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="29" column="47" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/dubbo/dubbo_consumer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="23" column="67" selection-start-line="23" selection-start-column="67" selection-end-line="23" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/GoodsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="27" selection-start-line="27" selection-end-line="28" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar!/lombok/AccessLevel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar!/lombok/Getter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar!/lombok/ToString.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/GoodsVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/LoginVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/OrderDetailVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/GoodsDetailVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/MiaoshaOrder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/MiaoshaUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/schemas/maven-4.0.0.xsd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="1763" column="12" selection-start-line="1763" selection-start-column="12" selection-end-line="1763" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/Goods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/MiaoshaGoods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/com/geekq/miaosha/GeekQMainApplication.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/maven-archiver/pom.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/application-prod.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/classes/application-test.properties" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/config/application-test.properties">
       <provider selected="true" editor-type-id="text-editor">
@@ -1323,40 +1137,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/OrderInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/classes/application.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/application-local.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/application-local.properties" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoShaUserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/MiaoShaUserDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1367,27 +1155,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoshaService.java">
+    <entry file="file://$PROJECT_DIR$/target/classes/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gitignore" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/1.5.8.RELEASE/spring-boot-autoconfigure-1.5.8.RELEASE.jar!/org/springframework/boot/autoconfigure/amqp/RabbitProperties.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        <state relative-caret-position="2750">
+          <caret line="159" column="16" selection-start-line="159" selection-start-column="16" selection-end-line="159" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/1.5.8.RELEASE/spring-boot-autoconfigure-1.5.8.RELEASE.jar!/org/springframework/boot/autoconfigure/amqp/RabbitProperties.class">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-prod.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="159" column="16" selection-start-line="159" selection-start-column="16" selection-end-line="159" selection-end-column="16" />
-          <folding>
-            <element signature="e#5253#5254#0" expanded="true" />
-            <element signature="e#5330#5331#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1584">
+          <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
+        <state relative-caret-position="1210">
           <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1395,51 +1183,410 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/MiaoshaService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/Userkey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-test.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="723">
+          <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/GeekQMainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/GoodsDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/MiaoShaUserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/vo/OrderDetailVo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/domain/OrderInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/OrderKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="9" column="66" lean-forward="true" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/MiaoshaKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/BasePrefix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Enum.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+          <folding>
+            <element signature="e#542#543#0" expanded="true" />
+            <element signature="e#577#578#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mmall/util/DateTimeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/dao/OrderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="25" column="77" selection-start-line="25" selection-start-column="77" selection-end-line="25" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.3/joda-time-2.3.jar!/org/joda/time/DateTime.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="90" column="28" selection-start-line="90" selection-start-column="28" selection-end-line="90" selection-end-column="28" />
+          <folding>
+            <element signature="e#1952#1953#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/utils/DateTimeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0.jar!/redis/clients/jedis/Jedis.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="212" column="16" selection-start-line="212" selection-start-column="16" selection-end-line="212" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.3.12.RELEASE/spring-core-4.3.12.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/common/Constanst.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding>
+            <element signature="e#161#162#0" expanded="true" />
+            <element signature="e#199#200#0" expanded="true" />
+            <element signature="e#184#185#0" expanded="true" />
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#263#264#0" expanded="true" />
+            <element signature="e#303#304#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="222" column="4" selection-start-line="194" selection-start-column="14" selection-end-line="222" selection-end-column="4" />
+        <state relative-caret-position="430">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-prod.properties">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/1.5.8.RELEASE/spring-boot-1.5.8.RELEASE.jar!/org/springframework/boot/context/properties/ConfigurationProperties.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
+        <state relative-caret-position="180">
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
+        <state relative-caret-position="498">
           <caret line="73" column="26" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application-test.properties">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="72" column="14" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
+        <state relative-caret-position="188">
+          <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
+            <element signature="e#830#831#0" expanded="true" />
+            <element signature="e#873#874#0" expanded="true" />
+            <element signature="e#911#912#0" expanded="true" />
+            <element signature="e#958#959#0" expanded="true" />
+            <element signature="e#1004#1005#0" expanded="true" />
+            <element signature="e#1197#1198#0" expanded="true" />
+            <element signature="e#1244#1245#0" expanded="true" />
+            <element signature="e#1439#1440#0" expanded="true" />
+            <element signature="e#1479#1480#0" expanded="true" />
+            <element signature="e#1651#1652#0" expanded="true" />
+            <element signature="e#1684#1685#0" expanded="true" />
+            <element signature="e#1736#1737#0" expanded="true" />
+            <element signature="e#1780#1781#0" expanded="true" />
+            <element signature="e#1815#1816#0" expanded="true" />
+            <element signature="e#1846#1847#0" expanded="true" />
+            <element signature="e#1894#1895#0" expanded="true" />
+            <element signature="e#1934#1935#0" expanded="true" />
+            <element signature="e#1968#1969#0" expanded="true" />
+            <element signature="e#1998#1999#0" expanded="true" />
+            <element signature="e#2044#2045#0" expanded="true" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2124#2125#0" expanded="true" />
+            <element signature="e#2165#2166#0" expanded="true" />
+            <element signature="e#2230#2231#0" expanded="true" />
+            <element signature="e#2290#2291#0" expanded="true" />
+            <element signature="e#2339#2340#0" expanded="true" />
+            <element signature="e#2387#2388#0" expanded="true" />
+            <element signature="e#2572#2573#0" expanded="true" />
+            <element signature="e#2603#2604#0" expanded="true" />
+            <element signature="e#2648#2649#0" expanded="true" />
+            <element signature="e#2688#2689#0" expanded="true" />
+            <element signature="e#2756#2757#0" expanded="true" />
+            <element signature="e#2814#2815#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/redisson/redisson/2.14.0/redisson-2.14.0.jar!/org/redisson/api/RedissonClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="43" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/4.3.12.RELEASE/spring-beans-4.3.12.RELEASE.jar!/org/springframework/beans/factory/annotation/AutowiredAnnotationBeanPostProcessor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="530" selection-start-line="530" selection-end-line="530" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedisPoolFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="21" column="40" selection-start-line="20" selection-start-column="36" selection-end-line="21" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissLockUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+          <folding>
+            <element signature="e#1180#1181#0" expanded="true" />
+            <element signature="e#1215#1216#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#1302#1303#0" expanded="true" />
+            <element signature="e#1351#1352#0" expanded="true" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1587#1588#0" expanded="true" />
+            <element signature="e#1764#1765#0" expanded="true" />
+            <element signature="e#1819#1820#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/DistributedLocker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonDistributedLocker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="18" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#841#842#0" expanded="true" />
+            <element signature="e#893#894#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="31" />
+          <folding>
+            <element signature="e#494#495#0" expanded="true" />
+            <element signature="e#524#525#0" expanded="true" />
+            <element signature="e#567#568#0" expanded="true" />
+            <element signature="e#605#606#0" expanded="true" />
+            <element signature="e#652#653#0" expanded="true" />
+            <element signature="e#698#699#0" expanded="true" />
+            <element signature="e#891#892#0" expanded="true" />
+            <element signature="e#938#939#0" expanded="true" />
+            <element signature="e#1133#1134#0" expanded="true" />
+            <element signature="e#1173#1174#0" expanded="true" />
+            <element signature="e#1345#1346#0" expanded="true" />
+            <element signature="e#1378#1379#0" expanded="true" />
+            <element signature="e#1430#1431#0" expanded="true" />
+            <element signature="e#1474#1475#0" expanded="true" />
+            <element signature="e#1509#1510#0" expanded="true" />
+            <element signature="e#1540#1541#0" expanded="true" />
+            <element signature="e#1588#1589#0" expanded="true" />
+            <element signature="e#1628#1629#0" expanded="true" />
+            <element signature="e#1662#1663#0" expanded="true" />
+            <element signature="e#1692#1693#0" expanded="true" />
+            <element signature="e#1738#1739#0" expanded="true" />
+            <element signature="e#1776#1777#0" expanded="true" />
+            <element signature="e#1818#1819#0" expanded="true" />
+            <element signature="e#1859#1860#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1984#1985#0" expanded="true" />
+            <element signature="e#2033#2034#0" expanded="true" />
+            <element signature="e#2081#2082#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/redis/RedissonAutoConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/service/OrderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="59" column="16" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/geekq/miaosha/timeTask/OrderCloseTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="56" column="15" lean-forward="true" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="137" column="67" selection-start-line="137" selection-start-column="67" selection-end-line="137" selection-end-column="67" />
+        <state relative-caret-position="498">
+          <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
         </state>
       </provider>
     </entry>

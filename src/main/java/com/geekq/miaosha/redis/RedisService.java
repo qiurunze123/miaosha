@@ -1,22 +1,64 @@
 package com.geekq.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class RedisService {
 	
 	@Autowired
 	JedisPool jedisPool;
-	
+
+
+	/**
+	 * 设置失效时间
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public Long setnx(String key ,String value){
+		Jedis jedis =null;
+		Long result = null;
+		try {
+			jedis = jedisPool.getResource();
+			result = jedis.setnx(key,value);
+		}catch (Exception e){
+			log.error("expire key:{} error",key,e);
+		jedisPool.returnResource(jedis);
+		return  result;
+		}
+		jedisPool.returnResource(jedis);
+		return  result;
+
+	}
+	/**
+	 * 设置key的有效期，单位是秒
+	 * @param key
+	 * @param exTime
+	 * @return
+	 */
+	public Long expire(String key,int exTime){
+		Jedis jedis = null;
+		Long result = null;
+		try {
+			jedis =  jedisPool.getResource();
+			result = jedis.expire(key,exTime);
+		} catch (Exception e) {
+			log.error("expire key:{} error",key,e);
+			jedisPool.returnBrokenResource(jedis);
+			return result;
+		}
+		jedisPool.returnResource(jedis);
+		return result;
+	}
+
 	/**
 	 * 获取当个对象
 	 * */
@@ -33,7 +75,37 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
+    public  String get(String key){
+        Jedis jedis = null;
+        String result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.get(key);
+        } catch (Exception e) {
+            log.error("expire key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
+
+
+    public  String getset(String key,String value){
+        Jedis jedis = null;
+        String result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.getSet(key,value);
+        } catch (Exception e) {
+            log.error("expire key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
 	/**
 	 * 设置对象
 	 * */
@@ -119,7 +191,23 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
+    public  Long del(String key){
+        Jedis jedis = null;
+        Long result = null;
+        try {
+            jedis =  jedisPool.getResource();
+            result = jedis.del(key);
+        } catch (Exception e) {
+            log.error("del key:{} error",key,e);
+            jedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        jedisPool.returnResource(jedis);
+        return result;
+    }
+
+
 	public boolean delete(KeyPrefix prefix) {
 		if(prefix == null) {
 			return false;
