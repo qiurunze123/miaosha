@@ -19,24 +19,24 @@ import java.io.OutputStream;
 
 @Service
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
-	
+
 	@Autowired
 	MiaoShaUserService userService;
-	
+
 	@Autowired
 	RedisService redisService;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		if(handler instanceof HandlerMethod) {
+			MiaoshaUser user = getUser(request, response);
+			UserContext.setUser(user);
 			HandlerMethod hm = (HandlerMethod)handler;
 			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
 			if(accessLimit == null) {
 				return true;
 			}
-			MiaoshaUser user = getUser(request, response);
-			UserContext.setUser(user);
 			int seconds = accessLimit.seconds();
 			int maxCount = accessLimit.maxCount();
 			boolean needLogin = accessLimit.needLogin();
@@ -63,7 +63,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		}
 		return true;
 	}
-	
+
 	private void render(HttpServletResponse response, CodeMsg cm)throws Exception {
 		response.setContentType("application/json;charset=UTF-8");
 		OutputStream out = response.getOutputStream();
@@ -82,7 +82,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
 		return userService.getByToken(response, token);
 	}
-	
+
 	private String getCookieValue(HttpServletRequest request, String cookiName) {
 		Cookie[]  cookies = request.getCookies();
 		if(cookies == null || cookies.length <= 0){
@@ -95,5 +95,5 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		}
 		return null;
 	}
-	
+
 }

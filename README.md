@@ -52,7 +52,7 @@
 监控工具：１.nginx_status并发统计,Ngxtop缓存统计
 ### nginx负载均衡
 
-![整体流程](http://i2.bvimg.com/601558/23f54a389b2b23e8.png)
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha2.png)
 
 
 ### <font color=#0099ff size=3 >8.服务降级--服务熔断(过载保护)</font><br>
@@ -97,7 +97,7 @@ redis的数量不是库存,他的作用仅仅只是为了阻挡多余的请求�
 
 ### <font color=#0099ff size=3 >15.为什么threadlocal存储user对象，原理？？</font><br>
 
-![整体流程](http://i2.bvimg.com/601558/3293e36cc2c7e303.png)
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha1.png)
 
 1.并发编程中重要的问题就是数据共享，当你在一个线程中改变任意属性时，所有的线程都会因此受到影响，同时会看到第一个线程修改后的值<br>
 有时我们希望如此，比如：多个线程增大或减小同一个计数器变量<br>
