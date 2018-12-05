@@ -50,6 +50,7 @@ public class RedissonAutoConfiguration {
     RedissonClient redissonSingle() {
         Config config = new Config();
         SingleServerConfig serverConfig = config.useSingleServer()
+                .setDatabase(9)
                 .setAddress(redssionProperties.getAddress())
                 .setTimeout(redssionProperties.getTimeout())
                 .setConnectionPoolSize(redssionProperties.getConnectionPoolSize())
