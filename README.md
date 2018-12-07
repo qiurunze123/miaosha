@@ -14,6 +14,8 @@
 
 ### 秒杀高并发架构 -- 架构图
 
+> 软件环境 : 请选择稳定版 
+
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
 #### [提交合并代码规范](/docs/code-criterion.md)

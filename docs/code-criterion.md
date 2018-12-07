@@ -94,3 +94,15 @@
             void garnish(List<Strawberry> strawberries) { ... }
           }
 13.**类名应该是名词不应该是动词,使用普遍的被大众理解的词**<br>
+14.**请勿抛异常直接返回**<br>
+        
+        类似如下规范
+        Result result=Result.build();
+        boolean isChecking = redisServiceUtil.getIsCheckingOfAutomatedLoanService();
+        result.setValue(isChecking);
+        if (isChecking) {
+            logger.info("--- isSystemChecking ---系统清算中-----");
+            result.withError(ResultMsgStatus.SYSTEM_CHECKING.getMessage());
+        }
+        return result;
+
