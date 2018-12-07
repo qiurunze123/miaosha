@@ -16,7 +16,7 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
-### [提交合并代码规范](/miaosha/docs/README.md)
+#### [提交合并代码规范](/docs/README1.md)
 
 ### [秒杀注意事项]()
 ####  [1.如何解决卖超问题]() 
