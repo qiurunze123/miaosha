@@ -17,6 +17,8 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
+### [提交合并代码规范](/docs/README.md)
+
 ### [秒杀注意事项]()
 ####  [1.如何解决卖超问题]() 
     --在sql加上判断防止数据边为负数 
@@ -107,6 +109,7 @@
     
     9.所有秒杀相关的接口比如：秒杀，获取秒杀地址，获取秒杀结果，获取秒杀验证码都需要加上<br>
     秒杀是否开始结束的判断
+#### [tomcat配置和优化]()
 #### [Nginx优化（前端缓存）]()
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha2.png)
 ### [缓存](/docs/high-concurrency/why-cache.md)
