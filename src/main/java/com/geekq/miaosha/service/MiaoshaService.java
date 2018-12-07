@@ -122,7 +122,8 @@ public class MiaoshaService {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("JavaScript");
-			return (Integer)engine.eval(exp);
+			Double catch1 = (Double)engine.eval(exp);
+			return catch1.intValue();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return 0;

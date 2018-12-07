@@ -9,7 +9,11 @@ import java.util.Map;
 
 @Configuration
 public class MQConfig {
-	
+
+	/**
+	 * /usr/sbin/rabbitmq-plugins enable rabbitmq_management
+	 * mq页面
+	 */
 	public static final String MIAOSHA_QUEUE = "miaosha.queue";
 	public static final String QUEUE = "queue";
 	public static final String TOPIC_QUEUE1 = "topic.queue1";
