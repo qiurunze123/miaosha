@@ -9,117 +9,89 @@
     1.内存优化
     2.并发优化
     3.APR优化
+    
+#### [APR优化相关包](/docs/tools)
 1.**内存优化**
 
+    内存优化catalina
     JAVA_OPTS="-server -Xms2048M -Xmx2048M -XX:+HeapDumpOnOutOfMemoryError 
     -XX:HeapDumpPath=$CATALINA_HOME/logs/heap.dump"
     # Register custom URL handlers
     server.xml 配置
     maxConnections="300"
-               acceptCount="200"
-               maxThreads="400"
-               minSpareThreads="200"/>
+    acceptCount="200"
+    maxThreads="400"
+    minSpareThreads="200"/>
     禁用
     <!-- Define an AJP 1.3 Connector on port 8009 
-        <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />-->
+    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />-->
+    
+    ${tomcat}/webapps/docs/config/host.html
+        
+    autoDeploy：This flag value indicates if Tomcat should check periodically for new or updated web applications while Tomcat is running
+        
+    ${tomcat}/webapps/docs/config/http.html
+    enableLookups：false
+        
+    ${tomcat}/webapps/docs/config/context.html:
+    reloadable：false
 2.**如果你的网站具有高并发那么建议使用APR模式**
 
-          1.长的类名会使开发者不易生命该类型的变量
-          2.长的方法命名会使它变得晦涩难懂
-          3.长的变量名不利于代码重用，导致过长的方法链
-3.**命名清晰准确**<br>
-
-          清晰: 你要知道该命名于什么有关
-          精确：你要知道该命名于什么无关
-          当完成这两个目标后其他的都是多余的字符
-          
-4.**命名无需含有表示变量或者参数类型的单词**<br>
-
-          nameString  请写成 name
-          accountLessWindow 请写成 window
-          
-5.**对于集合来说，最好使用名词的复数形式来描述内容**<br>
-
-    List<DateTime> holidayDateLists 请写成 List<DateTime> holidays
-    Map<Employee,Role> employeeRoleHashMap 请写成 Map<Employee,Role> employeeRoles
-
-6.**方法名不需要描述它的参数及参数的类型–参数列表已经说明了这些**<br>
-
-     mergeTableCells(List<TableCell> cells) 请写成 merge(List<TableCell> cells)
-     sortEventsUsingComparator(List<Event> events,Comparator<Event> comparator) 请写成 sort(List<Event> events, Comparator<Event> comparator)
-     
-7.**省略命名中不是用来消除歧义的单词**<br>
-8.**命名只是一个表示符，只要告诉你变量在哪定义不需要吧所有的信息都塞到命名里面**<br>
-
-     recentlyUpdatedAnnualSalesBid
-     存在不是最近更新的全年销售投标么？
-     存在没有被更新的最近的全年销售投标么？
-     存在最近更新的非全年的销售投标么？
-     存在最近更新的全年非销售的投标么？
-     存在最近更新的全年销售非投标的东东吗？
-     上面的任何一个问题回答是不存在，那就意味着命名中引入了无用的单词
-     finalBattleMostDangerousBossMonster 请写成 boss
-     weaklingFirstEncounterMonster 请写成firstMonster
-     如果有一些你觉得过了，太短了，容易引起歧义，但是你可以大胆的这样做，如果在之后的开发中你觉得命名会造成冲突和不明确
-     你可以填一些修饰词来完善它，反之如果一开始就是一个很长的名字，你不可能再改回来
-9.**省略命名中可以从上下文获取的单词**<br>
-
-          
-          // Bad:
-          class AnnualHolidaySale {
-            int _annualSaleRebate;
-            void promoteHolidaySale() { ... }
-          }
-          // Better:
-          class AnnualHolidaySale {
-            int _rebate;
-            void promote() { ... }
-          }
-          实际上一个命名嵌套的层次越多，他就有更多的相关的上下文，也就更简短，换句话说一个变量的作用域越小，命名就越短
-10.**省略命名中无任何意义的单词**<br>
-
-      例如：data、state、amount、value、manager、engine、object、entity 和 instance一类的 不需要这类严肃的词语 
-11.**是否可以描述出一幅画（我在装逼）**<br>
-
-      一个好的命名能够在阅读者的脑海里面描绘出一幅图画，而降变量命名为manager 并不能象读者传达出任何有关该变量做什么的信息
-      在命名时可以问一下自己，把这个单词去掉含义是不是不变？如果是，那就果断把它剔除吧
-12.**终极一例**<br>
-
-    例子:好吃的华夫饼
-          
-          // 好吃的比利时华夫饼
-          class DeliciousBelgianWaffleObject {
-            void garnishDeliciousBelgianWaffleWithStrawberryList(
-                List<Strawberry> strawberryList) { ... }
-          }
-          首先，通过参数列表，我们可以知道方法是用来处理一个strawberry 的列表 所以可以在方法的命名中去掉
-          class DeliciousBelgianWaffleObject {
-              void garnishDeliciousBelgianWaffle(
-                  List<Strawberry> strawberries) { ... }
-          }
-          除非程序中还包含不好吃的比利时华夫饼或者其它华夫饼 不然我们可以将这个无用的形容词去掉
-          class WaffleObject {
-            void garnishWaffle(List<Strawberry> strawberries) { ... }
-          }
-          
-          方法是包含在waffleObject类中的 所以方法名无需waffle说明
-          class WaffleObject {
-            void garnish(List<Strawberry> strawberries) { ... }
-          }
-          很明显他是一个对象，任何事物都是一个对象，这也就是传说中的面相对象的意思，所以命名中无需带有Object
-          class Waffle {
-            void garnish(List<Strawberry> strawberries) { ... }
-          }
-13.**类名应该是名词不应该是动词,使用普遍的被大众理解的词**<br>
-14.**请勿抛异常直接返回**<br>
+       http://apr.apache.org/
+       依赖：
+ >>APR 1.2+ development headers (libapr1-dev package)
+ >>OpenSSL 1.0.2+ development headers (libssl-dev package)
+ >>JNI headers from Java compatible JDK 1.4+
+ >>GNU development environment (gcc, make)
         
-        类似如下规范
-        Result result=Result.build();
-        boolean isChecking = redisServiceUtil.getIsCheckingOfAutomatedLoanService();
-        result.setValue(isChecking);
-        if (isChecking) {
-            logger.info("--- isSystemChecking ---系统清算中-----");
-            result.withError(ResultMsgStatus.SYSTEM_CHECKING.getMessage());
-        }
-        return result;
-
+       yum install apr* openssl-devel gcc make
+       
+       tar zxvf apr-1.4.5.tar  
+       cd apr-1.4.5  
+       ./configure --prefix=/usr/local/apr  
+       make  
+       make install  
+       
+       tar -zxvf apr-iconv-1.2.1.tar.gz  
+       cd apr-iconv-1.2.1  
+       ./configure --prefix=/usr/local/apr-iconv --with-apr=/usr/local/apr  
+       make  
+       make install
+       
+       yum install expat-devel
+       
+       tar zxvf apr-util-1.3.12.tar.gz  
+       cd apr-util-1.3.12  
+       ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr
+       make  
+       make install 
+       
+       安装openssl 1.0.2
+       ./config  --prefix=/usr/local/openssl
+       修改Makefile：
+       vi Makefile
+       将原来的：CFLAG=     -DOPENSSL_THREADS
+       修改为：  CFLAG= -fPIC -DOPENSSL_THREADS
+       也就是添加-fPIC
+       执行执行：
+       make && make install
+       
+       cd bin
+       tar -zxvf tomcat-native.tar.gz
+       cd tomcat-native-1.2.12-src
+       cd native
+       ./configure --with-apr=/usr/local/apr --with-ssl=/usr/local/openssl 
+       make
+       make install
+       
+       catalina.sh：
+       JAVA_OPTS="$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib
+       注意：开启了apr之后，jvm用到的native内存会增大，因此要适当调大Metaspace空间,添加JVM选项：-XX:MetaspaceSize=128m
+       JAVA_OPTS="-server -Xms2048M -Xmx2048M -XX:MetaspaceSize=128M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$CATALINA_HOME/logs/heap.dump"
+       
+       server.xml：
+       <Connector port="8080" protocol="org.apache.coyote.http11.Http11AprProtocol"
+       connectionTimeout="20000"
+       redirectPort="8443" />
+       
+       <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="off" />
