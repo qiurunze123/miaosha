@@ -1,6 +1,6 @@
 package com.geekq.miaosha.vo;
 
-import com.geekq.miaosha.validator.IsMobile;
+import com.geekq.miaosha.validator.MobileCheck;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class LoginVo {
     @NotNull
-    @IsMobile
+    @MobileCheck
     private String mobile ;
 
     @NotNull

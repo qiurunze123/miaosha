@@ -1,11 +1,11 @@
 package com.geekq.miaosha.service;
 
-import com.geekq.miaosha.Md5Utils.MD5Utils;
 import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.geekq.miaosha.controller;
 
+import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
@@ -16,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import static com.geekq.miaosha.common.enums.ResultStatus.ORDER_NOT_EXIST;
+import static com.geekq.miaosha.common.enums.ResultStatus.SESSION_ERROR;
 
 @Controller
 @RequestMapping("/order")
@@ -35,21 +39,25 @@ public class OrderController {
 	
     @RequestMapping("/detail")
     @ResponseBody
-    public Result<OrderDetailVo> info(Model model, MiaoshaUser user,
+    public ResultGeekQ<OrderDetailVo> info(Model model, MiaoshaUser user,
 									  @RequestParam("orderId") long orderId) {
-    	if(user == null) {
-    		return Result.error(CodeMsg.SESSION_ERROR);
-    	}
+		ResultGeekQ<OrderDetailVo> result = ResultGeekQ.build();
+		if (user == null) {
+			result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
+			return result;
+		}
     	OrderInfo order = orderService.getOrderById(orderId);
     	if(order == null) {
-    		return Result.error(CodeMsg.ORDER_NOT_EXIST);
+			result.withError(ORDER_NOT_EXIST.getCode(), ORDER_NOT_EXIST.getMessage());
+			return result;
     	}
     	long goodsId = order.getGoodsId();
     	GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
     	OrderDetailVo vo = new OrderDetailVo();
     	vo.setOrder(order);
     	vo.setGoods(goods);
-    	return Result.success(vo);
+    	result.setData(vo);
+    	return result;
     }
     
 }

@@ -1,4 +1,4 @@
-package com.geekq.miaosha;
+package com.geekq.miaosha.common;
 
 import java.util.ArrayList;
 import java.util.List;

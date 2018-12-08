@@ -42,7 +42,7 @@ public class Result<T> {
         return new Result<T>(cm);
     }
 
-//    public Result(CodeMsg msg, T data) {
+//    public ResultGeekQ(CodeMsg msg, T data) {
 //        this.code = msg.getCode();
 //        this.msg = msg.getMsg();
 //        this.data = data;

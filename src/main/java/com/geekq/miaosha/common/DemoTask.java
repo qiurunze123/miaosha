@@ -1,4 +1,4 @@
-package com.geekq.miaosha;
+package com.geekq.miaosha.common;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

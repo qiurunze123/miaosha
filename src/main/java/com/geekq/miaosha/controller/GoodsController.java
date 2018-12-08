@@ -1,5 +1,6 @@
 package com.geekq.miaosha.controller;
 
+import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
@@ -40,7 +41,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @Autowired
-    ThymeleafViewResolver thymeleafViewResolver;
+    ThymeleafViewResolver viewResolver;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -64,7 +65,7 @@ public class GoodsController {
         SpringWebContext ctx = new SpringWebContext(request,response,
                 request.getServletContext(),request.getLocale(), model.asMap(), applicationContext );
         //手动渲染
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
+        html = viewResolver.getTemplateEngine().process("goods_list", ctx);
         if(!StringUtils.isEmpty(html)) {
             redisService.set(GoodsKey.getGoodsList, "", html);
         }
@@ -108,7 +109,7 @@ public class GoodsController {
 
         SpringWebContext ctx = new SpringWebContext(request,response,
                 request.getServletContext(),request.getLocale(), model.asMap(), applicationContext );
-        html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);
+        html = viewResolver.getTemplateEngine().process("goods_detail", ctx);
         if(!StringUtils.isEmpty(html)) {
             redisService.set(GoodsKey.getGoodsDetail, ""+goodsId, html);
         }
@@ -124,8 +125,9 @@ public class GoodsController {
      */
     @RequestMapping(value="/detail/{goodsId}")
     @ResponseBody
-    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,
+    public ResultGeekQ<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,
                                         @PathVariable("goodsId")long goodsId) {
+        ResultGeekQ<GoodsDetailVo> result = ResultGeekQ.build();
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
         long startAt = goods.getStartDate().getTime();
         long endAt = goods.getEndDate().getTime();
@@ -147,6 +149,7 @@ public class GoodsController {
         vo.setUser(user);
         vo.setRemainSeconds(remainSeconds);
         vo.setMiaoshaStatus(miaoshaStatus);
-        return Result.success(vo);
+        result.setData(vo);
+        return result;
     }
 }

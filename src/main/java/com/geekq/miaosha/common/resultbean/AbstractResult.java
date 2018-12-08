@@ -8,8 +8,15 @@ public class AbstractResult {
     private String message;
 
     protected AbstractResult(ResultStatus status, String message) {
+        this.code = status.getCode();
         this.status = status;
         this.message = message;
+    }
+
+    protected AbstractResult(ResultStatus status) {
+        this.code = status.getCode();
+        this.message = status.getMessage();
+        this.status = status;
     }
 
     public static boolean isSuccess(AbstractResult result) {
@@ -37,7 +44,6 @@ public class AbstractResult {
         this.status = ResultStatus.SUCCESS;
         return this;
     }
-
     public ResultStatus getStatus() {
         return this.status;
     }

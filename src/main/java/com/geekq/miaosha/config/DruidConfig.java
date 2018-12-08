@@ -1,16 +1,14 @@
-package com.geekq.miaosha.dao;
+package com.geekq.miaosha.config;
 
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.http.StatViewServlet;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Configuration
 @ConfigurationProperties(prefix="spring.datasource")
