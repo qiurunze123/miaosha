@@ -26,9 +26,9 @@
     --数据库加唯一索引防止用户重复购买
     --redis预减库存减少数据库访问　内存标记减少redis访问　请求先入队列缓冲，异步下单，增强用户体验
 ####  [全局异常处理拦截]()
-    1.定义全局的异常拦截器<br>
-    2.定义了全局异常类型<br>
-    3.只返回和业务有关的<br>
+    1.定义全局的异常拦截器
+    2.定义了全局异常类型
+    3.只返回和业务有关的
 
 ####  [页面级缓存thymeleafViewResolver]()
      1.详细请看basecontroller 缓存渲染页面
@@ -118,7 +118,10 @@
     
     9.所有秒杀相关的接口比如：秒杀，获取秒杀地址，获取秒杀结果，获取秒杀验证码都需要加上<br>
     秒杀是否开始结束的判断
+#### [定时关单模拟与分布式锁](/docs/time-close.md)
+#### [mybatis源码解析]()
 #### [tomcat配置和优化](/docs/tomcat-good.md)
+#### [tomcat集群配置](/docs/tomcat-group.md)
 #### [Nginx优化（前端缓存）](/docs/ngnix-good.md))
      1.并发优化 2.Keepalive长连接 3.压缩优化 4.配置缓存5.监控工具
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha2.png)
