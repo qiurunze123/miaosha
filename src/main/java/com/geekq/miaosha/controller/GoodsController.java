@@ -27,7 +27,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/goods")
-public class GoodsController {
+public class GoodsController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
@@ -54,21 +54,9 @@ public class GoodsController {
     @ResponseBody
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
         model.addAttribute("user", user);
-        //取缓存
-        String html = redisService.get(GoodsKey.getGoodsList, "", String.class);
-        if(!StringUtils.isEmpty(html)) {
-            return html;
-        }
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
-        SpringWebContext ctx = new SpringWebContext(request,response,
-                request.getServletContext(),request.getLocale(), model.asMap(), applicationContext );
-        //手动渲染
-        html = viewResolver.getTemplateEngine().process("goods_list", ctx);
-        if(!StringUtils.isEmpty(html)) {
-            redisService.set(GoodsKey.getGoodsList, "", html);
-        }
-        return html;
+        return render(request,response,model,"goods_list",GoodsKey.getGoodsList,"");
     }
 
     @RequestMapping(value="/to_detail2/{goodsId}",produces="text/html")
