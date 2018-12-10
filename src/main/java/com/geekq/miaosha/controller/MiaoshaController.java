@@ -1,7 +1,6 @@
 package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.access.AccessLimit;
-import com.geekq.miaosha.common.enums.ResultStatus;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
@@ -9,13 +8,13 @@ import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.result.CodeMsg;
-import com.geekq.miaosha.result.Result;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
 import com.geekq.miaosha.service.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +34,8 @@ import static com.geekq.miaosha.common.enums.ResultStatus.*;
 @Controller
 @RequestMapping("/miaosha")
 public class MiaoshaController implements InitializingBean {
+
+    private static Logger logger = LoggerFactory.getLogger(MiaoshaController.class);
 
     @Autowired
     MiaoShaUserService userService;
@@ -160,10 +161,12 @@ public class MiaoshaController implements InitializingBean {
 
     @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
     @ResponseBody
-    public Result<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,
+    public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,
                                               @RequestParam("goodsId") long goodsId) {
+        ResultGeekQ<String> result = ResultGeekQ.build();
         if (user == null) {
-            return Result.error(CodeMsg.SESSION_ERROR);
+            result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
+            return result;
         }
         try {
             BufferedImage image = miaoshaService.createVerifyCode(user, goodsId);
@@ -171,13 +174,13 @@ public class MiaoshaController implements InitializingBean {
             ImageIO.write(image, "JPEG", out);
             out.flush();
             out.close();
-            return null;
+            return result;
         } catch (Exception e) {
-            e.printStackTrace();
-            return Result.error(CodeMsg.MIAOSHA_FAIL);
+            logger.error("生成验证码错误-----goodsId:{}", goodsId, e);
+            result.withError(MIAOSHA_FAIL.getCode(), MIAOSHA_FAIL.getMessage());
+            return result;
         }
     }
-
     /**
      * 系统初始化
      *

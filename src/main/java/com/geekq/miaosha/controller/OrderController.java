@@ -4,8 +4,6 @@ import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.result.CodeMsg;
-import com.geekq.miaosha.result.Result;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.OrderService;

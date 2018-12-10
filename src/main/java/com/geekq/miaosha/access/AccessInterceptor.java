@@ -1,10 +1,10 @@
 package com.geekq.miaosha.access;
 
 import com.alibaba.fastjson.JSON;
+import com.geekq.miaosha.common.enums.ResultStatus;
+import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.result.CodeMsg;
-import com.geekq.miaosha.result.Result;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+
+import static com.geekq.miaosha.common.enums.ResultStatus.ACCESS_LIMIT_REACHED;
+import static com.geekq.miaosha.common.enums.ResultStatus.SESSION_ERROR;
 
 @Service
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
@@ -43,7 +46,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 			String key = request.getRequestURI();
 			if(needLogin) {
 				if(user == null) {
-					render(response, CodeMsg.SESSION_ERROR);
+					render(response, SESSION_ERROR);
 					return false;
 				}
 				key += "_" + user.getId();
@@ -57,17 +60,17 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 	    	}else if(count < maxCount) {
 	    		 redisService.incr(ak, key);
 	    	}else {
-	    		render(response, CodeMsg.ACCESS_LIMIT_REACHED);
+	    		render(response, ACCESS_LIMIT_REACHED);
 	    		return false;
 	    	}
 		}
 		return true;
 	}
 
-	private void render(HttpServletResponse response, CodeMsg cm)throws Exception {
+	private void render(HttpServletResponse response, ResultStatus cm)throws Exception {
 		response.setContentType("application/json;charset=UTF-8");
 		OutputStream out = response.getOutputStream();
-		String str  = JSON.toJSONString(Result.error(cm));
+		String str  = JSON.toJSONString(ResultGeekQ.error(cm));
 		out.write(str.getBytes("UTF-8"));
 		out.flush();
 		out.close();

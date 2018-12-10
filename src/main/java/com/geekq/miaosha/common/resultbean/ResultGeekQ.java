@@ -1,8 +1,6 @@
 package com.geekq.miaosha.common.resultbean;
 
 import com.geekq.miaosha.common.enums.ResultStatus;
-import com.geekq.miaosha.result.CodeMsg;
-import com.geekq.miaosha.result.Result;
 
 import java.io.Serializable;
 
