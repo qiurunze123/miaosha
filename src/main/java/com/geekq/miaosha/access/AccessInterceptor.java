@@ -3,10 +3,13 @@ package com.geekq.miaosha.access;
 import com.alibaba.fastjson.JSON;
 import com.geekq.miaosha.common.enums.ResultStatus;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
+import com.geekq.miaosha.controller.LoginController;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
@@ -23,6 +26,8 @@ import static com.geekq.miaosha.common.enums.ResultStatus.SESSION_ERROR;
 @Service
 public class AccessInterceptor  extends HandlerInterceptorAdapter{
 
+	private static Logger logger = LoggerFactory.getLogger(AccessInterceptor.class);
+
 	@Autowired
 	MiaoShaUserService userService;
 
@@ -32,7 +37,11 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		/**
+		 * 获取调用 获取主要方法
+		 */
 		if(handler instanceof HandlerMethod) {
+			logger.info("打印拦截方法handler ：{} ",handler);
 			MiaoshaUser user = getUser(request, response);
 			UserContext.setUser(user);
 			HandlerMethod hm = (HandlerMethod)handler;

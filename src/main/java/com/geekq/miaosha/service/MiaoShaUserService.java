@@ -93,7 +93,7 @@ public class MiaoShaUserService {
         if(!calcPass.equals(dbPass)){
             throw new GlobleException(PASSWORD_ERROR);
         }
-        //生成cookie
+        //生成cookie 将session返回游览器 分布式session
         String token= UUIDUtil.uuid();
         addCookie(response, token, user);
         return true ;
@@ -102,6 +102,7 @@ public class MiaoShaUserService {
     private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
         redisService.set(MiaoShaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        //设置有效期
         cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);

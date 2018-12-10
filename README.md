@@ -31,9 +31,10 @@
     3.只返回和业务有关的<br>
 
 #### [解决分布式session]()
-    --生成一个随机的uuid一类的写回到cookie中
-    --redis 内存写入 
-    --下一个页面拿到uuid 内存取对象
+    --生成随机的uuid作为cookie返回并redis内存写入 
+    --拦截器每次拦截方法，来重新获根据cookie获取对象
+    --下一个页面拿到key重新获取对象
+    --HandlerMethodArgumentResolver 方法 supportsParameter 如果为true 执行 resolveArgument 方法获取miaoshauser对象
     --如果有缓存的话 这个功能实现起来就和简单，在一个用户访问接口的时候我们把访问次数写到缓存中，在加上一个有效期。
        通过拦截器. 做一个注解 @AccessLimit 然后封装这个注解，可以有效的设置每次访问多少次，有效时间是否需要登录！
 #### [通用缓存key的封装采用什么设计模式]()
