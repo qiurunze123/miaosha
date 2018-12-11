@@ -40,6 +40,7 @@
     1.定义全局的异常拦截器
     2.定义了全局异常类型
     3.只返回和业务有关的
+    4.详情请看GlobleException
 
 ####  [页面级缓存thymeleafViewResolver]()
      1.详细请看basecontroller 缓存渲染页面
