@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MiaoshaUser {
+
 	private Long id;
 	private String nickname;
 	private String password;
