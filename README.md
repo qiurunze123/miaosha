@@ -18,7 +18,17 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
-#### [提交合并代码规范](/docs/code-criterion.md)
+> 软件环境 : mysql 数据库表设计
+
+>1.需注意 因为秒杀，大促，打折等活动进行频繁，所以需要单独建立秒杀_....表来管理否则会经常进行回归
+
+>2.本sql只是进行模拟，显示情况比这个信息要复杂的多，你可以把它看作是一个简化版本的sql
+
+>3.详情请看miaosha.sql
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaoshasql.png)
+
+ 
+###  [如要提交代码请先看--提交合并代码规范](/docs/code-criterion.md)
 
 > 秒杀注意事项以及整体简略设计
 ####  [1.如何解决卖超问题]() 
