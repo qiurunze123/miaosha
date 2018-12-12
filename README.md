@@ -46,6 +46,14 @@
 
 ####  [页面级缓存thymeleafViewResolver]()
      1.详细请看basecontroller 缓存渲染页面
+####  [对象级缓存redis]()
+     redis永久缓存对象减少压力
+     redis预减库存减少数据库访问
+     内存标记方法减少redis访问
+#### [订单处理队列rabbitmq]()
+     请求先入队缓冲，异步下单，增强用户体验
+     请求出队，生成订单，减少库存
+     客户端定时轮询检查是否秒杀成功 
 #### [解决分布式session]()
     --生成随机的uuid作为cookie返回并redis内存写入 
     --拦截器每次拦截方法，来重新获根据cookie获取对象
