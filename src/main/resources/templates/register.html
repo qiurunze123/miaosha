@@ -14,16 +14,17 @@
 		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
 <script>
     $(function() {// 初始化内容
-        $("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId=1");
+        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
         $("#verifyCodeImg").show();
     });
     function refreshVerifyCode(){
-        $("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId=1");
+        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
     };
 	function register_go() {
 		var username =$("#username").val();
 	    var inputPass = $("#password").val();
 		var passwordrepeat = $("#repassword").val();
+		var verifyCode = $("#verifyCode").val();
         if(inputPass==""||inputPass==null||inputPass == undefined ){
             alert("密码不能为空！");
             return ;
@@ -35,7 +36,9 @@
         if(inputPass!=passwordrepeat){
             alert("密码不一致！");
 		}
-
+        if(verifyCode!=verifyCode){
+            alert("验证码不能为空！");
+        }
         var salt = g_passsword_salt;
         var str = ""+salt.charAt(0)+salt.charAt(2) + inputPass +salt.charAt(5) + salt.charAt(4);
         var password = md5(str);
@@ -46,7 +49,8 @@
             data:{
                 username:$("#username").val(),
                 password: password,
-				salt:salt
+				salt:salt,
+                verifyCode:verifyCode
             },
             success:function(data){
                 layer.closeAll();
@@ -91,7 +95,7 @@
 							</div>
 							<div class="ececk_warning"><span>密码不能为空</span></div>
 							<div class="form_text_ipt">
-								<img id="verifyCodeImg" width="80" height="32" src="/miaosha/verifyCode?goodsId=1" type="text" onclick="refreshVerifyCode()" />
+								<img id="verifyCodeImg" width="80" height="32" src="/miaosha/verifyCodeRegister" type="text" onclick="refreshVerifyCode()" />
 							</div>
 							<div class="form_text_ipt">
 							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
