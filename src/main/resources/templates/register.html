@@ -20,11 +20,24 @@
     function refreshVerifyCode(){
         $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
     };
-	function register_go() {
+
+    function checkPhone(phone){
+        if(!(/^1[34578]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填");
+            return false;
+        }
+    }
+
+    function register_go() {
 		var username =$("#username").val();
 	    var inputPass = $("#password").val();
 		var passwordrepeat = $("#repassword").val();
 		var verifyCode = $("#verifyCode").val();
+		var check = checkPhone(username);
+		if(check){
+		    alert("手机号不符合要求");
+		    return ;
+		}
         if(inputPass==""||inputPass==null||inputPass == undefined ){
             alert("密码不能为空！");
             return ;
