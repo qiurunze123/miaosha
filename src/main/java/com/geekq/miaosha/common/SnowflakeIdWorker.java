@@ -1,4 +1,4 @@
-package com.geekq.miaosha;
+package com.geekq.miaosha.common;
 /**
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>
@@ -71,6 +71,17 @@ public class SnowflakeIdWorker {
         }
         this.workerId = workerId;
         this.datacenterId = datacenterId;
+    }
+
+    /**
+     * 生成订单唯一ID
+     * @param workerId
+     * @param datacenterId
+     * @return
+     */
+    public static long getOrderId(long workerId, long datacenterId){
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        return idWorker.nextId();
     }
 
     // ==============================Methods==========================================
