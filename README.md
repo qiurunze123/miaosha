@@ -46,7 +46,7 @@
 
 ####  [页面级缓存thymeleafViewResolver]()
      1.详细请看basecontroller 缓存渲染页面
-####  [对象级缓存redis]()
+####  [对象级缓存redis🙋🐓]()
      redis永久缓存对象减少压力
      redis预减库存减少数据库访问
      内存标记方法减少redis访问
