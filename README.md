@@ -60,11 +60,10 @@
 | 020 |分布式事物解决方案（未更新） |[解决思路](/docs/code-solve.md)   |
 | 021 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
 | 022 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
-| 022 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
 
 #### [分布式基础--未更新](/docs/redis-code.md)
 #### [mybatis源码解析--未更新](/docs/mybatis-code.md)
-#### [redis专题缓存的优势--未更新](/docs/redis-code.md)
+#### [redis专题缓存的优势及如何进行集群--未更新](/docs/redis-code.md)
 #### [spring源码--未更新](/docs/redis-code.md)
 #### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
