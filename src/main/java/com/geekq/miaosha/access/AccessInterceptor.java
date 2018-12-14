@@ -76,6 +76,12 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		return true;
 	}
 
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		super.afterCompletion(request, response, handler, ex);
+		UserContext.removeUser();
+	}
+
 	private void render(HttpServletResponse response, ResultStatus cm)throws Exception {
 		response.setContentType("application/json;charset=UTF-8");
 		OutputStream out = response.getOutputStream();
