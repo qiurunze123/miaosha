@@ -57,9 +57,9 @@
 | 018 |tomcat集群配置 |[解决思路](/docs/tomcat-group.md)  |
 | 019 |Nginx优化（前端缓存） |[解决思路](/docs/ngnix-good.md)  |
 | 020 |RPC分布式补偿如何解决 |[解决思路](/docs/code-solve.md)   |
-| 020 |分布式事物解决方案（未更新） |[解决思路](/docs/code-solve.md)   |
-| 021 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
-| 022 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
+| 021 |分布式事物解决方案（未更新） |[解决思路](/docs/code-solve.md)   |
+| 022 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
+| 023 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
 
 #### [分布式基础--未更新](/docs/redis-code.md)
 #### [mybatis源码解析--未更新](/docs/mybatis-code.md)
