@@ -54,6 +54,7 @@
 | 018 |tomcat集群配置 |[解决思路](/docs/tomcat-group.md)  |
 | 019 |Nginx优化（前端缓存） |[解决思路](/docs/ngnix-good.md)  |
 | 020 |RPC分布式补偿如何解决 |[解决思路](/docs/code-solve.md)   |
+| 021 |mysql主从复制思路及节约 |[解决思路](/docs/mysql-master-slave.md)   |
 
 
 #### [定时关单模拟与分布式锁](/docs/time-close.md)
