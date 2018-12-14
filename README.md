@@ -8,7 +8,9 @@
 
 [![GQ Welcome](https://raw.githubusercontent.com/qiurunze123/imageall/master/2018.png)](https://github.com/qiurunze123)
 [![Travis](https://img.shields.io/badge/language-Java-yellow.svg)](https://github.com/qiurunze123)
-高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。本GitHub还有许多其他的知识，随时欢迎探讨与骚扰！
+高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。本GitHub还有许多其他的知识，随时欢迎探讨与骚扰！本文还在更新如果文章出现瑕疵请及时与我联系！
+
+文章还有许多不足，我仍在不断改进！ 谢谢大家！
 
 一点小建议：学习本系列知识之前，如果你完全没接触过 `MQ`、`SpringBoot`、`Redis`、`Dubbo`、`ZK` 、`Maven`等，那么我建议你可以先在网上搜一下每一块知识的快速入门，也可以下载本项目边做边学习，然后再开始每一块知识的学习。这样效果更好噢~
 
@@ -54,7 +56,7 @@
 | 018 |tomcat集群配置 |[解决思路](/docs/tomcat-group.md)  |
 | 019 |Nginx优化（前端缓存） |[解决思路](/docs/ngnix-good.md)  |
 | 020 |RPC分布式补偿如何解决 |[解决思路](/docs/code-solve.md)   |
-| 021 |mysql主从复制思路及节约 |[解决思路](/docs/mysql-master-slave.md)   |
+| 021 |mysql主从复制思路及实操 |[解决思路](/docs/mysql-master-slave.md)   |
 
 
 #### [定时关单模拟与分布式锁](/docs/time-close.md)
@@ -63,7 +65,6 @@
 #### [tomcat集群配置](/docs/tomcat-group.md)
 #### [Nginx优化（前端缓存）](/docs/ngnix-good.md)
 #### [如何进行分库分表](/docs/ngnix-good.md)
-     1.并发优化 2.Keepalive长连接 3.压缩优化 4.配置缓存5.监控工具
 ### [缓存](/docs/why-cache.md)
 - [在项目中缓存是如何使用的？缓存如果使用不当会造成什么后果？](/docs/why-cache.md)
 - [Redis 和 Memcached 有什么区别？Redis 的线程模型是什么？为什么单线程的 Redis 比多线程的 Memcached 效率要高得多？](/docs/redis-single-thread-model.md)
