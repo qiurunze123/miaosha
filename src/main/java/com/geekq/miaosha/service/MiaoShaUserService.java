@@ -1,27 +1,32 @@
 package com.geekq.miaosha.service;
 
-import com.geekq.miaosha.Md5Utils.MD5Utils;
+import com.geekq.miaosha.controller.RegisterController;
 import com.geekq.miaosha.dao.MiaoShaUserDao;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.exception.GlobleException;
 import com.geekq.miaosha.redis.MiaoShaUserKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.result.CodeMsg;
-import com.geekq.miaosha.result.Result;
+import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.LoginVo;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Date;
+
+import static com.geekq.miaosha.common.enums.ResultStatus.*;
+
 @Service
 public class MiaoShaUserService {
 
     public static final String COOKIE_NAME_TOKEN = "token" ;
+    private static Logger logger = LoggerFactory.getLogger(MiaoShaUserService.class);
 
     @Autowired
     private MiaoShaUserDao miaoShaUserDao ;
@@ -43,87 +48,93 @@ public class MiaoShaUserService {
 
     }
 
-    public MiaoshaUser getById(long id) {
+    public MiaoshaUser getByNickName(String nickName) {
         //取缓存
-        MiaoshaUser user = redisService.get(MiaoShaUserKey.getById, ""+id, MiaoshaUser.class);
+        MiaoshaUser user = redisService.get(MiaoShaUserKey.getByNickName, ""+nickName, MiaoshaUser.class);
         if(user != null) {
             return user;
         }
         //取数据库
-        user = miaoShaUserDao.getById(id);
+        user = miaoShaUserDao.getByNickname(nickName);
         if(user != null) {
-            redisService.set(MiaoShaUserKey.getById, ""+id, user);
+            redisService.set(MiaoShaUserKey.getByNickName, ""+nickName, user);
         }
         return user;
     }
 
+
     // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
-    public boolean updatePassword(String token, long id, String formPass) {
+    public boolean updatePassword(String token, String nickName, String formPass) {
         //取user
-        MiaoshaUser user = getById(id);
+        MiaoshaUser user = getByNickName(nickName);
         if(user == null) {
-            throw new GlobleException(CodeMsg.MOBILE_NOT_EXIST);
+            throw new GlobleException(MOBILE_NOT_EXIST);
         }
         //更新数据库
         MiaoshaUser toBeUpdate = new MiaoshaUser();
-        toBeUpdate.setId(id);
+        toBeUpdate.setNickname(nickName);
         toBeUpdate.setPassword(MD5Utils.formPassToDBPass(formPass, user.getSalt()));
         miaoShaUserDao.update(toBeUpdate);
         //处理缓存
-        redisService.delete(MiaoShaUserKey.getById, ""+id);
+        redisService.delete(MiaoShaUserKey.getByNickName, ""+nickName);
         user.setPassword(toBeUpdate.getPassword());
         redisService.set(MiaoShaUserKey.token, token, user);
         return true;
     }
 
-    public Result<String> insertMiaoShaUser(MiaoshaUser miaoshaUser){
 
-        long resultRegister  = miaoShaUserDao.insertMiaoShaUser(miaoshaUser);
-
-        if(resultRegister == 0){
-            throw new GlobleException(CodeMsg.RESIGETER_FAIL);
+    public boolean register(HttpServletResponse response , String userName , String passWord , String salt) {
+        MiaoshaUser miaoShaUser =  new MiaoshaUser();
+        miaoShaUser.setNickname(userName);
+        String DBPassWord =  MD5Utils.formPassToDBPass(passWord , salt);
+        miaoShaUser.setPassword(DBPassWord);
+        miaoShaUser.setRegisterDate(new Date());
+        miaoShaUser.setSalt(salt);
+        miaoShaUser.setNickname(userName);
+        try {
+            miaoShaUserDao.insertMiaoShaUser(miaoShaUser);
+            MiaoshaUser user = miaoShaUserDao.getById(miaoShaUser.getId());
+            if(user == null){
+                return false;
+            }
+            //生成cookie 将session返回游览器 分布式session
+            String token= UUIDUtil.uuid();
+            addCookie(response, token, user);
+        } catch (Exception e) {
+            logger.error("注册失败",e);
+            return false;
         }
-
-        return Result.success(CodeMsg.SUCCESS_RESIGETER);
+        return true;
     }
-
     public boolean login(HttpServletResponse response , LoginVo loginVo) {
         if(loginVo ==null){
-            throw  new GlobleException(CodeMsg.SERVER_ERROR);
+            throw  new GlobleException(SYSTEM_ERROR);
         }
 
         String mobile =loginVo.getMobile();
         String password =loginVo.getPassword();
-        MiaoshaUser user = getById(Long.valueOf(mobile));
+        MiaoshaUser user = getByNickName(mobile);
         if(user == null) {
-            throw new GlobleException(CodeMsg.MOBILE_NOT_EXIST);
+            throw new GlobleException(MOBILE_NOT_EXIST);
         }
 
         String dbPass = user.getPassword();
         String saltDb = user.getSalt();
         String calcPass = MD5Utils.formPassToDBPass(password,saltDb);
         if(!calcPass.equals(dbPass)){
-            throw new GlobleException(CodeMsg.PASSWORD_ERROR);
+            throw new GlobleException(PASSWORD_ERROR);
         }
-        //生成cookie
+        //生成cookie 将session返回游览器 分布式session
         String token= UUIDUtil.uuid();
         addCookie(response, token, user);
         return true ;
     }
-
     private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
         redisService.set(MiaoShaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        //设置有效期
         cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
     }
-//    private void addCookie(HttpServletResponse response ,MiaoshaUser user){
-//        String token = UUIDUtil.uuid();
-//        redisService.set(MiaoShaUserKey.token,token,user) ;
-//        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN , token) ;
-//        cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
-//    }
 }

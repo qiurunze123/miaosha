@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script type="text/javascript" th:src="@{/js/common1.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+		<meta charset="utf-8" />
+		<title>注册界面</title>
+		<link rel="stylesheet" th:href="@{/css/reset.css}" />
+		<link rel="stylesheet" th:href="@{/css/common.css}" />
+		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+<script>
+    $(function() {// 初始化内容
+        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
+        $("#verifyCodeImg").show();
+    });
+    function refreshVerifyCode(){
+        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
+    };
+
+    function checkPhone(phone){
+        if(!(/^1[34578]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填");
+            return false;
+        }
+    }
+
+    function register_go() {
+		var username =$("#username").val();
+	    var inputPass = $("#password").val();
+		var passwordrepeat = $("#repassword").val();
+		var verifyCode = $("#verifyCode").val();
+		var check = checkPhone(username);
+		if(check){
+		    alert("手机号不符合要求");
+		    return ;
+		}
+        if(inputPass==""||inputPass==null||inputPass == undefined ){
+            alert("密码不能为空！");
+            return ;
+        }
+        if(username==""||username==null||username == undefined ){
+            alert("用户名不能为空！");
+            return ;
+        }
+        if(inputPass!=passwordrepeat){
+            alert("密码不一致！");
+		}
+        if(verifyCode!=verifyCode){
+            alert("验证码不能为空！");
+        }
+        var salt = g_passsword_salt;
+        var str = ""+salt.charAt(0)+salt.charAt(2) + inputPass +salt.charAt(5) + salt.charAt(4);
+        var password = md5(str);
+	    g_showLoading();
+        $.ajax({
+            url: "/user/register",
+            type: "POST",
+            data:{
+                username:$("#username").val(),
+                password: password,
+				salt:salt,
+                verifyCode:verifyCode
+            },
+            success:function(data){
+                layer.closeAll();
+                if(data.code == 0){
+                    layer.msg("成功");
+                    window.location.href="/goods/to_list";
+                }else{
+                    layer.msg(data.message);
+                }
+            },
+            error:function(){
+                layer.closeAll();
+            }
+        });
+    }
+
+
+</script>
+	</head>
+	<body>
+	<form name="registerForm" id="registerForm" method="post"  >
+		<div class="wrap login_wrap">
+			<div class="content">
+				<div class="logo"></div>
+				<div class="login_box">
+					<div class="login_form">
+						<div class="login_title">
+							注册
+						</div>
+						<form action="#" method="post">
+							
+							<div class="form_text_ipt">
+								<input id="username" name="username" type="text" placeholder="手机号" />
+							</div>
+							<div class="ececk_warning"><span>手机号/邮箱不能为空</span></div>
+							<div class="form_text_ipt">
+								<input id="password" name="password" type="password" placeholder="密码" />
+							</div>
+							<div class="ececk_warning"><span>密码不能为空</span></div>
+							<div class="form_text_ipt">
+								<input id="repassword" name="repassword" type="password" placeholder="重复密码" />
+							</div>
+							<div class="ececk_warning"><span>密码不能为空</span></div>
+							<div class="form_text_ipt">
+								<img id="verifyCodeImg" width="80" height="32" src="/miaosha/verifyCodeRegister" type="text" onclick="refreshVerifyCode()" />
+							</div>
+							<div class="form_text_ipt">
+							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
+							</div>
+							<div class="ececk_warning"><span>验证码不能为空</span></div>
+							
+							<div class="form_btn">
+								<button type="button" onclick="register_go()">注册</button>
+							</div>
+							<div class="form_reg_btn">
+								<span>已有帐号？</span><a href="/login/to_login">马上登录</a>
+							</div>
+						</form>
+						<div class="other_login">
+							<div class="left other_left">
+								<span>其它登录方式</span>
+							</div>
+							<div class="right other_right">
+								<a href="#"><i class="fa fa-qq fa-2x"></i></a>
+								<a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+								<a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;">
+<p>秒杀系统登陆--by GeekQ</p>
+</div>
+	</form>
+	</body>
+</html>

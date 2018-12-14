@@ -1,17 +1,22 @@
 package com.geekq.miaosha.exception;
 
-import com.geekq.miaosha.result.CodeMsg;
+import com.geekq.miaosha.common.enums.ResultStatus;
 
 public class GlobleException extends RuntimeException {
 
 
-    private CodeMsg cm ;
-    public GlobleException(CodeMsg cm){
+    private ResultStatus status;
+
+    public GlobleException(ResultStatus status){
         super();
-        this.cm = cm;
+        this.status = status;
     }
 
-    public CodeMsg getCm() {
-        return cm;
+    public ResultStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ResultStatus status) {
+        this.status = status;
     }
 }

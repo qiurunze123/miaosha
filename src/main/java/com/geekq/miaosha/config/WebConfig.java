@@ -13,19 +13,19 @@ import java.util.List;
 public class WebConfig  extends WebMvcConfigurerAdapter {
 
     @Autowired
-    UserArgumentResolver userArgumentResolver;
+    UserArgumentResolver resolver;
 
     @Autowired
-    private AccessInterceptor accessInterceptor;
+    private AccessInterceptor interceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
-        registry.addInterceptor(accessInterceptor);
+        registry.addInterceptor(interceptor);
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(userArgumentResolver);
+        argumentResolvers.add(resolver);
     }
 }
