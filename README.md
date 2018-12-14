@@ -10,7 +10,7 @@
 [![Travis](https://img.shields.io/badge/language-Java-yellow.svg)](https://github.com/qiurunze123)
 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。本GitHub还有许多其他的知识，随时欢迎探讨与骚扰！本文还在更新如果文章出现瑕疵请及时与我联系！
 
-文章还有许多不足，我仍在不断改进！ 谢谢大家！
+文章还有许多不足，我仍在不断改进！ ps: 本文章基础思路来自于若鱼老师！大家可以关注老师的课和博客很不错！ 谢谢大家 ！
 
 一点小建议：学习本系列知识之前，如果你完全没接触过 `MQ`、`SpringBoot`、`Redis`、`Dubbo`、`ZK` 、`Maven`等，那么我建议你可以先在网上搜一下每一块知识的快速入门，也可以下载本项目边做边学习，然后再开始每一块知识的学习。这样效果更好噢~
 
@@ -30,7 +30,8 @@
 
 >3.详情请看miaosha.sql
 
- 
+###  以下所有内容都已完成，但是因内容多需逐渐整理上传！ 专题的部分也会尽快上传更新！ 立个flag 半年内吧争取全部更新完！ 
+
 ###  [如要提交代码请先看--提交合并代码规范](/docs/code-criterion.md)
 
 | ID | Problem  | Article | 
@@ -49,34 +50,27 @@
 | 011 |rabbitmq如何做到消息不重复不丢失即使服务器重启 |[解决思路](/docs/code-solve.md)  |
 | 012 |为什么threadlocal存储user对象，原理 |[解决思路](/docs/code-solve.md)  |
 | 013 |maven 隔离 |[解决思路](/docs/code-solve.md)  |
-| 014 |服务降级--服务熔断(过载保护)） |[解决思路](/docs/code-solve.md)  |
+| 014 |服务降级--服务熔断(过载保护)(未更新)） |[解决思路](/docs/code-solve.md)  |
 | 015 |redis 分布式锁实现方法 |[解决思路](/docs/code-solve.md)  |
-| 016 |定时关单模拟与分布式锁 |[解决思路](/docs/code-solve.md)  |
+| 016 |定时关单模拟与分布式锁(未更新文章--代码已更新) |[解决思路](/docs/time-close.md)  |
 | 017 |tomcat配置和优化  |[解决思路]((/docs/tomcat-good.md))  |
 | 018 |tomcat集群配置 |[解决思路](/docs/tomcat-group.md)  |
 | 019 |Nginx优化（前端缓存） |[解决思路](/docs/ngnix-good.md)  |
 | 020 |RPC分布式补偿如何解决 |[解决思路](/docs/code-solve.md)   |
-| 021 |mysql主从复制思路及实操 |[解决思路](/docs/mysql-master-slave.md)   |
+| 020 |分布式事物解决方案（未更新） |[解决思路](/docs/code-solve.md)   |
+| 021 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
+| 022 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
+| 022 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
+
+#### [分布式基础--未更新](/docs/redis-code.md)
+#### [mybatis源码解析--未更新](/docs/mybatis-code.md)
+#### [redis专题缓存的优势--未更新](/docs/redis-code.md)
+#### [spring源码--未更新](/docs/redis-code.md)
+#### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
+#### [通信mq-Kafka--未更新](/docs/redis-code.md)
+#### [微服务框架--未更新](/docs/redis-code.md)
+#### [JVM内存解析与性能调优--未更新](/docs/redis-code.md)
+#### [面试专题（最后更新）--未更新](/docs/redis-code.md)
 
 
-#### [定时关单模拟与分布式锁](/docs/time-close.md)
-#### [mybatis源码解析](/docs/mybatis-code.md)
-#### [tomcat配置和优化](/docs/tomcat-good.md)
-#### [tomcat集群配置](/docs/tomcat-group.md)
-#### [Nginx优化（前端缓存）](/docs/ngnix-good.md)
-#### [如何进行分库分表](/docs/ngnix-good.md)
 
-## 高可用架构
-
-### 高可用系统
-- 如何设计一个高可用系统？
-
-### 限流
-- 如何限流？在工作中是怎么做的？说一下具体的实现？
-
-### 熔断
-- 如何进行熔断？
-- 熔断框架都有哪些？具体实现原理知道吗？
-
-### 降级
-- 如何进行降级？

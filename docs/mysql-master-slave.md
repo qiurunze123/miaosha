@@ -1,108 +1,134 @@
-### 代码规范 
+###  分库分表及mycat的整理实操(未整理马上更新)
 
-    老司机一般的规范大家都知道类似驼峰,匹配一类的大家都知道具体则不再提
-    有问题或者宝贵意见联系我的QQ,非常希望你的加入！
+    本文章安排目标：
+    1. 对于存储层的压力知道如何去提供解决方案和思路
+    2. 对分库分表的常用手段有全面了解
+    3. 了解Mysql的主从及binlog
+    4. 知道Mycat及其他相似的中间件
+    5. Mycat是什么
+    6. Mycat中的核心概念及配置文件分析
+    7. 水平分表实战（单库、跨库）
+    8. Mycat读写分离实战
+    9. Mycat 全局序列号
+    10. Mycat常用分片规则
     
-##要求：
-1.lombook-- idea插件请大家下载 ,去除setget构造方法等,阿里巴巴代码规范插件请自行下载<br>
-2.**尽量将长的类名，方法名，变量名精简**<br>
+##思路(3why??)
 
-          1.长的类名会使开发者不易生命该类型的变量
-          2.长的方法命名会使它变得晦涩难懂
-          3.长的变量名不利于代码重用，导致过长的方法链
-3.**命名清晰准确**<br>
-
-          清晰: 你要知道该命名于什么有关
-          精确：你要知道该命名于什么无关
-          当完成这两个目标后其他的都是多余的字符
-          
-4.**命名无需含有表示变量或者参数类型的单词**<br>
-
-          nameString  请写成 name
-          accountLessWindow 请写成 window
-          
-5.**对于集合来说，最好使用名词的复数形式来描述内容**<br>
-
-    List<DateTime> holidayDateLists 请写成 List<DateTime> holidays
-    Map<Employee,Role> employeeRoleHashMap 请写成 Map<Employee,Role> employeeRoles
-
-6.**方法名不需要描述它的参数及参数的类型–参数列表已经说明了这些**<br>
-
-     mergeTableCells(List<TableCell> cells) 请写成 merge(List<TableCell> cells)
-     sortEventsUsingComparator(List<Event> events,Comparator<Event> comparator) 请写成 sort(List<Event> events, Comparator<Event> comparator)
-     
-7.**省略命名中不是用来消除歧义的单词**<br>
-8.**命名只是一个表示符，只要告诉你变量在哪定义不需要吧所有的信息都塞到命名里面**<br>
-
-     recentlyUpdatedAnnualSalesBid
-     存在不是最近更新的全年销售投标么？
-     存在没有被更新的最近的全年销售投标么？
-     存在最近更新的非全年的销售投标么？
-     存在最近更新的全年非销售的投标么？
-     存在最近更新的全年销售非投标的东东吗？
-     上面的任何一个问题回答是不存在，那就意味着命名中引入了无用的单词
-     finalBattleMostDangerousBossMonster 请写成 boss
-     weaklingFirstEncounterMonster 请写成firstMonster
-     如果有一些你觉得过了，太短了，容易引起歧义，但是你可以大胆的这样做，如果在之后的开发中你觉得命名会造成冲突和不明确
-     你可以填一些修饰词来完善它，反之如果一开始就是一个很长的名字，你不可能再改回来
-9.**省略命名中可以从上下文获取的单词**<br>
-
-          
-          // Bad:
-          class AnnualHolidaySale {
-            int _annualSaleRebate;
-            void promoteHolidaySale() { ... }
-          }
-          // Better:
-          class AnnualHolidaySale {
-            int _rebate;
-            void promote() { ... }
-          }
-          实际上一个命名嵌套的层次越多，他就有更多的相关的上下文，也就更简短，换句话说一个变量的作用域越小，命名就越短
-10.**省略命名中无任何意义的单词**<br>
-
-      例如：data、state、amount、value、manager、engine、object、entity 和 instance一类的 不需要这类严肃的词语 
-11.**是否可以描述出一幅画（我在装逼）**<br>
-
-      一个好的命名能够在阅读者的脑海里面描绘出一幅图画，而降变量命名为manager 并不能象读者传达出任何有关该变量做什么的信息
-      在命名时可以问一下自己，把这个单词去掉含义是不是不变？如果是，那就果断把它剔除吧
-12.**终极一例**<br>
-
-    例子:好吃的华夫饼
-          
-          // 好吃的比利时华夫饼
-          class DeliciousBelgianWaffleObject {
-            void garnishDeliciousBelgianWaffleWithStrawberryList(
-                List<Strawberry> strawberryList) { ... }
-          }
-          首先，通过参数列表，我们可以知道方法是用来处理一个strawberry 的列表 所以可以在方法的命名中去掉
-          class DeliciousBelgianWaffleObject {
-              void garnishDeliciousBelgianWaffle(
-                  List<Strawberry> strawberries) { ... }
-          }
-          除非程序中还包含不好吃的比利时华夫饼或者其它华夫饼 不然我们可以将这个无用的形容词去掉
-          class WaffleObject {
-            void garnishWaffle(List<Strawberry> strawberries) { ... }
-          }
-          
-          方法是包含在waffleObject类中的 所以方法名无需waffle说明
-          class WaffleObject {
-            void garnish(List<Strawberry> strawberries) { ... }
-          }
-          很明显他是一个对象，任何事物都是一个对象，这也就是传说中的面相对象的意思，所以命名中无需带有Object
-          class Waffle {
-            void garnish(List<Strawberry> strawberries) { ... }
-          }
-13.**类名应该是名词不应该是动词,使用普遍的被大众理解的词**<br>
-14.**请勿抛异常直接返回**<br>
-        
-        类似如下规范
-        Result result=Result.build();
-        boolean isChecking = redisServiceUtil.getIsCheckingOfAutomatedLoanService();
-        result.setValue(isChecking);
-        if (isChecking) {
-            logger.info("--- isSystemChecking ---系统清算中-----");
-            result.withError(ResultMsgStatus.SYSTEM_CHECKING.getMessage());
-        }
-        return result;
+**为什么要进行分库分表**  
+    
+    为什么要分库分表、
+    超大容量问题
+    性能问题
+    如何去做到
+    垂直切分、 水平切分
+    1. 垂直分库； 解决的是表过多的问题
+    2. 垂直分表； 解决单表列过多的问题
+    
+    水平切分； 大数据表拆成小表
+    常见的拆分策略
+    垂直拆分（er分片）
+    
+    水平拆分
+    一致性hash
+    范围切分 可以按照ID
+    日期拆分
+    拆分以后带来的问题
+    跨库join的问题
+    1. 设计的时候考虑到应用层的join问题。
+    2. 在服务层去做调用；
+    A服务里查询到一个list
+    for(list){
+       bservice.select(list);
+    }
+    3. 全局表
+    1. 数据变更比较少的基于全局应用的表
+    2. 
+    4. 做字段冗余（空间换时间的做法）
+    订单表。 商家id  商家名称
+    商家名称变更- 定时任务、任务通知
+    跨分片数据排序分页
+    唯一主键问题
+    用自增id做主键
+    UUID 性能比较低
+    snowflake 
+    mongoDB 
+    zookeeper 
+    数据库表
+    分布式事务问题
+    多个数据库表之间保证原子性  性能问题； 互联网公司用强一致性分布式事务比较少
+    
+    分库分表最难的在于业务的复杂度； 
+    前提： 水平分表的前提是已经存在大量的业务数据。而这个业务数据已经渗透到了各个应用节点
+    
+    如何权衡当前公司的存储需要优化
+    1． 提前规划（主键问题解决、 join问题）
+    2． 当前数据单表超过1000W、每天的增长量持续上升
+    
+    Mysql的主从
+    数据库的版本5.7版本
+    安装以后文件对应的目录
+    mysql的数据文件和二进制文件： /var/lib/mysql/
+    mysql的配置文件： /etc/my.cnf
+    mysql的日志文件： /var/log/mysql.log
+    
+    140 为master
+    1. 创建一个用户’repl’,并且允许其他服务器可以通过该用户远程访问master，通过该用户去读取二进制数据，实现数据同步
+    Create user repl identified by ‘repl； repl用户必须具有REPLICATION SLAVE权限，除此之外其他权限都不需要
+    GRANT REPLICATION SLAVE ON *.* TO ‘repl’@’%’ IDENTIFIED BY ‘repl’ ; 
+    2. 修改140 my.cnf配置文件，在[mysqld] 下添加如下配置
+    log-bin=mysql-bin //启用二进制日志文件
+    server-id=130 服务器唯一ID 
+    3. 重启数据库 systemctl restart mysqld 
+    4. 登录到数据库，通过show master status  查看master的状态信息
+    142 为slave
+    1. 修改142 my.cnf配置文件， 在[mysqld]下增加如下配置
+    server-id=132  服务器id，唯一
+    relay-log=slave-relay-bin
+    relay-log-index=slave-relay-bin.index
+    read_only=1
+    2. 重启数据库： systemctl restart mysqld
+    3. 连接到数据库客户端，通过如下命令建立同步连接
+    change master to master_host=’192.168.11.140’, master_port=3306,master_user=’repl’,master_password=’repl’,master_log_file=’mysql-bin.000001’,master_log_pos=0;
+      红色部分从master的show master status可以找到对应的值，不能随便写。
+    4. 执行 start slave
+    5. show slave status\G;查看slave服务器状态，当如下两个线程状态为yes，表示主从复制配置成功
+    Slave_IO_Running=Yes
+    Slave_SQL_Running=Yes
+    主从同步的原理
+    
+    1. master记录二进制日志。在每个事务更新数据完成之前，master在二日志记录这些改变。MySQL将事务串行的写入二进制日志，即使事务中的语句都是交叉执行的。在事件写入二进制日志完成后，master通知存储引擎提交事务
+    2. slave将master的binary log拷贝到它自己的中继日志。首先，slave开始一个工作线程——I/O线程。I/O线程在master上打开一个普通的连接，然后开始binlog dump process。Binlog dump process从master的二进制日志中读取事件，如果已经跟上master，它会睡眠并等待master产生新的事件。I/O线程将这些事件写入中继日志
+    3. SQL线程从中继日志读取事件，并重放其中的事件而更新slave的数据，使其与master中的数据一致
+    
+    
+    binlog： 用来记录mysql的数据更新或者潜在更新（update xxx where id=x effect row 0）;
+    文件内容存储：/var/lib/mysql
+    
+    mysqlbinlog --base64-output=decode-rows -v mysql-bin.000001  查看binlog的内容
+    
+    binlog的格式
+    statement ： 基于sql语句的模式。update table set name =””; effect row 1000； uuid、now() other function
+    row： 基于行模式; 存在1000条数据变更；  记录修改以后每一条记录变化的值
+    mixed: 混合模式，由mysql自动判断处理
+    修改binlog_formater,通过在mysql客户端输入如下命令可以修改
+    set global binlog_format=’row/mixed/statement’;
+    或者在vim /etc/my.cnf  的[mysqld]下增加binlog_format=‘mixed’
+    
+    主从同步的延时问题
+    主从同步延迟是怎么产生的
+    1. 当master库tps比较高的时候，产生的DDL数量超过slave一个sql线程所能承受的范围，或者slave的大型query语句产生锁等待
+    2. 网络传输： bin文件的传输延迟
+    3. 磁盘的读写耗时：文件通知更新、磁盘读取延迟、磁盘写入延迟
+    解决方案
+    1. 在数据库和应用层增加缓存处理，优先从缓存中读取数据
+    2. 减少slave同步延迟，可以修改slave库sync_binlog属性； 
+    sync_binlog=0  文件系统来调度把binlog_cache刷新到磁盘
+    sync_binlog=n  
+    3. 增加延时监控
+    Nagios做网络监控
+    mk-heartbeat
+    
+    5. Mysql的主从配置
+    6. 了解binlog及主从复制原理  
+   
 
