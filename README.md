@@ -65,11 +65,8 @@
 #### [tomcat集群配置](/docs/tomcat-group.md)
 #### [Nginx优化（前端缓存）](/docs/ngnix-good.md)
 #### [如何进行分库分表](/docs/ngnix-good.md)
-### [缓存](/docs/why-cache.md)
 
 ## 高可用架构
-- [Hystrix 介绍](/docs/hystrix-introduction.md)
-- [电商网站详情页系统架构](/docs/e-commerce-website-detail-page-architecture.md)
 
 ### 高可用系统
 - 如何设计一个高可用系统？
