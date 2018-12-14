@@ -66,17 +66,6 @@
 #### [Nginx优化（前端缓存）](/docs/ngnix-good.md)
 #### [如何进行分库分表](/docs/ngnix-good.md)
 ### [缓存](/docs/why-cache.md)
-- [在项目中缓存是如何使用的？缓存如果使用不当会造成什么后果？](/docs/why-cache.md)
-- [Redis 和 Memcached 有什么区别？Redis 的线程模型是什么？为什么单线程的 Redis 比多线程的 Memcached 效率要高得多？](/docs/redis-single-thread-model.md)
-- [Redis 都有哪些数据类型？分别在哪些场景下使用比较合适？](/docs/redis-data-types.md)
-- [Redis 的过期策略都有哪些？手写一下 LRU 代码实现？](/docs/redis-expiration-policies-and-lru.md)
-- [如何保证 Redis 高并发、高可用？Redis 的主从复制原理能介绍一下么？Redis 的哨兵原理能介绍一下么？](/docs/how-to-ensure-high-concurrency-and-high-availability-of-redis.md)
-- [Redis 的持久化有哪几种方式？不同的持久化机制都有什么优缺点？持久化机制具体底层是如何实现的？](/docs/redis-persistence.md)
-- [Redis 集群模式的工作原理能说一下么？在集群模式下，Redis 的 key 是如何寻址的？分布式寻址都有哪些算法？了解一致性 hash 算法吗？如何动态增加和删除一个节点？](/docs/redis-cluster.md)
-- [了解什么是 Redis 的雪崩和穿透？Redis 崩溃之后会怎么样？系统该如何应对这种情况？如何处理 Redis 的穿透？](/docs/redis-caching-avalanche-and-caching-penetration.md)
-- [如何保证缓存与数据库的双写一致性？](/docs/redis-consistence.md)
-- [Redis 的并发竞争问题是什么？如何解决这个问题？了解 Redis 事务的 CAS 方案吗？](/docs/redis-cas.md)
-- [生产环境中的 Redis 是怎么部署的？](/docs/redis-production-environment.md)
 
 ## 高可用架构
 - [Hystrix 介绍](/docs/hystrix-introduction.md)
