@@ -19,6 +19,10 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
+> 软件环境 : 未来设计
+
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/futuremiaosha.png)
+
 > 软件环境 : mysql 数据库表设计
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaoshasql.png)
