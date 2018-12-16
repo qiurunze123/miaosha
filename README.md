@@ -19,7 +19,7 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png)
 
-> 软件环境 : 未来设计
+> 未来设计图 : 未来设计
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/futuremiaosha.png)
 
@@ -64,7 +64,8 @@
 | 022 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
 | 023 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
 
-#### [分布式基础--未更新](/docs/redis-code.md)
+#### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
+#### [分布式系统](/docs/redis-code.md)
 #### [mybatis源码解析--未更新](/docs/mybatis-code.md)
 #### [redis专题缓存的优势及如何进行集群--未更新](/docs/redis-code.md)
 #### [spring源码--未更新](/docs/redis-code.md)
