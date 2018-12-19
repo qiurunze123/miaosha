@@ -67,7 +67,7 @@
 #### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
 #### [分布式系统](/docs/redis-code.md)
 #### [mybatis源码解析--未更新](/docs/mybatis-code.md)
-#### [redis专题缓存的优势及如何进行集群--更新1/3](/docs/redis-good.md)
+#### [redis 使用与进阶以及如何进行集群--更新1/3](/docs/redis-good.md)
 #### [spring源码--未更新](/docs/redis-code.md)
 #### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
