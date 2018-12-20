@@ -119,6 +119,18 @@
     1.	减少网络开销，在Lua脚本中可以把多个命令放在同一个脚本中运行
     2.	原子操作，redis会将整个脚本作为一个整体执行，中间不会被其他命令插入。换句话说，编写脚本的过程中无需担心会出现竞态条件
     3.	复用性，客户端发送的脚本会永远存储在redis中，这意味着其他客户端可以复用这一脚本来完成同样的逻辑 
+        
+    例子： 利用lua脚本进行电话号或则IP限流
+    KEYS[1] ARGV[1] ARGV[2]  key 参数1  参数2 
+    local num=redis.call('incr',KEYS[1])
+    if tonumber(num)==1 then
+       redis.call('expire',KEYS[1],ARGV[1])
+       return 1
+    elseif tonumber(num)>tonumber(ARGV[2]) then
+       return 0
+    else
+       return 1
+    end
 
    
 
