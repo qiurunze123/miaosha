@@ -63,6 +63,7 @@
 | 021 |分布式事物解决方案（未更新） |[解决思路](/docs/code-solve.md)   |
 | 022 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
 | 023 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
+| 024 |秒杀类似场景sql的写法注意事项有哪些？|[解决思路](/docs/mysql-master-slave.md)   |
 
 #### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
 #### [分布式系统](/docs/redis-code.md)
@@ -73,7 +74,7 @@
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
 #### [微服务框架--未更新](/docs/redis-code.md)
 #### [JVM内存解析与性能调优--未更新](/docs/redis-code.md)
-#### [面试专题（最后更新）--未更新](/docs/redis-code.md)
+#### [面试专题（最后更新）--未更新](/docs/code-solve.md)
 
 
 
