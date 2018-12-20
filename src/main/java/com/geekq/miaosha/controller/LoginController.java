@@ -1,6 +1,7 @@
 package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
+import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.vo.LoginVo;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class LoginController {
 
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo) {
+        RedisLua.getLUa();
         logger.info(loginVo.toString());
         return "login";
     }

@@ -46,7 +46,7 @@ public class OrderCloseTask {
 //        log.info("关闭订单定时任务结束");
 //    }
 
-    @Scheduled(cron = "0/1 * * * * ?")
+//    @Scheduled(cron = "0/1 * * * * ?")
     public void closeOrderTaskV3(){
         log.info("关闭订单定时任务启动");
         long lockTime = 5000;

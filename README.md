@@ -64,7 +64,7 @@
 | 022 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
 | 023 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
 | 024 |秒杀类似场景sql的写法注意事项有哪些？|[解决思路](/docs/mysql-master-slave.md)   |
-| 025 |如何利用lua脚本进行原子性 -- 操作限流？|[解决思路](/docs/mysql-master-slave.md)   |
+| 025 |如何利用lua脚本进行操作限流与分布式锁（可保证原子性）？|[解决思路](/docs/redis-good.md)   |
 
 #### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
 #### [分布式系统](/docs/redis-code.md)
