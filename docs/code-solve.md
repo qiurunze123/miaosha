@@ -131,11 +131,10 @@
            2. 应尽量避免在 where 子句中使用!=或<>操作符 
            3. 应尽量避免在 where 子句中使用 or 来连接条件
            4. in 和 not in 也要慎用，否则会导致全表扫描
-           5. select id from t where name like '%abc%' 或者
-           6 .select id from t where name like '%abc' 或者
-           7 . 若要提高效率，可以考虑全文检索。 
-           8 .而select id from t where name like 'abc%' 才用到索引 慢查询一般在测试环境不容易复现
-           9 .应尽量避免在 where 子句中对字段进行表达式操作 where num/2  num=100*2
+           5. 避免 select id from t where name like '%abc%' 或者 select id from t where name like '%abc'
+           6. 若要提高效率，可以考虑全文检索。 
+           7. 而select id from t where name like 'abc%' 才用到索引 慢查询一般在测试环境不容易复现
+           8. 应尽量避免在 where 子句中对字段进行表达式操作 where num/2  num=100*2
      2.合理的使用索引  索引并不是越多越好，使用不当会造成性能开销
      3.尽量避免大事务操作，提高系统并发能力
      4.尽量避免象客户端返回大量数据，如果返回则要考虑是否需求合理，实在不得已则需要在设计一波了！！！！！
