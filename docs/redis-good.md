@@ -132,6 +132,8 @@
        return 1
     end
     
+    
+    
    **Redis（2.6以后）--lua--EVALSHA命令**
 
     考虑到我们通过eval执行lua脚本,脚本比较长的情况下,每次调用脚本都需要把整个脚本传给redis

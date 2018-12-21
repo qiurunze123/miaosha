@@ -25,7 +25,6 @@ public class LoginController {
 
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo) {
-        RedisLua.getLUa();
         logger.info(loginVo.toString());
         return "login";
     }

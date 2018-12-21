@@ -5,12 +5,15 @@ import redis.clients.jedis.Jedis;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * lua脚本使用
+ */
 public class RedisLua {
 
     /**
-     * 未完成  需 evalsha更方便
+     * 未完成  需 evalsha更方便 限制ip 或者 手机号访问次数
      */
-    public static void getLUa() {
+    public static void getLuaLimit() {
 
         Jedis jedis = null;
         try {
@@ -29,8 +32,11 @@ public class RedisLua {
         List<String> argves = new ArrayList<String>();
         argves.add("6000");
         argves.add("5");
-        jedis.auth("youxin11");
-        Object object = jedis.eval(lua, keys, argves);
+        jedis.auth("xxxx");
+//        Object evalSha = jedis.evalsha(lua);
+        String luaScript = jedis.scriptLoad(lua);
+        System.out.println(luaScript);
+        Object object = jedis.evalsha(luaScript, keys, argves);
         System.out.println(object);
     }
 }
