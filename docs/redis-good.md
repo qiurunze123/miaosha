@@ -155,6 +155,8 @@
     最后第二个窗口的运行结果是Busy, 可以通过script kill命令终止正在执行的脚本
     如果当前执行的lua脚本对redis的数据进行了修改,比如（set）操作,那么script kill命令没办法终止脚本的运行,
     因为要保证lua脚本的原子性。如果执行一部分终止了,就违背了这一个原则
-    在这种情况下,只能通过 shutdown nosave命令强行终止   
-   
- 
+    在这种情况下,只能通过 shutdown nosave命令强行终止
+       
+   **Redis（2.6以后）--lua分布式锁**
+    
+   ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualock.png)
