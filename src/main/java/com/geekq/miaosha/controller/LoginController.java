@@ -37,4 +37,13 @@ public class LoginController {
         userService.login(response, loginVo);
         return result;
     }
+
+
+    @RequestMapping("/create_token")
+    @ResponseBody
+    public String createToken(HttpServletResponse response, @Valid LoginVo loginVo) {
+        logger.info(loginVo.toString());
+        String token = userService.createToken(response, loginVo);
+        return token;
+    }
 }

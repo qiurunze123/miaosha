@@ -129,6 +129,33 @@ public class MiaoShaUserService {
         addCookie(response, token, user);
         return true ;
     }
+
+
+
+
+    public String createToken(HttpServletResponse response , LoginVo loginVo) {
+        if(loginVo ==null){
+            throw  new GlobleException(SYSTEM_ERROR);
+        }
+
+        String mobile =loginVo.getMobile();
+        String password =loginVo.getPassword();
+        MiaoshaUser user = getByNickName(mobile);
+        if(user == null) {
+            throw new GlobleException(MOBILE_NOT_EXIST);
+        }
+
+        String dbPass = user.getPassword();
+        String saltDb = user.getSalt();
+        String calcPass = MD5Utils.formPassToDBPass(password,saltDb);
+        if(!calcPass.equals(dbPass)){
+            throw new GlobleException(PASSWORD_ERROR);
+        }
+        //生成cookie 将session返回游览器 分布式session
+        String token= UUIDUtil.uuid();
+        addCookie(response, token, user);
+        return token ;
+    }
     private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
         redisService.set(MiaoShaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);

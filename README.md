@@ -40,7 +40,7 @@
 | ID | Problem  | Article | 
 | --- | ---   | :--- |
 | 000 |如何解决卖超问题 | [解决思路](/docs/code-solve.md) |
-| 001 |如何对本项目进行jmeter压测 | [解决思路](/docs/code-solve.md) |
+| 001 |如何对本项目进行jmeter压测 | [解决思路](/docs/jemter-solve.md) |
 | 003 |全局异常处理拦截 |[解决思路](/docs/code-solve.md)  |
 | 003 |页面级缓存thymeleafViewResolver |[解决思路](/docs/code-solve.md)  |
 | 004 |对象级缓存redis🙋🐓 |[解决思路](/docs/code-solve.md)  |
