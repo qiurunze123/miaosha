@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,8 +25,11 @@ public class LoginController {
     private MiaoShaUserService userService;
 
     @RequestMapping("/to_login")
-    public String tologin(LoginVo loginVo) {
+    public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
+        String count = RedisLua.getVistorCount().toString();
+        logger.info("访问网站的次数为:{}",count);
+        model.addAttribute("count",count);
         return "login";
     }
 

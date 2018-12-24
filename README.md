@@ -76,7 +76,7 @@
 #### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
 #### [微服务框架--未更新](/docs/redis-code.md)
-#### [JVM内存解析与性能调优--未更新](/docs/redis-code.md)
+#### [lua学习](/docs/redis-lua.md)
 #### [面试专题（最后更新）--未更新](/docs/code-solve.md)
 
 

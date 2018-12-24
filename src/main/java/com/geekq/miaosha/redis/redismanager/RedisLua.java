@@ -1,5 +1,8 @@
 package com.geekq.miaosha.redis.redismanager;
 
+import com.geekq.miaosha.controller.LoginController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
@@ -9,6 +12,8 @@ import java.util.List;
  * lua脚本使用
  */
 public class RedisLua {
+
+    private static Logger logger = LoggerFactory.getLogger(RedisLua.class);
 
     /**
      * 未完成  需 evalsha更方便 限制ip 或者 手机号访问次数
@@ -39,4 +44,57 @@ public class RedisLua {
         Object object = jedis.evalsha(luaScript, keys, argves);
         System.out.println(object);
     }
+
+    /**
+     * 统计访问次数
+     */
+    public static Object getVistorCount() {
+
+        Jedis jedis = null;
+        Object object = null;
+        try {
+            jedis = RedisManager.getJedis();
+
+        String count =
+                "local num=redis.call('get',KEYS[1]) return num";
+        List<String> keys = new ArrayList<String>();
+        keys.add("count:login");
+        List<String> argves = new ArrayList<String>();
+        jedis.auth("youxin11");
+        String luaScript = jedis.scriptLoad(count);
+        System.out.println(luaScript);
+        object = jedis.evalsha(luaScript, keys, argves);
+        } catch (Exception e) {
+            logger.error("统计访问次数失败！！！",e);
+            return "0";
+        }
+        return  object;
+    }
+
+    /**
+     * 统计访问次数
+     */
+    public static void vistorCount() {
+
+        Jedis jedis = null;
+        Object object = null;
+        try {
+            jedis = RedisManager.getJedis();
+            String count =
+                    "local num=redis.call('incr',KEYS[1]) return num";
+            List<String> keys = new ArrayList<String>();
+            keys.add("count:login");
+            List<String> argves = new ArrayList<String>();
+            jedis.auth("youxin11");
+            String luaScript = jedis.scriptLoad(count);
+            System.out.println(luaScript);
+            jedis.evalsha(luaScript, keys, argves);
+        } catch (Exception e) {
+            logger.error("统计访问次数失败！！！",e);
+        }
+    }
+    public static void main(String[] args) {
+        getVistorCount();
+    }
+
 }
