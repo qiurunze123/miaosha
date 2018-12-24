@@ -48,7 +48,7 @@ public class RedisLua {
     /**
      * 统计访问次数
      */
-    public static Object getVistorCount() {
+    public static Object getVistorCount(String key) {
 
         Jedis jedis = null;
         Object object = null;
@@ -58,7 +58,7 @@ public class RedisLua {
         String count =
                 "local num=redis.call('get',KEYS[1]) return num";
         List<String> keys = new ArrayList<String>();
-        keys.add("count:login");
+        keys.add(key);
         List<String> argves = new ArrayList<String>();
         jedis.auth("youxin11");
         String luaScript = jedis.scriptLoad(count);
@@ -74,7 +74,7 @@ public class RedisLua {
     /**
      * 统计访问次数
      */
-    public static void vistorCount() {
+    public static void vistorCount(String key) {
 
         Jedis jedis = null;
         Object object = null;
@@ -83,7 +83,7 @@ public class RedisLua {
             String count =
                     "local num=redis.call('incr',KEYS[1]) return num";
             List<String> keys = new ArrayList<String>();
-            keys.add("count:login");
+            keys.add(key);
             List<String> argves = new ArrayList<String>();
             jedis.auth("youxin11");
             String luaScript = jedis.scriptLoad(count);
@@ -93,8 +93,4 @@ public class RedisLua {
             logger.error("统计访问次数失败！！！",e);
         }
     }
-    public static void main(String[] args) {
-        getVistorCount();
-    }
-
 }

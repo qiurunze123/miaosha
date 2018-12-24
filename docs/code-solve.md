@@ -144,4 +144,4 @@
 
    ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/count.png)
    
-    利用lua脚本进行对redis操作,写通用方法随时在某处进行统计详情请看redislua.class
+    利用lua脚本进行对redis操作,登陆时，每次登陆成功则记录访问（具体你想在什么时段进行统计自己说了算）

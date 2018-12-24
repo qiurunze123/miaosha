@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import static com.geekq.miaosha.common.Constanst.COUNTLOGIN;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -27,7 +29,7 @@ public class LoginController {
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
-        String count = RedisLua.getVistorCount().toString();
+        String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
         logger.info("访问网站的次数为:{}",count);
         model.addAttribute("count",count);
         return "login";
