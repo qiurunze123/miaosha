@@ -13,6 +13,8 @@ import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
 import com.geekq.miaosha.service.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,7 +33,11 @@ import java.util.List;
 
 import static com.geekq.miaosha.common.enums.ResultStatus.*;
 
+/**
+ * 秒杀Controller
+ */
 @Controller
+@Api(tags = "MiaoshaController",description = "秒杀")
 @RequestMapping("/miaosha")
 public class MiaoshaController implements InitializingBean {
 
@@ -64,6 +70,7 @@ public class MiaoshaController implements InitializingBean {
      */
     @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/{path}/do_miaosha", method = RequestMethod.POST)
+    @ApiOperation("秒杀")
     @ResponseBody
     public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user,
                                         @RequestParam("goodsId") long goodsId, @PathVariable("path") String path) {
@@ -122,6 +129,7 @@ public class MiaoshaController implements InitializingBean {
      */
     @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/result", method = RequestMethod.GET)
+    @ApiOperation("秒杀结果")
     @ResponseBody
     public ResultGeekQ<Long> miaoshaResult(Model model, MiaoshaUser user,
                                            @RequestParam("goodsId") long goodsId) {
@@ -159,6 +167,7 @@ public class MiaoshaController implements InitializingBean {
     }
 
     @RequestMapping(value = "/verifyCodeRegister", method = RequestMethod.GET)
+    @ApiOperation("获取秒杀验证码")
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response
                                                   ) {
@@ -177,6 +186,7 @@ public class MiaoshaController implements InitializingBean {
         }
     }
     @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
+    @ApiOperation("获取秒杀验证码")
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,
                                               @RequestParam("goodsId") long goodsId) {

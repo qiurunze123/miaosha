@@ -8,6 +8,8 @@ import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.vo.GoodsDetailVo;
 import com.geekq.miaosha.vo.GoodsVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
+@Api(tags = "GoodsController", description = "商品")
 @RequestMapping("/goods")
 public class GoodsController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(GoodsController.class);
@@ -50,6 +53,7 @@ public class GoodsController extends BaseController {
      * 5000 * 10
      * QPS:2884, load:5
      * */
+    @ApiOperation("查询商品")
     @RequestMapping(value="/to_list", produces="text/html")
     @ResponseBody
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
@@ -59,6 +63,7 @@ public class GoodsController extends BaseController {
         return render(request,response,model,"goods_list",GoodsKey.getGoodsList,"");
     }
 
+    @ApiOperation("商品详情")
     @RequestMapping(value="/to_detail2/{goodsId}",produces="text/html")
     @ResponseBody
     public String detail2(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,
@@ -110,6 +115,7 @@ public class GoodsController extends BaseController {
      * @param goodsId
      * @return
      */
+    @ApiOperation("商品详情")
     @RequestMapping(value="/detail/{goodsId}")
     @ResponseBody
     public ResultGeekQ<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model,MiaoshaUser user,
