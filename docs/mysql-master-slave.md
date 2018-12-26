@@ -71,14 +71,15 @@
     mysql的配置文件： /etc/my.cnf
     mysql的日志文件： /var/log/mysql.log
     
-    140 为master
+    140 为master 
+
     1. 创建一个用户’repl’,并且允许其他服务器可以通过该用户远程访问master，通过该用户去读取二进制数据，实现数据同步
-    Create user repl identified by ‘repl； repl用户必须具有REPLICATION SLAVE权限，除此之外其他权限都不需要
-    GRANT REPLICATION SLAVE ON *.* TO ‘repl’@’%’ IDENTIFIED BY ‘repl’ ; 
+    create user repl identified by ‘repl； repl用户必须具有replication slave权限，除此之外其他权限都不需要
+    grant replication slave on *.* to ‘repl’@’%’ identified BY ‘repl’ ; 
     2. 修改140 my.cnf配置文件，在[mysqld] 下添加如下配置
     log-bin=mysql-bin //启用二进制日志文件
     server-id=130 服务器唯一ID 
-    3. 重启数据库 systemctl restart mysqld 
+    3. 重启数据库 systemctl restart mysqld sudo /etc/init.d/mysql start
     4. 登录到数据库，通过show master status  查看master的状态信息
     142 为slave
     1. 修改142 my.cnf配置文件， 在[mysqld]下增加如下配置
@@ -88,7 +89,26 @@
     read_only=1
     2. 重启数据库： systemctl restart mysqld
     3. 连接到数据库客户端，通过如下命令建立同步连接
-    change master to master_host=’192.168.11.140’, master_port=3306,master_user=’repl’,master_password=’repl’,master_log_file=’mysql-bin.000001’,master_log_pos=0;
+    change master to master_log_file='mysql-bin 隆.000002',master_log_pos=154;
+    error:
+    ERROR 1794 (HY000): Slave is not configured or failed to initialize properly. You must at least set --server-id to enable either a master or a slave. Additional error messages can be found in the MySQL error log.
+    最后通过如下的操作解决的问题，具体原因还尚未清楚
+    CHANGE MASTER TO 
+    MASTER_HOST='39.107.245.253', 
+    MASTER_USER='repl', 
+    MASTER_PASSWORD='repl', 
+    MASTER_LOG_FILE='mysql-bin 隆.000001', 
+    MASTER_LOG_POS= 154;
+    (1)登录数据库后，删除5张表，并重新导入脚本
+    use mysql
+    drop table  slave_master_info;
+    drop table  slave_relay_log_info;
+    drop table  slave_worker_info;
+    drop table  innodb_index_stats;
+    drop table  innodb_table_stats;
+    --------------------- 
+    2.重启数据库
+    change master to master_host='39.107.245.253', master_port=3306,master_user='repl',master_password='repl',master_log_file='mysql-bin 隆.000001',master_log_pos=154;
       红色部分从master的show master status可以找到对应的值，不能随便写。
     4. 执行 start slave
     5. show slave status\G;查看slave服务器状态，当如下两个线程状态为yes，表示主从复制配置成功

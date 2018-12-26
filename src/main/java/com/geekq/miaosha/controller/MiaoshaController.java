@@ -68,12 +68,13 @@ public class MiaoshaController implements InitializingBean {
      * 5000 * 10
      * get　post get 幂等　从服务端获取数据　不会产生影响　　post 对服务端产生变化
      */
-    @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
-    @RequestMapping(value = "/{path}/do_miaosha", method = RequestMethod.POST)
+
     @ApiOperation("秒杀")
+//    @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
+    @RequestMapping(value = "/do_miaosha")
     @ResponseBody
-    public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user,
-                                        @RequestParam("goodsId") long goodsId, @PathVariable("path") String path) {
+    public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
+                                        @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Integer> result = ResultGeekQ.build();
 
         if (user == null) {
@@ -96,7 +97,7 @@ public class MiaoshaController implements InitializingBean {
 //		}
 
         //是否已经秒杀到
-        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
+        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
@@ -139,7 +140,7 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
         model.addAttribute("user", user);
-        Long miaoshaResult = miaoshaService.getMiaoshaResult(user.getId(), goodsId);
+        Long miaoshaResult = miaoshaService.getMiaoshaResult(Long.valueOf(user.getNickname()), goodsId);
         result.setData(miaoshaResult);
         return result;
     }
