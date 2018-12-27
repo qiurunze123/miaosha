@@ -43,7 +43,7 @@ public class MQReceiver {
 	    		return;
 	    	}
 	    	//判断是否已经秒杀到了
-	    	MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
+	    	MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
 	    	if(order != null) {
 	    		return;
 	    	}

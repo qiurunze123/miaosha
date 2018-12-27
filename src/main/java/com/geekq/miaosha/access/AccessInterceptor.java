@@ -58,7 +58,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 					render(response, SESSION_ERROR);
 					return false;
 				}
-				key += "_" + user.getId();
+				key += "_" + user.getNickname();
 			}else {
 				//do nothing
 			}

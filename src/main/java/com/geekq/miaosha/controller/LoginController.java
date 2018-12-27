@@ -29,9 +29,9 @@ public class LoginController {
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
-        String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
-        logger.info("访问网站的次数为:{}",count);
-        model.addAttribute("count",count);
+//        String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
+//        logger.info("访问网站的次数为:{}",count);
+//        model.addAttribute("count",count);
         return "login";
     }
 
@@ -39,6 +39,7 @@ public class LoginController {
     @ResponseBody
     public ResultGeekQ<Boolean> dologin(HttpServletResponse response, @Valid LoginVo loginVo) {
         ResultGeekQ<Boolean> result = ResultGeekQ.build();
+//         RedisLua.vistorCount(COUNTLOGIN);
         logger.info(loginVo.toString());
         userService.login(response, loginVo);
         return result;

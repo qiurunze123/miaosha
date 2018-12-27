@@ -69,7 +69,7 @@ public class MiaoshaService {
 		if(user == null || path == null) {
 			return false;
 		}
-		String pathOld = redisService.get(MiaoshaKey.getMiaoshaPath, ""+user.getId() + "_"+ goodsId, String.class);
+		String pathOld = redisService.get(MiaoshaKey.getMiaoshaPath, ""+user.getNickname() + "_"+ goodsId, String.class);
 		return path.equals(pathOld);
 	}
 
@@ -78,7 +78,7 @@ public class MiaoshaService {
 			return null;
 		}
 		String str = MD5Utils.md5(UUIDUtil.uuid()+"123456");
-		redisService.set(MiaoshaKey.getMiaoshaPath, ""+user.getId() + "_"+ goodsId, str);
+		redisService.set(MiaoshaKey.getMiaoshaPath, ""+user.getNickname() + "_"+ goodsId, str);
 		return str;
 	}
 
@@ -113,7 +113,7 @@ public class MiaoshaService {
 		g.dispose();
 		//把验证码存到redis中
 		int rnd = calc(verifyCode);
-		redisService.set(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId, rnd);
+		redisService.set(MiaoshaKey.getMiaoshaVerifyCode, user.getNickname()+","+goodsId, rnd);
 		//输出图片
 		return image;
 	}
@@ -182,11 +182,11 @@ public class MiaoshaService {
 		if(user == null || goodsId <=0) {
 			return false;
 		}
-		Integer codeOld = redisService.get(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId, Integer.class);
+		Integer codeOld = redisService.get(MiaoshaKey.getMiaoshaVerifyCode, user.getNickname()+","+goodsId, Integer.class);
 		if(codeOld == null || codeOld - verifyCode != 0 ) {
 			return false;
 		}
-		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId);
+		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, user.getNickname()+","+goodsId);
 		return true;
 	}
 
