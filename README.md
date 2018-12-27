@@ -6,7 +6,10 @@
 
 > QQ : [3341386488](3341386488)
 
-> QQ群 : [群](https://raw.githubusercontent.com/qiurunze123/imageall/master/qq.png)
+> QQ群 :
+
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/qq.png)
+
 
 
 [![Travis](https://img.shields.io/badge/language-Java-yellow.svg)](https://github.com/qiurunze123)
