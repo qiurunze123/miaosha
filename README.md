@@ -69,7 +69,7 @@
 | 018 |tomcat配置和优化  |[解决思路]((/docs/tomcat-good.md))  |
 | 018 |tomcat集群配置 |[解决思路](/docs/tomcat-group.md)  |
 | 020 |Nginx优化（前端缓存） |[解决思路](/docs/ngnix-good.md)  |
-| 021 |重点*** RPC分布式补偿如何解决(已更新 两种写法) |[解决思路](/docs/code-rpc.md)   |
+| 021 |重点  *** RPC分布式补偿如何解决(已更新 两种写法) |[解决思路](/docs/code-rpc.md)   |
 | 022 |分布式事物解决方案（已更新 -- 最新的思路和写法） |[解决思路](/docs/code-rpc.md)   |
 | 023 |mysql主从复制思路及实操（未更新代码） |[解决思路](/docs/mysql-master-slave.md)   |
 | 024 |如何进行分库分表 |[解决思路](/docs/mysql-master-slave.md)   |
