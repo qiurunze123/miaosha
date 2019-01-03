@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="springBeanFactory" class="org.mengyun.tcctransaction.spring.support.SpringBeanFactory"/>
+
+
+    <bean id="transactionConfigurator" class="org.mengyun.tcctransaction.spring.support.SpringTransactionConfigurator"
+          init-method="init"/>
+
+    <bean id="compensableTransactionAspect" class="org.mengyun.tcctransaction.spring.ConfigurableTransactionAspect"
+          init-method="init">
+        <property name="transactionConfigurator" ref="transactionConfigurator"/>
+    </bean>
+
+    <bean id="resourceCoordinatorAspect" class="org.mengyun.tcctransaction.spring.ConfigurableCoordinatorAspect"
+          init-method="init">
+        <property name="transactionConfigurator" ref="transactionConfigurator"/>
+    </bean>
+
+    <task:annotation-driven/>
+
+
+    <bean id="transactionRecovery" class="org.mengyun.tcctransaction.recover.TransactionRecovery">
+        <property name="transactionConfigurator" ref="transactionConfigurator"/>
+    </bean>
+
+    <bean id="recoverScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
+
+    <bean id="recoverScheduledJob" class="org.mengyun.tcctransaction.spring.recover.RecoverScheduledJob"
+          init-method="init">
+        <property name="transactionRecovery" ref="transactionRecovery"/>
+        <property name="transactionConfigurator" ref="transactionConfigurator"/>
+        <property name="scheduler" ref="recoverScheduler"/>
+    </bean>
+
+    <bean id="transactionRepository"
+          class="org.mengyun.tcctransaction.spring.repository.SpringJdbcTransactionRepository">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="domain" value="TestProvider"/>
+        <property name="tbSuffix" value="_test_a"/>
+    </bean>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/tcc_red"/>
+        <property name="username" value="root"/>
+        <property name="password" value="nihaoma"/>
+    </bean>
+
+    <bean class="org.mengyun.tcctransaction.spring.recover.DefaultRecoverConfig">
+        <property name="maxRetryCount" value="3"/>
+        <property name="recoverDuration" value="120"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+        <property name="delayCancelExceptions">
+            <util:set>
+                <value>com.alibaba.dubbo.remoting.TimeoutException</value>
+            </util:set>
+        </property>
+    </bean>
+
+</beans>
