@@ -87,6 +87,8 @@
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
 #### [微服务框架--未更新](/docs/redis-code.md)
 #### [lua学习](/docs/redis-lua.md)
+#### [netty专题](/docs/netty.md)
+#### [linux专题](/docs/linux.md)
 #### [面试专题（最后更新）--未更新](/docs/code-solve.md)
 
 
