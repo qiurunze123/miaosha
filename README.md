@@ -79,7 +79,7 @@
 | 028 |网站访问统计实现？|[解决思路](/docs/code-solve.md)   |
 
 #### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
-#### [生产环境内存调优](/docs/redis-code.md)
+#### [生产环境内存调优](/docs/jvm-goods.md)
 #### [mybatis源码解析--未更新](/docs/mybatis-code.md)
 #### [redis 使用与进阶以及如何进行集群--更新2/3](/docs/redis-good.md)
 #### [spring源码--未更新](/docs/redis-code.md)
