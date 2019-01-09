@@ -68,4 +68,8 @@
         |_  jmap + MAT实战内存溢出
         |_  jstack 实战死锁循环与死锁
         
-      
+     
+| ID | Problem  | Article | 
+| --- | ---   | :--- |
+| 000 |JVM参数类型 | 三种: 标准参数 , X参数 ,XX 参数 |
+| 001 |如何对本项目进行jmeter压测 | [解决思路](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha.png) |

@@ -93,7 +93,7 @@ public class MiaoShaUserService {
         miaoShaUser.setNickname(userName);
         try {
             miaoShaUserDao.insertMiaoShaUser(miaoShaUser);
-            MiaoshaUser user = miaoShaUserDao.getById(Long.valueOf(miaoShaUser.getNickname()));
+            MiaoshaUser user = miaoShaUserDao.getByNickname(miaoShaUser.getNickname());
             if(user == null){
                 return false;
             }
