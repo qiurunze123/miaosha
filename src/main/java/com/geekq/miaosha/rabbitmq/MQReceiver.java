@@ -9,6 +9,7 @@ import com.geekq.miaosha.service.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class MQReceiver {
 			MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage.class);
 			MiaoshaUser user = mm.getUser();
 			long goodsId = mm.getGoodsId();
-			
+
 			GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
 	    	int stock = goods.getStockCount();
 	    	if(stock <= 0) {
@@ -54,8 +55,9 @@ public class MQReceiver {
 
 
 	@RabbitListener(queues=MQConfig.MIAOSHA_MESSAGE)
-	public void receiveMiaoShaMessage(String message) {
-
+	@RabbitHandler
+	public void receiveMiaoShaMessage(Object message) {
+		System.out.println(111111);
 		System.out.println(message);
 	}
 }
