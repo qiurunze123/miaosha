@@ -82,6 +82,11 @@
             <version>1.3.1</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.geekq.dubbo.springboot</groupId>-->
+            <!--<artifactId>miaosha-rely</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
