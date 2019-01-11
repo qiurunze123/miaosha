@@ -11,7 +11,7 @@ public class MiaoShaMessage implements Serializable {
 
     private Integer id ;
 
-    private String messageId ;
+    private Long messageId ;
 
     private String content ;
 
@@ -38,11 +38,11 @@ public class MiaoShaMessage implements Serializable {
         this.id = id;
     }
 
-    public String getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(String messageId) {
+    public void setMessageId(Long messageId) {
         this.messageId = messageId;
     }
 

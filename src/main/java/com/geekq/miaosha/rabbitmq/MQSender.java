@@ -1,6 +1,8 @@
 package com.geekq.miaosha.rabbitmq;
 
+import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -34,6 +36,14 @@ public class MQSender {
 		log.info("send message:"+"11111");
 		rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", "111111111");
 	}
-	
-	
+
+    /**
+     * 站内信
+     * @param
+     */
+    public void sendRegisterMessage(MiaoShaMessageVo miaoShaMessageVo) {
+		String msg = RedisService.beanToString(miaoShaMessageVo);
+        log.info("send message:{}" , msg);
+        rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", msg);
+    }
 }

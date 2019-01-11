@@ -4,15 +4,21 @@ import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
+import com.geekq.miaosha.service.MiaoShaMessageService;
 import com.geekq.miaosha.service.MiaoshaService;
 import com.geekq.miaosha.service.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
+import com.geekq.miaosha.vo.MiaoShaMessageVo;
+import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class MQReceiver {
@@ -30,6 +36,9 @@ public class MQReceiver {
 		
 		@Autowired
 		MiaoshaService miaoshaService;
+
+		@Autowired
+		MiaoShaMessageService messageService ;
 		
 		@RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
 		public void receive(String message) {
@@ -55,9 +64,10 @@ public class MQReceiver {
 
 
 	@RabbitListener(queues=MQConfig.MIAOSHA_MESSAGE)
-	@RabbitHandler
-	public void receiveMiaoShaMessage(Object message) {
-		System.out.println(111111);
-		System.out.println(message);
-	}
+	public void receiveMiaoShaMessage(Message message, Channel channel) throws IOException {
+		log.info("接受到的消息为:{}",message);
+		channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
+//		MiaoShaMessageVo msm  = RedisService.stringToBean((String) message, MiaoShaMessageVo.class);
+//		messageService.insertMs(msm);
+		}
 }
