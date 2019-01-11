@@ -63,11 +63,12 @@ public class MQReceiver {
 
 
 
-	@RabbitListener(queues=MQConfig.MIAOSHA_MESSAGE)
+	@RabbitListener(queues=MQConfig.MIAOSHATEST)
 	public void receiveMiaoShaMessage(Message message, Channel channel) throws IOException {
 		log.info("接受到的消息为:{}",message);
+		String messRegister = new String(message.getBody(), "UTF-8");
 		channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
-//		MiaoShaMessageVo msm  = RedisService.stringToBean((String) message, MiaoShaMessageVo.class);
-//		messageService.insertMs(msm);
+		MiaoShaMessageVo msm  = RedisService.stringToBean(messRegister, MiaoShaMessageVo.class);
+		messageService.insertMs(msm);
 		}
 }

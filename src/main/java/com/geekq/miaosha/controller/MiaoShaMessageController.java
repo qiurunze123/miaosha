@@ -31,6 +31,6 @@ public class MiaoShaMessageController {
         vo.setSendType(0);
         vo.setStatus(0);
         vo.setUserId(Long.valueOf(22));
-         sendMessage.sendMessage(null);
+         sendMessage.sendRegisterMessage(vo);
     }
 }

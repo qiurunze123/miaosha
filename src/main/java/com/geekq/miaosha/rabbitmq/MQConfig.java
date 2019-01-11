@@ -20,6 +20,8 @@ public class MQConfig {
 
 	public static final String MIAOSHA_MESSAGE = "miaosha_mess";
 
+	public static final String MIAOSHATEST = "miaoshatest";
+
 	public static final String QUEUE = "queue";
 	public static final String TOPIC_QUEUE1 = "topic.queue1";
 	public static final String TOPIC_QUEUE2 = "topic.queue2";

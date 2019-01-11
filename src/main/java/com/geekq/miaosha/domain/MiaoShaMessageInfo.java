@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * 消息中心主体表
  */
-public class MiaoShaMessage implements Serializable {
+public class MiaoShaMessageInfo implements Serializable {
 
     private Integer id ;
 

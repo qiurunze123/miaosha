@@ -44,6 +44,7 @@ public class MQSender {
     public void sendRegisterMessage(MiaoShaMessageVo miaoShaMessageVo) {
 		String msg = RedisService.beanToString(miaoShaMessageVo);
         log.info("send message:{}" , msg);
-        rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", msg);
+		rabbitTemplate.convertAndSend(MQConfig.MIAOSHATEST,msg);
+//        rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", msg);
     }
 }
