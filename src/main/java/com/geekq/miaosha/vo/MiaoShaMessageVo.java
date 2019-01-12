@@ -40,4 +40,7 @@ public class MiaoShaMessageVo implements Serializable {
     private String goodName ;
 
     private BigDecimal price ;
+
+    private String messageHead ;
+
 }

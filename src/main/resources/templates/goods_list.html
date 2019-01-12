@@ -18,11 +18,15 @@
     <!-- common.js -->
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
 </head>
+
 <body>
 
 <div class="panel panel-default">
   <div class="panel-heading">秒杀商品列表11</div>
-    <div  class="panel-heading"><a href="">消息中心</a></div>　　
+    <div  class="panel-heading">
+        <button onclick="messageRegister()">消息中心</button>
+        <input id="userid" th:value="${user.id}"></input>
+    </div>　　
     <table class="table" id="goodslist">
   	<tr><td>商品名称</td><td>商品图片</td><td>商品原价</td><td>秒杀价</td><td>库存数量</td><td>详情</td></tr>
   	<tr  th:each="goods,goodsStat : ${goodsList}">  
@@ -36,4 +40,12 @@
   </table>
 </div>
 </body>
+
+<script>
+    function messageRegister() {
+        var userid = $("#userid").val();
+        window.location.href='/message/list?userid='+userid;
+    }
+
+</script>
 </html>

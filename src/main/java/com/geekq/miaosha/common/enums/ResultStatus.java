@@ -44,7 +44,7 @@ public enum ResultStatus {
     MOBILE_ERROR (30008,"手机号格式错误!"),
     MOBILE_NOT_EXIST (30009,"手机号不存在!"),
     PASSWORD_ERROR (30010,"密码错误!"),
-
+    USER_NOT_EXIST(30011,"用户不存在！"),
 
     /**
      * 订单模块

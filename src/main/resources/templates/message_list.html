@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>消息中心列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+</head>
+
+<body>
+
+<div class="panel panel-default">
+  <div class="panel-heading">消息列表</div>
+    <input class="panel-heading" style="display:none" name="t1" id="t1" value="有新消息"></input>
+    <table class="table" id="message">
+  	<tr><td>消息名称</td><td>消息类型</td><td>消息内容</td><td>创建时间</td></tr>
+  	<tr  th:each="messages,goodsStat : ${message}">
+                <td th:text="${messages.messageHead}"></td>
+
+        <td th:if="${messages.messageType eq 0}">秒杀消息</td>
+        <td th:if="${messages.messageType eq 1}">购买消息</td>
+        <td th:if="${messages.messageType eq 2}">系统消息</td>
+        <input id="userid" th:value="${messages.userId}" th:type="hidden"></input>
+        <td th:text="${messages.content}"></td>
+                <td th:text="${#dates.format(messages.createTime, 'yyyy-MM-dd')}" colspan="2"></td>
+    </tr>
+    </table>
+</div>
+</body>
+
+<script>
+
+    setInterval(function(){
+        messageKeeping();
+    },5000);
+
+
+    // window.onload = function(){
+    //     //页面加载即执行函数
+    //     messageKeeping();
+    // }
+    function messageKeeping() {
+        $.ajax({
+            url: "/message/getNewMessage",
+            type: "GET",
+            async:true,
+            data: {
+                userid: $("#userid").val(),
+            },
+            success: function (data) {
+                if(data == 1){
+                    $("#t1").css({'display':'block'});
+                }else{
+                    $("#t1").css({'display':'none'});
+                }
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        });
+        // setTimeout('messageKeeping()', 100000); //注意:执行的函数需要加引号,否则会报错的
+
+    }
+</script>
+</html>

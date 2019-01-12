@@ -86,8 +86,8 @@
 #### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
 #### [微服务框架--未更新](/docs/redis-code.md)
-#### [lua学习](/docs/redis-lua.md)
-#### [netty专题](/docs/netty.md)
+#### [mysql数据库优化及架构学习](/docs/mysql.md)
+#### [netty专题(已更新 by liuxiangyu)](/docs/netty.md)
 #### [linux专题](/docs/linux.md)
 #### [面试专题（最后更新）--未更新](/docs/code-solve.md)
 

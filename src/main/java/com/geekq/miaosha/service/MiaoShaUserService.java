@@ -1,6 +1,7 @@
 package com.geekq.miaosha.service;
 
 import com.geekq.miaosha.common.SnowflakeIdWorker;
+import com.geekq.miaosha.common.enums.MessageStatus;
 import com.geekq.miaosha.controller.RegisterController;
 import com.geekq.miaosha.dao.MiaoShaUserDao;
 import com.geekq.miaosha.domain.MiaoshaUser;
@@ -110,7 +111,9 @@ public class MiaoShaUserService {
             vo.setMessageId(SnowflakeIdWorker.getOrderId(0,0));
             vo.setSendType(0);
             vo.setStatus(0);
+            vo.setMessageType(MessageStatus.messageType.system_message.ordinal());
             vo.setUserId(miaoShaUser.getId());
+            vo.setMessageHead(MessageStatus.ContentEnum.system_message_register_head.getMessage());
             sender.sendRegisterMessage(vo);
 
 

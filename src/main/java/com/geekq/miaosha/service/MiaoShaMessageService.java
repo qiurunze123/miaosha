@@ -1,5 +1,6 @@
 package com.geekq.miaosha.service;
 
+import com.geekq.miaosha.common.enums.MessageStatus;
 import com.geekq.miaosha.dao.MiaoShaMessageDao;
 import com.geekq.miaosha.domain.MiaoShaMessageInfo;
 import com.geekq.miaosha.domain.MiaoShaMessageUser;
@@ -19,11 +20,8 @@ public class MiaoShaMessageService {
     @Autowired
     private MiaoShaMessageDao messageDao;
 
-    public List<MiaoShaMessageUser> getMessage( String userId ){
-
-        List<MiaoShaMessageUser> messageUserList  = messageDao.listMiaoShaMessageUser(userId);
-
-        return  messageUserList;
+    public List<MiaoShaMessageInfo> getmessageUserList( Long userId , Integer status ){
+        return messageDao.listMiaoShaMessageByUserId(userId,status);
     }
 
 
@@ -41,6 +39,7 @@ public class MiaoShaMessageService {
         miaoshaMessage.setSendType(miaoShaMessageVo.getSendType());
         miaoshaMessage.setMessageId(miaoShaMessageVo.getMessageId());
         miaoshaMessage.setCreateTime(new Date());
+        miaoshaMessage.setMessageHead(miaoShaMessageVo.getMessageHead());
         messageDao.insertMiaoShaMessage(miaoshaMessage);
     }
 }
