@@ -89,10 +89,10 @@
 -------------------------------------------------|
 #### [mysql数据库优化及架构学习](/docs/mysql.md)
 #####     [mysql数据库设计规范](/docs/mysql.md)
-#####     [mysql数据库设计实例](/docs/mysql.md)
-#####     [mysql数据库执行计划分析](/docs/mysql.md)
-#####     [mysql数据库备份和恢复](/docs/mysql.md)
-#####     [mysql数据库架构变迁](/docs/mysql.md)
+#####     [mysql数据库设计实例](/docs/mysql-1.md)
+#####     [mysql数据库执行计划分析](/docs/mysql-2.md)
+#####     [mysql数据库备份和恢复](/docs/mysql-3.md)
+#####     [mysql数据库架构变迁](/docs/mysql-4.md)
 --------------------------------------------------|
 #### [netty专题(已更新 by liuxiangyu)](/docs/netty.md)
 #### [linux专题](/docs/linux.md)
