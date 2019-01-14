@@ -89,7 +89,7 @@
 -------------------------------------------------|
 #### [mysql数据库优化及架构学习](/docs/mysql.md)
 #####     [mysql数据库设计规范(已更新)](/docs/mysql.md)
-#####     [mysql数据库设计实例](/docs/mysql-1.md)
+#####     [mysql数据库设计实例(已更新)](/docs/mysql-1.md)
 #####     [mysql数据库执行计划分析（已更新）](/docs/mysql-2.md)
 #####     [mysql数据库备份和恢复](/docs/mysql-3.md)
 #####     [mysql数据库架构变迁](/docs/mysql-4.md)

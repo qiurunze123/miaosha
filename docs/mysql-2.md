@@ -167,3 +167,87 @@
             GROUP BY customer_id
             ) b
         ON a.customer_id = b.customer_id
+        
+        
+ **for example测试表分析执行计划 (联合索引和单列索引)** 
+ 
+ 
+     CREATE TABLE `miaosha_mysql_test` (
+       `id` bigint(20) NOT NULL AUTO_INCREMENT,
+       `userId` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '用户id',
+       `mobile` varchar(24) NOT NULL DEFAULT '' COMMENT '手机号码',
+       `month` varchar(32) DEFAULT NULL COMMENT '月份',
+       `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+       `overTime` datetime DEFAULT NULL COMMENT '修改时间',
+       PRIMARY KEY (`id`),
+       KEY `联合索引` (`userId`,`mobile`,`month`)
+     ) ENGINE=InnoDB AUTO_INCREMENT=71185 DEFAULT CHARSET=utf8 COMMENT='测试'
+  
+  建立联合索引的列userId,mobile,month 三个建立联合索引
+  
+      EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE userid='2222' and mobile='166011'
+ 
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql2.png)
+     
+      有索引可用
+      
+      EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE  mobile='166011' ; 
+
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql3.png)
+
+      无索引可用
+      
+      EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE  userid='2222' or mobile='166011' ; 
+
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql4.png)
+
+      无索引可用
+      
+ ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql5.png)
+
+      有索引可用 当然这才是正确的用法！！！
+      
+ ---------- -----------  -----------   --------------
+ 
+ **创建三个单列的索引**
+ 
+      CREATE INDEX useridsingle  ON miaosha_mysql_test(userid);
+      CREATE INDEX mobilesingle  ON miaosha_mysql_test(mobile);
+      CREATE INDEX monthsingle  ON miaosha_mysql_test(month);
+     
+     EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE userid='2222' and mobile='166011' and month=1;
+ ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql7.png)
+     
+     只是用了useridsingle 有索引可用 
+     
+     EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE mobile='13281899972' AND month='2018-04'
+
+ ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql8.png)
+
+     EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE  userid='2222' OR mobile='13281899972' 
+     
+ ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql9.png)
+      
+      有索引可用 都用上了
+**多个单列索引在多条件查询时只会生效第一个索引！所以多条件联合查询时最好建联合索引！**
+
+**最左前缀原则：**
+
+    |_在创建联合索引时，要根据业务需求，where子句中使用最频繁的一列放在最左边。这样的话扩展性较好
+    |_比如 userid 经常需要作为查询条件，而 mobile 不常常用
+    |_则需要把 userid 放在联合索引的第一位置，即最左边
+    |_第一个字段是范围查询需要单独建一个索引
+ **同时存在联合索引和单列索引（字段有重复的），这个时候查询mysql会怎么用索引呢**
+ 
+    当一个表有多条索引可走，那么会根据优化器的查询成本来选择走哪个索引
+    
+     联合索引本质：
+     当创建(a,b,c)联合索引时，相当于创建了(a)单列索引，(a,b)联合索引以及(a,b,c)联合索引 
+     想要索引生效的话,只能使用 a和a,b和a,b,c三种组合，当然a,c也可以但是只用到了a
+     
+     1.需要加索引的字段，要在where条件中 
+     2、数据量少的字段不需要加索引；因为建索引有一定开销，如果数据量小则没必要建索引（速度反而慢） 
+     3、如果where条件中是OR关系，加索引不起作用 
+     4、联合索引比对每个列分别建索引更有优势，因为索引建立得越多就越占磁盘空间，
+     在更新数据的时候速度会更慢。另外建立多列索引时，顺序也是需要注意的，
+     应该将严格的索引放在前面，这样筛选的力度会更大，效率更高。
