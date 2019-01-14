@@ -107,4 +107,63 @@
       如何删除重复数据 
       删除评论表中的对同一个商品的重复评论，只保留最早的一条
       
+      |--- 查看是否存在对于同一订单同一商品的重复评论，如果存在，进行后续步骤
+           查询语句：
+           SELECT order_id,product_id,COUNT(*) FROM product_comment
+           GROUP BY order_id,product_id HAVING COUNT(*) > 1;
       
+      |--- 备份product_comment表（避免误删除的情况）
+           CREATE  TABLE bak_product_comment_190108 AS  SELECT * FROM product_comment;
+           错误代码：1786 Statement violates GTID consistency:CREATE TABLE ... SELECT.
+           则换用下面的语句
+               CREATE  TABLE bak_product_comment_190108 AS  LIKE  product_comment;
+               INSERT INTO bak_product_comment_190108  SELECT * FROM product_comment；
+           错误代码：1786
+           Statement violates GTID consistency:CREATE TABLE ... SELECT.
+           错误原因
+           这是因为在5.6及以上的版本内，开启了 enforce_gtid_consistency=true 功能导致的，MySQL官方解释说当启用 enforce_gtid_consistency 功能的时候，MySQL只允许能够保障事务安全，并且能够被日志记录的SQL语句被执行，像create table … select 和 create temporarytable语句，以及同时更新事务表和非事务表的SQL语句或事务都不允许执行。
+           解决办法
+           
+         |---- 修改 ：
+               SET @@GLOBAL.ENFORCE_GTID_CONSISTENCY = off;
+               配置文件中 ：
+               ENFORCE_GTID_CONSISTENCY = off;
+         |---- 
+               create table xxx as select 的方式会拆分成两部分。
+               create table xxxx like data_mgr;
+               insert into xxxx select *from data_mgr;
+               如果表数据量比较大，则使用mysql dump的方式导出成文件进行备份
+           
+        
+         |---- 删除同一订单的重复评论
+               删除语句：
+               DELETE a FROM product_comment a 
+               JOIN(
+               SELECT order_id,product_id,MIN(comment_id) AS comment_id 
+               FROM product_comment
+               GROUP BY order_id,product_id 
+               HAVING COUNT(*) > 1
+               ) b on a.order_id = b.order_id AND a.product_id = b.product_id
+               AND a.comment_id > b.comment_id;
+               
+               
+       分区间统计 
+       
+       统计消费总金额大于1000元的，800到1000元的，500到800元的，以及500元以下的人数
+
+
+        SELECT 
+        COUNT(CASE WHEN IFNULL(total_money,0) >= 1000 THEN a.customer_id END) AS '大于1000'
+        ,COUNT(CASE WHEN IFNULL(total_money,0) >= 800 AND IFNULL(total_money,0)<1000 
+            THEN a.customer_id END) AS '800~1000'
+        ,COUNT(CASE WHEN IFNULL(total_money,0) >= 500 AND IFNULL(total_money,0)<800 
+            THEN a.customer_id END) AS '500~800'
+        ,COUNT(CASE WHEN IFNULL(total_money,0) < 500 THEN a.customer_id END)  '小于500'
+        FROM mc_userdb.customer_login a 
+        LEFT JOIN 
+        ( 
+        SELECT customer_id,SUM(order_money) AS total_money
+            FROM mc_orderdb.order_master 
+            GROUP BY customer_id
+            ) b
+        ON a.customer_id = b.customer_id
