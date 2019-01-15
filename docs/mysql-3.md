@@ -6,7 +6,7 @@
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/MySQLGood.png)
 
-![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql.jpg)
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/sql.jpg)
 
 **详情请下载**
 
