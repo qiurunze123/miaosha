@@ -4,7 +4,7 @@
     
 ##简介：
 
-![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysqlGood.png)
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/MySQLGood.png)
 
 
 **详情请下载**
