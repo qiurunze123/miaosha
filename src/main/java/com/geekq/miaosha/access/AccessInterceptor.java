@@ -42,9 +42,13 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 		 */
 		if(handler instanceof HandlerMethod) {
 			logger.info("打印拦截方法handler ：{} ",handler);
+			HandlerMethod hm = (HandlerMethod)handler;
+			//方便mybatis 测试
+			if(hm.getMethod().getName().startsWith("test")){
+				return true;
+			}
 			MiaoshaUser user = getUser(request, response);
 			UserContext.setUser(user);
-			HandlerMethod hm = (HandlerMethod)handler;
 			AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
 			if(accessLimit == null) {
 				return true;
