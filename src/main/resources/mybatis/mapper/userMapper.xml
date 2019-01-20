@@ -13,7 +13,6 @@ userMapper(userMapper.xml文件去除后缀)保证唯一性
     <!--
         根据id查询得到一个user对象
      -->
-
     <resultMap type="com.geekq.miaosha.mybatis.entity.User" id="userResultMap">
         <!-- id表示查询结果集中唯一标识 column:查询出的列名
         property:type所指定的POJO中的属性名
@@ -46,6 +45,16 @@ userMapper(userMapper.xml文件去除后缀)保证唯一性
         </if>
     </select>
 
+    <select id="getUserListMap" resultMap="userResultMap">
+        select <include refid="base_column" />
+        from users where 1=1
+        <if test="id != null and id !=''">
+            and id=#{id}
+        </if>
+        <if test="name != null and name !=''">
+            and name=#{name}
+        </if>
+    </select>
 
 
     <!-- 插入自动递增-->
@@ -55,6 +64,15 @@ userMapper(userMapper.xml文件去除后缀)保证唯一性
     </insert>
 
 
+    <!-- update-->
+    <update id="update" parameterType="com.geekq.miaosha.mybatis.entity.User"
+            keyProperty="id">
+        update users  set name=#{name},age=#{age} ,_address=#{address} where id=#{id}
+    </update>
 
+    <!-- update-->
+    <update id="delete" parameterType="int">
+        delete  from users  where id=#{id}
+    </update>
 
 </mapper>

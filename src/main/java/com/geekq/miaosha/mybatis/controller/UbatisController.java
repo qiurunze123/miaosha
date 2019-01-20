@@ -38,7 +38,7 @@ public class UbatisController {
     @RequestMapping(value = "/testSelectLIst", produces = "text/html")
     @ResponseBody
     public void testSelectUser(){
-        List<User> result =  userMapper.getUserList(1,"xiaoming");
+        List<User> result =  userMapper.getUserList(null,"");
         System.out.println(result.size());
     }
     @RequestMapping(value = "/testInsert", produces = "text/html")
@@ -49,6 +49,28 @@ public class UbatisController {
         user.setName("xiaoming");
         user.setAge(16);
         int result =  userMapper.insert(user);
+        System.out.println(result);
+    }
+
+
+
+    @RequestMapping(value = "/testUpdate", produces = "text/html")
+    @ResponseBody
+    public void testUpdate(){
+        User user =new User();
+
+        user.setName("xiaoming");
+        user.setAge(16);
+        user.setId(1);
+        user.setAddress("xingong");
+        int result =  userMapper.update(user);
+        System.out.println(result);
+    }
+
+    @RequestMapping(value = "/testDelete", produces = "text/html")
+    @ResponseBody
+    public void testDelete(){
+        int result =  userMapper.delete(2 );
         System.out.println(result);
     }
 }
