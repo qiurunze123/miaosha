@@ -3,6 +3,7 @@
 ### Example user template
 
 # IntelliJ project files
+.DS_Store
 .idea
 *.iml
 out
