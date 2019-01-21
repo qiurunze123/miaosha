@@ -44,7 +44,7 @@
 
 ###  以下所有内容都已完成，但是因内容多需逐渐整理上传！ 专题的部分也会尽快上传更新！ 立个flag 半年内吧争取全部更新完！各位稍安勿躁！ 
 
-###  [如要提交代码请先看--提交合并代码规范](/docs/code-criterion.md)
+###  [如要提交代码请先看--提交合并代码规范提交者的后面都会有署名方面大家问问题](/docs/code-criterion.md)
 
 | ID | Problem  | Article | 
 | --- | ---   | :--- |
@@ -101,9 +101,6 @@
 #### Get Start
 
    下载项目, 切换的项目根目录
-   
-   
-    
    ```bash
    Linux/Mac:
    
@@ -116,7 +113,6 @@
    ```
     运行以上命令相关依赖便会安装完毕
     启动GeekQMainApplication主类即可
-    
    若有对于./mvnw 不了解的请点击下方链接介绍
-###### [maven-wrapper介绍](/docs/maven-wrapper.md)
+###### [maven-wrapper介绍(add by zhangkai)](/docs/maven-wrapper.md)
 

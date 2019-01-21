@@ -3,6 +3,7 @@ package com.geekq.miaosha.mybatis.controller;
 import com.geekq.miaosha.access.AccessLimit;
 import com.geekq.miaosha.mybatis.Mapper.UserMapper;
 import com.geekq.miaosha.mybatis.entity.User;
+import com.geekq.miaosha.mybatis.vo.TeacherListVo;
 import com.geekq.miaosha.mybatis.vo.TeacherVo;
 import com.geekq.miaosha.redis.KeyPrefix;
 import com.geekq.miaosha.redis.RedisService;
@@ -98,7 +99,18 @@ public class UbatisController {
 
         list.add(1);
         list.add(2);
-        List<TeacherVo> teacherAndUser =  userMapper.getTeacherAndUserList(list );
+        List<TeacherVo> teacherAndUser =  userMapper.getTeacherAndUserList(list);
         System.out.println(teacherAndUser.size());
+    }
+
+    /**
+     * 测试多表联合查询  in
+     */
+    @RequestMapping(value = "/testAssc", produces = "text/html")
+    @ResponseBody
+    public void testAssc(){
+
+        List<TeacherListVo> teacherAndUser =  userMapper.getTeacherAndUserListVo(1 );
+        System.out.println(teacherAndUser.toString());
     }
 }

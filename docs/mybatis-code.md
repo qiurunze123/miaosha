@@ -88,4 +88,10 @@
 ### generatorConfig.xml 内容解析?
     已在其中备注,详细内容请见generatorConfig.xml
 
-### generatorConfig.xml 内容解析?
+### xml映射文件都会有一个dao接口，工作原理？
+   
+      Dao接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。      
+      Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为Dao接口生成代理proxy对象，
+      代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行结果返回。
+
+### 
