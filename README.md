@@ -98,5 +98,25 @@
 #### [linux专题](/docs/linux.md)
 #### [面试专题（最后更新）--未更新](/docs/code-solve.md)
 
+#### Get Start
 
+   下载项目, 切换的项目根目录
+   
+   
+    
+   ```bash
+   Linux/Mac:
+   
+   > cd miaosha/
+   > ./mvnw clean install
+   
+   Windows:
+   > mvnw.cmd clean install
+   
+   ```
+    运行以上命令相关依赖便会安装完毕
+    启动GeekQMainApplication主类即可
+    
+   若有对于./mvnw 不了解的请点击下方链接介绍
+###### [maven-wrapper介绍](/docs/maven-wrapper.md)
 
