@@ -18,6 +18,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -83,9 +94,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>com.geekq.dubbo.springboot</groupId>-->
-            <!--<artifactId>miaosha-rely</artifactId>-->
-            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--<groupId>com.geekq.dubbo.springboot</groupId>-->
+        <!--<artifactId>miaosha-rely</artifactId>-->
+        <!--<version>0.0.1-SNAPSHOT</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>mysql</groupId>
@@ -145,9 +156,9 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
         <!--<dependency>-->
-            <!--<groupId>org.redisson</groupId>-->
-            <!--<artifactId>redisson</artifactId>-->
-            <!--<version>2.14.0</version>-->
+        <!--<groupId>org.redisson</groupId>-->
+        <!--<artifactId>redisson</artifactId>-->
+        <!--<version>2.14.0</version>-->
         <!--</dependency>-->
 
         <dependency>
@@ -215,17 +226,12 @@
             <resource> <!--配置文件路径 -->
                 <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
                 <filtering>true</filtering>
-               <includes>
-                   <include>application-${activatedProperties}.properties</include>
-                   <include>application.properties</include>
-               </includes>
+                <includes>
+                    <include>application-${activatedProperties}.properties</include>
+                    <include>application.properties</include>
+                </includes>
             </resource>
-
-
-
         </resources>
-
-
     </build>
 
     <profiles>
