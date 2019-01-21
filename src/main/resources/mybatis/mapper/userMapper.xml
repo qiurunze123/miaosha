@@ -46,8 +46,8 @@ userMapper(userMapper.xml文件去除后缀)保证唯一性
             <!--property="supervisor"表明这是为了映射学生实体的
     supervisor属性。javaType="Teacher"用到了Teacher这个
     别名定义，并指出了supervisor属性的java类型-->
-        <association property="userList"  javaType="com.geekq.miaosha.mybatis.entity.User" column="u_id" select="com.geekq.miaosha.mybatis.Mapper.getUser" >
-        </association>
+       <!-- <association property="userList"  javaType="com.geekq.miaosha.mybatis.entity.User" column="u_id" select="com.geekq.miaosha.mybatis.Mapper.getUser" >
+        </association>-->
     </resultMap>
 
     <sql id="base_column">
