@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如 namespace="com.geekq.uMybatis.mapping.UserMapper"就是 com.geekq.uMybatis.mapping.UserMapper(包名)+
+userMapper(userMapper.xml文件去除后缀)保证唯一性
+ -->
+<mapper namespace="com.geekq.miaosha.mybatis.Mapper.UserMapper">
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复
+    使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+    resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+    User类就是users表所对应的实体类
+    -->
+    <!--
+        根据id查询得到一个user对象
+     -->
+    <resultMap type="com.geekq.miaosha.mybatis.entity.User" id="userResultMap">
+        <!-- id表示查询结果集中唯一标识 column:查询出的列名
+        property:type所指定的POJO中的属性名
+        最终reslutMap对column和property做一个映射关系(对应关系)
+        -->
+        <id column="id" property="id"/>
+        <!-- 对普通列的映射定义 -->
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="_address" property="address"/>
+    </resultMap>
+
+    <sql id="base_column">
+        id,name,age,_address
+  </sql>
+    <!-- 查询-->
+    <select id="getUser" parameterType="int"
+            resultType="com.geekq.miaosha.mybatis.entity.User">
+        select * from users where id=#{id}
+    </select>
+
+    <select id="getUserList" resultType="com.geekq.miaosha.mybatis.entity.User">
+        select <include refid="base_column" />
+        from users where 1=1
+       <if test="id != null and id !=''">
+           and id=#{id}
+       </if>
+        <if test="name != null and name !=''">
+            and name=#{name}
+        </if>
+    </select>
+
+    <select id="getUserListMap" resultMap="userResultMap">
+        select <include refid="base_column" />
+        from users where 1=1
+        <if test="id != null and id !=''">
+            and id=#{id}
+        </if>
+        <if test="name != null and name !=''">
+            and name=#{name}
+        </if>
+    </select>
+
+
+    <!-- 插入自动递增-->
+    <insert id="insert" parameterType="com.geekq.miaosha.mybatis.entity.User"
+            useGeneratedKeys="true" keyProperty="id">
+        insert users (id,name,age) value (#{id},#{name},#{age})
+    </insert>
+
+
+    <!-- update-->
+    <update id="update" parameterType="com.geekq.miaosha.mybatis.entity.User"
+            keyProperty="id">
+        update users  set name=#{name},age=#{age} ,_address=#{address} where id=#{id}
+    </update>
+
+    <!-- update-->
+    <update id="delete" parameterType="int">
+        delete  from users  where id=#{id}
+    </update>
+
+</mapper>
