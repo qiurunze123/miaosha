@@ -2,6 +2,7 @@ package com.geekq.miaosha.mybatis.Mapper;
 
 
 import com.geekq.miaosha.mybatis.entity.User;
+import com.geekq.miaosha.mybatis.vo.TeacherVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.omg.CORBA.INTERNAL;
@@ -35,5 +36,9 @@ public interface UserMapper {
      * @return
      */
     public List<User> getUserListMap(@Param("id") Integer id , @Param("name") String name);
+
+    public List<TeacherVo> getTeacherAndUser( @Param("uId") Integer uId );
+
+    public List<TeacherVo> getTeacherAndUserList( @Param("uId") List<Integer> uId );
 
 }

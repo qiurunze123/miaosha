@@ -3,6 +3,7 @@ package com.geekq.miaosha.mybatis.controller;
 import com.geekq.miaosha.access.AccessLimit;
 import com.geekq.miaosha.mybatis.Mapper.UserMapper;
 import com.geekq.miaosha.mybatis.entity.User;
+import com.geekq.miaosha.mybatis.vo.TeacherVo;
 import com.geekq.miaosha.redis.KeyPrefix;
 import com.geekq.miaosha.redis.RedisService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -72,5 +74,31 @@ public class UbatisController {
     public void testDelete(){
         int result =  userMapper.delete(2 );
         System.out.println(result);
+    }
+
+
+    /**
+     * 测试多表联合查询
+     */
+    @RequestMapping(value = "/testTandU", produces = "text/html")
+    @ResponseBody
+    public void testTandU(){
+        List<TeacherVo> teacherAndUser =  userMapper.getTeacherAndUser(1 );
+        System.out.println(teacherAndUser.size());
+    }
+
+
+    /**
+     * 测试多表联合查询  in
+     */
+    @RequestMapping(value = "/testTandUIn", produces = "text/html")
+    @ResponseBody
+    public void testTandUIn(){
+        List<Integer> list = new ArrayList<Integer>();
+
+        list.add(1);
+        list.add(2);
+        List<TeacherVo> teacherAndUser =  userMapper.getTeacherAndUserList(list );
+        System.out.println(teacherAndUser.size());
     }
 }

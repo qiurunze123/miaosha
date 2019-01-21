@@ -2,6 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <typeAliases>
+        <typeAlias alias="user" type="com.geekq.miaosha.mybatis.entity."/>
+    </typeAliases>
 
         <!-- 为实体类me.gacl.domain.User配置一个别名_User -->
         <!-- <typeAlias type="me.gacl.domain.User" alias="_User"/> -->
