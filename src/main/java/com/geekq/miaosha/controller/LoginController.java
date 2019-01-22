@@ -1,9 +1,11 @@
 package com.geekq.miaosha.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.vo.LoginVo;
+import com.geekq.order.service.OrdersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,12 @@ public class LoginController {
 
     @Autowired
     private MiaoShaUserService userService;
-
+    @Reference
+    private OrdersService ordersService ;
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
+        ordersService.createOrder("111");
         //未完成
           RedisLua.vistorCount(COUNTLOGIN);
         String count = RedisLua.getVistorCount(COUNTLOGIN).toString();

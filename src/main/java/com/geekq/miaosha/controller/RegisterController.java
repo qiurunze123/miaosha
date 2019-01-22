@@ -1,9 +1,11 @@
 package com.geekq.miaosha.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
+import com.geekq.order.service.OrdersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class RegisterController {
     private MiaoShaUserService miaoShaUserService;
     @Autowired
     private MiaoshaService miaoshaService ;
+
     @RequestMapping("/do_register")
     public String registerIndex(){
         return "register";

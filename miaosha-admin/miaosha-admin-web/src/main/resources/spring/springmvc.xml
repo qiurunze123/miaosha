@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+	<context:component-scan base-package="com.geekq.web.controller" />
+	
+	<!-- 自动创建代理 对@AspectJ注解的支持 -->
+	<!-- 通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller --> 
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+	<mvc:annotation-driven />
+	
+	<!-- 开启aop，对类代理 -->
+	<aop:config proxy-target-class="true"></aop:config>
+
+	<!-- 静态资源映射 -->
+	<!-- 缓存存在时间 cache-period 1年 -->
+	<mvc:resources mapping="/static/**" location="/static/" cache-period="31556926"/>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 属性文件不能跨容器，要在controller中也能被访问到，也需要配置 -->
+	<context:property-placeholder location="classpath:resource/*.properties" />
+
+</beans>
