@@ -1,0 +1,63 @@
+.xdsoft_flipcountdown{display:inline-block;}
+
+.xdsoft_flipcountdown .xdsoft_digit{float:left;background-repeat:no-repeat;}
+.xdsoft_flipcountdown .xdsoft_clearex{clear:both;float:none;}
+
+
+.xdsoft_flipcountdown >.xdsoft_digit{
+	background-position:0px 0px;
+}
+.xdsoft_flipcountdown >.xdsoft_digit.xdsoft_separator,.xdsoft_flipcountdown >.xdsoft_digit.xdsoft_dot{
+	opacity:0.9;
+}
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit{
+	width:53px; 
+	height:76px;
+	background-image:url(./img/digit-lg.png);
+}
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit.xdsoft_space,
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit.xdsoft_separator,
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit.xdsoft_dot{
+	width:14px;
+	background-position:-19px -5082px;
+}
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit.xdsoft_dot{
+	background-position:-41px -5082px;
+}
+.xdsoft_flipcountdown.xdsoft_size_lg >.xdsoft_digit.xdsoft_space{
+	background-position:-100px -5082px;
+}
+
+.xdsoft_flipcountdown.xdsoft_size_md >.xdsoft_digit{
+	width:36px; 
+	height:51px;
+	background-image:url(./img/digit-md.png);
+}
+.xdsoft_flipcountdown.xdsoft_size_md >.xdsoft_digit.xdsoft_space,
+.xdsoft_flipcountdown.xdsoft_size_md >.xdsoft_digit.xdsoft_separator,
+.xdsoft_flipcountdown.xdsoft_size_md >.xdsoft_digit.xdsoft_dot{
+	width:10px;
+	background-position:-13px -3432px;
+}
+.xdsoft_flipcountdown.xdsoft_size_sm >.xdsoft_digit{
+	width:24px; 
+	height:34px;
+	background-image:url(./img/digit-sm.png);
+}
+.xdsoft_flipcountdown.xdsoft_size_sm >.xdsoft_digit.xdsoft_space,
+.xdsoft_flipcountdown.xdsoft_size_sm >.xdsoft_digit.xdsoft_separator,
+.xdsoft_flipcountdown.xdsoft_size_sm >.xdsoft_digit.xdsoft_dot{
+	width:10px;
+	background-position:-6px -2310px;
+}
+.xdsoft_flipcountdown.xdsoft_size_xs >.xdsoft_digit{
+	width:16px; 
+	height:23px;
+	background-image:url(./img/digit-xs.png);
+}
+.xdsoft_flipcountdown.xdsoft_size_xs >.xdsoft_digit.xdsoft_space,
+.xdsoft_flipcountdown.xdsoft_size_xs >.xdsoft_digit.xdsoft_separator,
+.xdsoft_flipcountdown.xdsoft_size_xs >.xdsoft_digit.xdsoft_dot{
+	width:5px;
+	background-position:-5px -1584px;
+}

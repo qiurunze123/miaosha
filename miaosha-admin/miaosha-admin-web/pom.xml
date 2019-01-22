@@ -21,7 +21,12 @@
 			<artifactId>miaosha-admin-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+		<!-- freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.23</version>
+		</dependency>
 		<!-- 引入dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

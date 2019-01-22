@@ -21,7 +21,7 @@ public class PayController {
 	
 	@RequestMapping("/index")
 	public String index() {
-		return "index";
+		return "login";
 	}
 	
 	@GetMapping("/buy")

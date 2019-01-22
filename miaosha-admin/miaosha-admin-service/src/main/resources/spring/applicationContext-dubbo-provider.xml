@@ -9,7 +9,7 @@
 	<dubbo:application name="imooc-dubbo-order-service"></dubbo:application>
 	
 	<!-- 注册中心的配置，使用zk暴露服务 -->
-	<dubbo:registry protocol="zookeeper" address="localhost:2181"></dubbo:registry>
+	<dubbo:registry protocol="zookeeper" address="39.107.245.253:2181"></dubbo:registry>
 	
 	<!-- 定义暴露服务的端口号 -->
 	<dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>

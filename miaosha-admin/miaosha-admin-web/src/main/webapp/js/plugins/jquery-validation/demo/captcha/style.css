@@ -1,0 +1,140 @@
+body {
+	margin: 3% 5%;
+	padding: 0;
+	background-color: #fff;
+	color: #333;
+	font: 0.9em/1.3 Helvetica, Arial, Verdana, Sans-serif;
+}
+
+a:link, a:visited {
+	background-color: #fff;
+	color: #333;
+	text-decoration: underline;
+}
+
+a:hover, a:focus, a:active {
+	background-color: #ffb;
+	color: #454545;
+	text-decoration: underline;
+}
+
+h1 {
+	margin: 2% 0%;
+	padding: 1%;
+	border-bottom: 1px solid #ddd;
+	background-color: #f8f8f8;
+	color: #666;
+	font: normal 1.5em Helvetica, Arial, Verdana, Sans-serif;
+}
+
+h2 {
+	margin: 2% 0%;
+	padding: 1%;
+	border-bottom: 1px solid #ddd;
+	background-color: #f8f8f8;
+	color: #666;
+	font: normal 1.3em Helvetica, Arial, Verdana, Sans-serif;
+}
+
+h3 {
+	margin: 2% 0%;
+	padding: 1%;
+	border-bottom: 1px solid #ddd;
+	background-color: #f8f8f8;
+	color: #666;
+	font: normal 1.2em Helvetica, Arial, Verdana, Sans-serif;
+}
+
+table {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+table th {
+	border: 1px solid #ddd;
+	font-weight: bold;
+	text-align: left;
+	padding: 1%;
+}
+
+table td {
+	border: 1px solid #ddd;
+	padding: 1%;
+}
+
+dl, dt, dd {
+	margin: 0;
+	padding: 0;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+fieldset {
+	border: 1px solid #ddd;
+	margin: 0% 0% 2% 0%;
+	padding: 2%;
+}
+
+fieldset legend {
+	margin: 0;
+	padding: 0 4px;
+	background-color: inherit;
+	color: #333;
+}
+
+code {
+	font: 1em "Courier New", Courier, Monospace;
+}
+
+pre code {
+	font: 1.1em "Courier New", Courier, Monospace;
+	border-bottom: 1px solid #eee;
+}
+
+img {
+ 	border: 1px solid #eee;
+}
+
+p#statusgreen {
+	font-size: 1.2em;
+	background-color: #fff;
+	color: #0a0;
+}
+
+p#statusred {
+	font-size: 1.2em;
+	background-color: #fff;
+	color: #a00;
+}
+
+fieldset label {
+	display: block;
+}
+
+fieldset label.error {
+	color: red;	
+}
+
+fieldset label.valid {
+	color: green;
+}
+
+fieldset div#captchaimage {
+	float: left;
+	margin-right: 15px;
+}
+
+fieldset input#captcha {
+	width: 25%;
+	border: 1px solid #ddd;
+	padding: 2px;
+}
+
+fieldset input#submit {
+	display: block;
+	margin: 2% 0% 0% 0%;
+}

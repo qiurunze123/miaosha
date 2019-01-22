@@ -23,14 +23,28 @@
 	<aop:config proxy-target-class="true"></aop:config>
 
 	<!-- 静态资源映射 -->
-	<!-- 缓存存在时间 cache-period 1年 -->
-	<mvc:resources mapping="/static/**" location="/static/" cache-period="31556926"/>
+	<!-- 缓存存在时间 cache-period 1年 修改-->
+	<mvc:resources mapping="/**/**" location="/**/" cache-period="31556926"/>
 	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
+	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+		<!--<property name="prefix" value="/WEB-INF/jsp/" />-->
+		<!--<property name="suffix" value=".jsp" />-->
+	<!--</bean>-->
+
+
+
+	<!-- 配置viewResolver -->
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<!-- 把session中的属性直接添加到freemarker的上下文中,我们就可以在页面上直接使用session中的属性 -->
+		<property name="exposeSessionAttributes" value="true" />
+		<!-- 配置模板文件的后缀 -->
+		<property name="suffix" value=".ftl" />
+		<!-- 配置输出文件的编码类型 -->
+		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
-	
+
+
 	<!-- 属性文件不能跨容器，要在controller中也能被访问到，也需要配置 -->
 	<context:property-placeholder location="classpath:resource/*.properties" />
 

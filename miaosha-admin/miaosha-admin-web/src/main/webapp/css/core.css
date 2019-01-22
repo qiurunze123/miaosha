@@ -1,0 +1,300 @@
+body {
+	font: 14px/1.5 "Verdana", "微软雅黑", YaHei, tahoma, arial, Hiragino Sans GB,
+		"宋体"
+}
+
+.el-header {
+	background-color: #333333;
+}
+
+.el-header .navbar-nav>li {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.el-header .navbar-nav>li>a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #fff;
+}
+
+.el-header .navbar-nav>li>a:HOVER {
+	background: transparent;
+	color: #00a7ff;
+	text-decoration: underline;
+}
+
+.el-header .navbar-nav>li>.el-current-user, .el-header .navbar-nav>li>.el-current-user:HOVER
+	{
+	color: #00a7ff;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.nav .open>a.el-current-user, .nav .open>a.el-current-user:hover {
+	background: transparent;
+}
+
+.el-header .nav>li>a:FOCUS {
+	background: transparent;
+}
+
+.el-navbar {
+	margin-bottom: 5px;
+}
+
+.el-navbar .navbar-header {
+	padding-top: 25px;
+	padding-bottom: 10px;
+	margin-right: 20px;
+}
+
+.el-navbar .navbar-nav>li>a {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	min-width: 80px;
+	text-align: center;
+	line-height: 80px;
+	font-size: 16px;
+}
+
+.el-navbar .navbar-nav>li>a:HOVER {
+	background: none repeat scroll 0 0 #f0f0f0;
+	color: #09d;
+}
+
+/* banner广告 */
+.el-banner {
+	margin: 8px auto;
+	width: 1328px;
+}
+
+/* p2p项目特色 */
+.el-feature {
+	overflow: hidden;
+	height: 80px;
+	margin-top: 40px;
+}
+
+.el-feature>dl {
+	padding-left: 80px;
+	float: left;
+	width: 33%;
+}
+
+.el-feature .el-feature-item01 {
+	background: url("../images/feature01.png") no-repeat;
+}
+
+.el-feature .el-feature-item02 {
+	background: url("../images/feature02.png") no-repeat;
+}
+
+.el-feature .el-feature-item03 {
+	background: url("../images/feature03.png") no-repeat;
+}
+
+.el-feature>dl>dt {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.el-feature>dl>dd {
+	color: #999;
+}
+
+/* footer网页底部 */
+.el-footer {
+	background-color: #f8f8f8;
+	margin: 20px 0px 20px 0px;
+	padding-top: 30px;
+}
+
+.el-footer img {
+	max-width: 100%;
+}
+
+/* override bootstrap */
+.el-page-title {
+	font-weight: bold;
+	font-size: 20px;
+	margin-left: 20px;
+	color: #337ab7;
+}
+
+/*自定义panel组件*/
+.el-panel {
+	box-shadow: none;
+}
+
+.el-panel .panel-title {
+	font-size: 24px;
+	color: #2e8ece;
+	font-weight: bold;
+	overflow: hidden;
+	border-bottom: 1px solid #e8e8e8;
+	margin: 60px 0px 16px;
+}
+
+.el-panel .panel-title span {
+	border-bottom: 3px solid;
+}
+
+.el-table thead th {
+	color: #999999;
+}
+
+.el-table tbody tr td {
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+/*新闻列表*/
+.el-new-list {}
+.el-new-list ul {
+	padding: 0px;;
+}
+
+.el-new-list ul li {
+	list-style-type: none;
+	overflow: hidden;
+	line-height: 38px;
+	font-size: 14px;
+	border-bottom: 1px dotted #eee;
+}
+
+.el-new-list ul li a {
+	color: #555;
+	overflow: hidden;
+}
+
+.el-new-list ul li a:hover {
+	background: none repeat scroll 0 0 #f5f5f5;
+	color: #09d;
+}
+
+
+.el-tip-info{
+	padding:20px;
+	background-color: #F4F8FA;
+	border-left: 2px solid #0099DD;
+	margin-bottom: 20px;
+}
+.el-tip-info h3{
+	color:#09d;
+}
+
+.container-foot-2 {
+    background-color: #000;
+    color: #ffffff;
+    height: 209px;
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+}
+.container-foot-2 .context {
+    margin: 50px auto 0;
+    width: 950px;
+}
+.container-foot-2 .context .left {
+    float: left;
+    width: 425px;
+}
+.container-foot-2 .context .right {
+    float: right;
+    width: 410px;
+}
+.container-foot-2 .context .right img {
+    width: 200px;
+}
+.container-foot-2 p {
+    color: #fff;
+    font: 14px/1.5 "Verdana","微软雅黑",YaHei,tahoma,arial,Hiragino Sans GB,"宋体";
+    margin-top: 5px;
+    text-align: left;
+}
+
+/*借款说明*/
+
+.el-borrow{
+	margin: 60px auto;
+}
+.el-borrow-item{
+	float: left;
+	margin-bottom: 40px;
+}
+.el-borrow-item .el-borrow-item-title{
+	font-size: 24px;
+	background-color: #ec7e20;
+	font-weight:300;
+	line-height: 48px;
+	padding-left: 20px;
+	color: #FFFFFF;
+}
+.el-borrow-item .el-borrow-item-content{
+	background-color: #f9f9f9;
+	padding: 14px;
+	font-size: 16px;
+	min-height: 300px;
+}
+.el-borrow-item .el-borrow-item-content a{
+	font-size: 13px;
+}
+.el-borrow-item .el-borrow-item-content .help-block{
+	font-size: 13px;
+}
+.el-borrow-item .el-borrow-item-content ul{
+	margin-top:10px;
+	padding-left: 10px;
+}
+.el-borrow-item .el-borrow-item-content ul li{
+	color:#555;
+	font-size:14px;
+	list-style:none;
+	padding-left:20px;
+	margin-top:5px;
+	background:url("/images/sequare.png") left center no-repeat ;
+}
+.el-borrow-item .el-borrow-item-content .el-borrow-apply{
+	border-radius: 20px;
+	background: #00a8ff;
+	color: #fff;
+	display: block;
+	margin: 0px auto;
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	position: absolute;
+	top: 300px;
+	left: 140px;
+}
+.el-borrow-item .el-borrow-item-content .el-borrow-apply:HOVER{
+	background: #008fd9;
+	text-decoration:none;
+}
+
+.el-bank{
+	display: block;
+	width: 150px;
+	height: 30px;
+	background: url(/images/bank_list.png) no-repeat;
+}
+.bank_1 {/*工商银行*/
+	background-position: 0 0;
+}
+.bank_2 {/*农业银行*/
+	background-position: 0 -35px;
+}
+.bank_3 {/*建设银行*/
+	background-position: 0 -70px;
+}
+.bank_6 {/*交通银行*/
+	background-position: 0 -175px;
+}
+.bank_7 {/*中国银行*/
+	background-position: 0 -210px;
+}
+.bank_19 {/*中国邮政银行*/
+	background-position: 0 -594px;
+}
