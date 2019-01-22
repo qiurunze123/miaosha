@@ -130,7 +130,9 @@
      例如： 1. where 子句中对字段进行 null 值判断 . 
            2. 应尽量避免在 where 子句中使用!=或<>操作符 
            3. 应尽量避免在 where 子句中使用 or 来连接条件
-           4. in 和 not in 也要慎用，否则会导致全表扫描
+           4. in 和 not in 也要慎用，否则会导致全表扫描( 如果索引 会优先走索引 不会导致全表扫描 
+            字段上建了索引后，使用in不会全表扫描，而用not in 会全表扫描 低版本的mysql是两种情况都会全表扫描。
+            5.5版本后以修。而且在优化大表连接查询的时候，有一个方法就是将join操作拆分为in查询)
            5. select id from t where name like '%abc%' 或者
            6.select id from t where name like '%abc' 或者
            7. 若要提高效率，可以考虑全文检索。 
