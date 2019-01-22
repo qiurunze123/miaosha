@@ -147,3 +147,32 @@
    ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/count.png)
    
     利用lua脚本进行对redis操作,登陆时，每次登陆成功则记录访问（具体你想在什么时段进行统计自己说了算）
+    
+#### [项目进行dubbo+ZK改造]()
+    
+     ├── miaosha-admin  登录模块
+     │   ├── pom.xml
+     │   └── miaosha-admin-api
+     │   └── miaosha-admin-service
+     │   └── miaosha-admin-web
+     │   └── miaosha-common
+     │   
+     │   
+     
+     ├── miaosha-order   订单秒杀模块
+          │   ├── pom.xml
+          │   └── miaosha-order-api
+          │   └── miaosha-order-service
+          │   └── miaosha-order-web
+          │   └── miaosha-order-common
+          │   
+          │   
+     
+     ├── miaosha-message   消息模块
+          │   ├── pom.xml
+          │   └── miaosha-message-api
+          │   └── miaosha-message-service
+          │   └── miaosha-message-web
+          │   └── miaosha-message-common
+          │   
+          │  
