@@ -11,6 +11,8 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
+	<!--<import resource="classpath:spring/applicationContext-service.xml" />-->
+
 	<context:component-scan base-package="com.geekq.web.controller" />
 	
 	<!-- 自动创建代理 对@AspectJ注解的支持 -->
@@ -18,19 +20,52 @@
 	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 
 	<mvc:annotation-driven />
+
+
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.geekq.web.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**" />-->
+			<!--<bean class="com.eloan.uiweb.interceptor.AddGlobalUtilInterceptor" />-->
+		<!--</mvc:interceptor>-->
+	</mvc:interceptors>
 	
 	<!-- 开启aop，对类代理 -->
 	<aop:config proxy-target-class="true"></aop:config>
 
-	<!-- 静态资源映射 -->
-	<!-- 缓存存在时间 cache-period 1年 修改-->
-	<mvc:resources mapping="/**/**" location="/**/" cache-period="31556926"/>
-	
-	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-		<!--<property name="prefix" value="/WEB-INF/jsp/" />-->
-		<!--<property name="suffix" value=".jsp" />-->
+	<!--&lt;!&ndash;处理上传 &ndash;&gt;-->
+	<!--<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">-->
+		<!--&lt;!&ndash; 在spring中,SpEL,#{}中的内容都是可以让spring来帮我们计算的内容 &ndash;&gt;-->
+		<!--<property name="maxUploadSize" value="#{1024*1024*100}" />-->
 	<!--</bean>-->
 
+	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+		<!--<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />-->
+	     <!--<property name="prefix" value="/WEB-INF/" />-->
+	     <!--<property name="suffix" value=".html" />-->
+	      <!--<property name="order" value="1" />-->
+	<!--</bean>-->
+
+
+	<!-- 配置freemarker本身 -->
+	<bean
+			class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- freemarker模板的编码 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- freemarker找模板的目录 -->
+		<property name="templateLoaderPath" value="/WEB-INF/views/" />
+		<!-- freemarker的一些基本输出设置 -->
+		<property name="freemarkerSettings">
+			<value>
+				number_format = 0.##
+				datetime_format = yyyy-MM-dd HH:mm:ss
+			</value>
+		</property>
+	</bean>
 
 
 	<!-- 配置viewResolver -->
@@ -40,12 +75,13 @@
 		<property name="exposeSessionAttributes" value="true" />
 		<!-- 配置模板文件的后缀 -->
 		<property name="suffix" value=".ftl" />
+		<property name="order" value="1" />
 		<!-- 配置输出文件的编码类型 -->
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
 
 
-	<!-- 属性文件不能跨容器，要在controller中也能被访问到，也需要配置 -->
-	<context:property-placeholder location="classpath:resource/*.properties" />
+	<!--&lt;!&ndash; 属性文件不能跨容器，要在controller中也能被访问到，也需要配置 &ndash;&gt;-->
+	<!--<context:property-placeholder location="classpath:resource/*.properties" />-->
 
 </beans>

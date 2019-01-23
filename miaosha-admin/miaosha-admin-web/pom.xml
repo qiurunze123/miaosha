@@ -78,7 +78,14 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
-		
+
+		<!-- xml freemarket 模板配置-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>3.2.4.RELEASE</version>
+		</dependency>
+
 		<!-- JSP相关 -->
 		<dependency>
 			<groupId>jstl</groupId>

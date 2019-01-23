@@ -3,8 +3,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/">首页</a></li>
 					<#if !logininfo??>
-					<li><a href="/login.html">登录</a></li>
-					<li><a href="/register.html">快速注册</a></li>
+					<li><a href="/WEB-INF/login.html">登录</a></li>
+					<li><a href="/WEB-INF/register.html">快速注册</a></li>
 					<#else>
 					<li>
 						  <a class="el-current-user" href="/personal.do">
