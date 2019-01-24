@@ -50,7 +50,7 @@
 		ajax: function(origSettings) {
 			var s = jQuery.extend(true, {}, jQuery.ajaxSettings, origSettings),
 			    mock = false;
-			// Iterate over our mock handlers (in registration order) until we find
+			// Iterate over our mock handlers (in registration admin) until we find
 			// one that is willing to intercept the request
 			$.each(mockHandlers, function(k, v) {
 				if ( !mockHandlers[k] ) {

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekq.admin.mapper.LogininfoMapper">
+	<!--<cache type="redis" />-->
+
+	<resultMap id="BaseResultMap" type="com.geekq.admin.entity.Logininfo">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="state" jdbcType="TINYINT" property="state" />
+		<result column="admin" property="admin" />
+		<result column="usertype" property="userType" />
+	</resultMap>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		logininfo
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" keyProperty="id" parameterType="com.geekq.admin.entity.Logininfo" useGeneratedKeys="true">
+		insert into logininfo (username,password, state,usertype,admin)
+		values	(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},#{userType},#{admin})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.geekq.admin.entity.Logininfo">
+		update logininfo set username = #{username,jdbcType=VARCHAR},password =#{password,jdbcType=VARCHAR},
+			state = #{state,jdbcType=TINYINT},usertype = #{userType},admin=#{admin}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<sql id="base_column">
+		id, username, password, state,usertype,admin
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap" useCache="true">
+		select <include refid="base_column" />
+		from logininfo	where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap" useCache="false">
+		select <include refid="base_column" />
+		from logininfo
+	</select>
+	
+	<select id="getCountByUsername" resultType="int" useCache="false">
+		select count(id) from logininfo where username=#{username} and usertype = #{userType}
+	</select>
+	
+	<select id="login" resultMap="BaseResultMap" useCache="true">
+		select <include refid="base_column"/>
+		from logininfo where username= #{name} and password=#{password} and usertype=#{userType}
+	</select>
+	
+	<select id="autoComplate" resultType="hashmap" useCache="false">
+		select id,username as name
+		from logininfo where username LIKE concat(#{word},'%') AND usertype = #{userType}
+	</select>
+</mapper>

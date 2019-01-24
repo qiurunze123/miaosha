@@ -1,6 +1,6 @@
-package com.geekq.order.service;
+package com.geekq.admin.service;
 
-import com.geekq.order.pojo.Orders;
+import com.geekq.admin.pojo.Orders;
 
 public interface OrdersService {
 

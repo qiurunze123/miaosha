@@ -7,7 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>miaosha-common</artifactId>
-	
+	<properties>
+		<org.mybatis.version>3.2.3</org.mybatis.version>
+		<org.springframework.version>4.0.0.RELEASE</org.springframework.version>
+	</properties>
 	<!-- jar包的依赖 -->
 	<dependencies>
 		<!-- Apache工具组件 -->
@@ -71,7 +74,24 @@
 			<artifactId>jsp-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.7</version>
+		</dependency>
+
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${org.mybatis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 		<!-- 日志处理 -->
 		<!--<dependency>-->
 			<!--<groupId>org.slf4j</groupId>-->

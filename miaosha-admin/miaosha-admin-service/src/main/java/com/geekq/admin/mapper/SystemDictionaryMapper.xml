@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.admin.mapper.SystemDictionaryMapper" >
+
+  <resultMap id="BaseResultMap" type="SystemDictionary" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from systemdictionary
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="SystemDictionary" useGeneratedKeys="true" keyProperty="id" >
+    insert into systemdictionary (sn, title, intro)
+    values (#{sn,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR} )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="SystemDictionary" >
+    update systemdictionary
+    set sn = #{sn,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <sql id="base_column">
+  	id, sn, title, intro
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select <include refid="base_column" />
+    from systemdictionary
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select <include refid="base_column" />
+    from systemdictionary
+  </select>
+  
+  <sql id="base_where">
+  	<where>
+  		<if test="keyword!=null">
+  			AND (sn LIKE concat('%',#{keyword},'%') OR title LIKE concat('%',#{keyword},'%'))
+  		</if>
+  	</where>
+  </sql>
+  
+  <select id="queryForCount" resultType="int">
+  	select count(id) from systemdictionary
+  	<include refid="base_where" />
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+  	select <include refid="base_column" />
+  	from systemdictionary
+  	<include refid="base_where" />
+  	<if test="pageSize>-1">
+  		LIMIT #{start},#{pageSize}
+  	</if>
+  </select>
+</mapper>

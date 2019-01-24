@@ -47,7 +47,7 @@
 		<!--<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />-->
 	     <!--<property name="prefix" value="/WEB-INF/" />-->
 	     <!--<property name="suffix" value=".html" />-->
-	      <!--<property name="order" value="1" />-->
+	      <!--<property name="admin" value="1" />-->
 	<!--</bean>-->
 
 

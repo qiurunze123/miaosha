@@ -36,11 +36,20 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	
-	<!-- 配置扫描包，加载mapper代理对象 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.geekq.order.mapper"></property>
+		<property name="typeAliasesPackage"
+				  value="com.geekq.admin.entity" />
+
+		<property name="mapperLocations"
+				  value="classpath*:com/geekq/admin/mapper/*.xml" />
 	</bean>
 
+	<!--&lt;!&ndash; 配置自动扫描Mapper &ndash;&gt;-->
+	<!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+		<!--<property name="basePackage"-->
+				  <!--value="com.eloan.base.mapper;com.eloan.business.mapper" />-->
+	<!--</bean>-->
+	<!-- 配置扫描包，加载mapper代理对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.geekq.admin.mapper"></property>
+	</bean>
 </beans>

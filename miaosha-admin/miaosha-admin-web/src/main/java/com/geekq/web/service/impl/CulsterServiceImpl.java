@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.geekq.order.service.OrdersService;
+import com.geekq.admin.service.OrdersService;
 import com.geekq.web.service.CulsterService;
 
 @Service("buyService")

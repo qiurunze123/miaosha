@@ -1,4 +1,4 @@
-package com.geekq.order.pojo;
+package com.geekq.admin.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

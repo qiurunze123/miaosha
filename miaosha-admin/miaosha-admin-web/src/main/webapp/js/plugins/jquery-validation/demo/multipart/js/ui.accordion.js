@@ -86,7 +86,7 @@ $.widget("ui.accordion", {
 			.next()
 			.hide();
 
-		// make sure at least one header is in the tab order
+		// make sure at least one header is in the tab admin
 		if (!this.active.length) {
 			this.headers.eq(0).attr('tabIndex','0');
 		} else {

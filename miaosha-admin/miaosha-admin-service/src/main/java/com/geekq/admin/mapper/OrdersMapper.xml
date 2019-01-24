@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.geekq.order.mapper.OrdersMapper" >
-  <resultMap id="BaseResultMap" type="com.geekq.order.pojo.Orders" >
+<mapper namespace="com.geekq.admin.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.geekq.admin.pojo.Orders" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
     <result column="item_id" property="itemId" jdbcType="VARCHAR" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List" >
     id, order_num, item_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.geekq.order.pojo.OrdersExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.geekq.admin.pojo.OrdersExample" >
     select
     <if test="distinct" >
       distinct
@@ -91,19 +91,19 @@
     delete from orders
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.geekq.order.pojo.OrdersExample" >
+  <delete id="deleteByExample" parameterType="com.geekq.admin.pojo.OrdersExample" >
     delete from orders
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.geekq.order.pojo.Orders" >
+  <insert id="insert" parameterType="com.geekq.admin.pojo.Orders" >
     insert into orders (id, order_num, item_id
       )
     values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.geekq.order.pojo.Orders" >
+  <insert id="insertSelective" parameterType="com.geekq.admin.pojo.Orders" >
     insert into orders
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.geekq.order.pojo.OrdersExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.geekq.admin.pojo.OrdersExample" resultType="java.lang.Integer" >
     select count(*) from orders
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -160,7 +160,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.geekq.order.pojo.Orders" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.geekq.admin.pojo.Orders" >
     update orders
     <set >
       <if test="orderNum != null" >
@@ -172,7 +172,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.geekq.order.pojo.Orders" >
+  <update id="updateByPrimaryKey" parameterType="com.geekq.admin.pojo.Orders" >
     update orders
     set order_num = #{orderNum,jdbcType=VARCHAR},
       item_id = #{itemId,jdbcType=VARCHAR}

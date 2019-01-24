@@ -23,7 +23,7 @@ public class MiaoshaUser {
 	private Integer loginCount;
 	@Override
 	public String toString() {
-		return "MiaoshaUser{" +
+		return "Logininfo{" +
 				"id=" + id +
 				", nickname='" + nickname + '\'' +
 				", password='" + password + '\'' +

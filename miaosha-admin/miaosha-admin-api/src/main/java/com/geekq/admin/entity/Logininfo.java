@@ -1,4 +1,4 @@
-package com.geekq.common.entity;
+package com.geekq.admin.entity;
 
 import com.geekq.common.enums.Constants;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MiaoshaUser {
+public class Logininfo {
 
 	private Long id;
 	private String nickname;

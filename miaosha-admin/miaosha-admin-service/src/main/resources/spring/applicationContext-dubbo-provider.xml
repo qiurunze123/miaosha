@@ -15,7 +15,7 @@
 	<dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>
 	
 	<!-- 暴露具体的服务接口 -->
-	<dubbo:service retries="3" interface="com.geekq.order.service.OrdersService"
+	<dubbo:service retries="3" interface="com.geekq.admin.service.OrdersService"
 		ref="ordersService" timeout="6000"></dubbo:service>
 	
 </beans>

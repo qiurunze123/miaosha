@@ -36,7 +36,7 @@
 	
 	<!-- 切面 -->
 	<aop:config>
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.geekq.order.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.geekq.admin.service..*.*(..))" />
 	</aop:config>
 
 </beans>

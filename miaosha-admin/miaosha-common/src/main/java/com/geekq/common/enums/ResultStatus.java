@@ -31,6 +31,7 @@ public enum ResultStatus {
     RESIGETR_SUCCESS(20000,"注册成功!"),
     RESIGETER_FAIL(200001,"注册失败!"),
     CODE_FAIL(200002,"验证码不一致!"),
+    RESIGETER_NICKNAMEEXIST(200003,"用户名已经存在!"),
 
     /**
      * check

@@ -1,18 +1,19 @@
-package com.geekq.order.service;
+package com.geekq.admin.service;
 
-import com.geekq.common.entity.MiaoshaUser;
+import com.geekq.admin.entity.Logininfo;
+import com.geekq.common.utils.resultbean.ResultGeekQ;
 
 import java.util.List;
 import java.util.Map;
 
-public interface MiaoShaUserService {
+public interface ILogininfoService {
 
 	/**
 	 * 注册
 	 * @param username
 	 * @param password
 	 */
-	void register(String username, String password);
+	ResultGeekQ<Boolean> register(String username, String password);
 
 	/**
 	 * 检查是否有重复的用户名
@@ -25,7 +26,7 @@ public interface MiaoShaUserService {
 	 * @param password
 	 * @return
 	 */
-	MiaoshaUser login(String name, String password, int userType, String ip);
+	Logininfo login(String name, String password, int userType, String ip);
 
 	/**
 	 * 是否有管理员

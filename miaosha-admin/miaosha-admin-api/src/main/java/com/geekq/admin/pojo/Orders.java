@@ -1,4 +1,4 @@
-package com.geekq.order.pojo;
+package com.geekq.admin.pojo;
 
 public class Orders {
     private String id;

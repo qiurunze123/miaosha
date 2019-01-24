@@ -12,7 +12,7 @@ import java.util.Random;
 public class MD5Utils {
 
 
-    private  static final  String  getSaltT (){
+    public  static final  String  getSaltT (){
         SecureRandom random = new SecureRandom();
         byte bytes[] = new byte[15];
         random.nextBytes(bytes);

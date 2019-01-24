@@ -5,7 +5,7 @@ import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.vo.LoginVo;
-import com.geekq.order.service.OrdersService;
+import com.geekq.admin.service.OrdersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

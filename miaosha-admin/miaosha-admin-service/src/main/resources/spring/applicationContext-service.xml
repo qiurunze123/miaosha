@@ -12,10 +12,11 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 		
 	<!-- 扫描包加载Service实现类 -->
-	<context:component-scan base-package="com.geekq.order.service"></context:component-scan>
+	<context:component-scan base-package="com.geekq.admin.service"></context:component-scan>
 	
 	<!-- 自动创建代理 对@AspectJ注解的支持 -->
 	<!-- 通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Service --> 
 	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
-	
+
+
 </beans>

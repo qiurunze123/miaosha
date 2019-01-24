@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.admin.mapper.UserinfoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.geekq.admin.entity.Userinfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="bitState" property="bitState" jdbcType="BIGINT" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="idNumber" property="idNumber" jdbcType="VARCHAR" />
+    <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="authScore" property="authScore"/>
+    <result column="email" property="email"/>
+    <result column="realauthId" property="realauthId"/>
+
+    <association property="incomeGrade" javaType="SystemDictionaryItem" column="incomeGrade_id" select="com.geekq.admin.mapper.SystemDictionaryItemMapper.selectByPrimaryKey" />
+    <association property="marriage" javaType="SystemDictionaryItem" column="marriage_id" select="com.geekq.admin.mapper.SystemDictionaryItemMapper.selectByPrimaryKey" />
+    <association property="kidCount" javaType="SystemDictionaryItem" column="kidCount_id" select="com.geekq.admin.mapper.SystemDictionaryItemMapper.selectByPrimaryKey" />
+    <association property="educationBackground" javaType="SystemDictionaryItem" column="educationBackground_id" select="com.geekq.admin.mapper.SystemDictionaryItemMapper.selectByPrimaryKey" />
+    <association property="houseCondition" javaType="SystemDictionaryItem" column="houseCondition_id" select="com.geekq.admin.mapper.SystemDictionaryItemMapper.selectByPrimaryKey" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from userinfo
+    where id = #{id,jdbcType=BIGINT} and version = #{version}
+  </delete>
+
+  <insert id="insert" parameterType="com.geekq.admin.entity.Userinfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into userinfo (id,version, bitState, authScore,email,phoneNumber, incomeGrade_id,
+      marriage_id, kidCount_id, educationBackground_id, houseCondition_id)
+    values (#{id},0, #{bitState,jdbcType=BIGINT}, #{authScore},#{email},#{phoneNumber,jdbcType=VARCHAR}, #{incomeGrade.id,jdbcType=BIGINT},
+      #{marriage.id,jdbcType=BIGINT}, #{kidCount.id,jdbcType=BIGINT}, #{educationBackground.id,jdbcType=BIGINT},
+      #{houseCondition.id,jdbcType=BIGINT})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.geekq.admin.entity.Userinfo" >
+    update userinfo
+    set version = version+1,
+      bitState = #{ui.bitState,jdbcType=BIGINT},
+      realName = AES_ENCRYPT(#{ui.realName,jdbcType=VARCHAR},#{salt}),
+      idNumber = AES_ENCRYPT(#{ui.idNumber,jdbcType=VARCHAR},#{salt}),
+      authScore = #{ui.authScore},
+      email = #{ui.email},
+      realauthId=#{ui.realauthId},
+      phoneNumber = #{ui.phoneNumber,jdbcType=VARCHAR},
+      incomeGrade_id = #{ui.incomeGrade.id,jdbcType=BIGINT},
+      marriage_id = #{ui.marriage.id,jdbcType=BIGINT},
+      kidCount_id = #{ui.kidCount.id,jdbcType=BIGINT},
+      educationBackground_id = #{ui.educationBackground.id,jdbcType=BIGINT},
+      houseCondition_id = #{ui.houseCondition.id,jdbcType=BIGINT}
+    where id = #{ui.id,jdbcType=BIGINT} and version = #{ui.version}
+  </update>
+
+  <sql id="base_column">
+  	id, version, bitState,  AES_DECRYPT(realName,#{salt}) as realName, AES_DECRYPT(idNumber,#{salt}) as idNumber, phoneNumber,
+  	incomeGrade_id, marriage_id, authScore,realauthId,email,kidCount_id, educationBackground_id, houseCondition_id
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select <include refid="base_column" />
+    from userinfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select <include refid="base_column" />
+    from userinfo
+  </select>
+
+</mapper>

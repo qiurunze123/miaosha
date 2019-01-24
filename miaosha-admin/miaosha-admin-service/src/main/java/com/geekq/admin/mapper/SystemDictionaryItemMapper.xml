@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.admin.mapper.SystemDictionaryItemMapper">
+
+	<resultMap id="BaseResultMap" type="SystemDictionaryItem">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parentId" property="parentId" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="tvalue" property="tvalue" jdbcType="VARCHAR" />
+		<result column="sequence" property="sequence" jdbcType="TINYINT" />
+		<result column="intro" property="intro" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap type="SystemDictionaryItem" id="small_result">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from systemdictionaryitem
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="SystemDictionaryItem"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into systemdictionaryitem (parentId, title, tvalue,sequence, intro)
+		values (#{parentId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},#{tvalue,jdbcType=VARCHAR},
+		#{sequence,jdbcType=TINYINT}, #{intro,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="SystemDictionaryItem">
+		update systemdictionaryitem
+		set parentId = #{parentId,jdbcType=BIGINT},
+		title = #{title,jdbcType=VARCHAR},
+		tvalue = #{tvalue,jdbcType=VARCHAR},
+		sequence = #{sequence,jdbcType=TINYINT},
+		intro = #{intro,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<sql id="base_column">
+	id, parentId, title, tvalue, sequence, intro
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select <include refid="base_column" />
+		from systemdictionaryitem
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select <include refid="base_column" />
+		from systemdictionaryitem
+	</select>
+	
+	<sql id="base_where">
+	  	<where>
+	  		<if test="parentId!=null">
+	  			AND parentId = #{parentId}
+	  		</if>
+	  		<if test="keyword!=null">
+	  			AND title LIKE concat('%',#{keyword},'%')
+	  		</if>
+	  	</where>
+  	</sql>
+  	
+  	  <select id="queryForCount" resultType="int">
+	  	select count(id) from systemdictionaryitem
+	  	<include refid="base_where" />
+	  </select>
+	  
+	  <select id="query" resultMap="BaseResultMap">
+	  	select <include refid="base_column" />
+	  	from systemdictionaryitem
+	  	<include refid="base_where" />
+	  	<if test="pageSize>-1">
+	  		LIMIT #{start},#{pageSize}
+	  	</if>
+	  </select>
+	  
+	  <select id="queryBySn" resultMap="small_result">
+	  	 select item.id as id,item.title as title
+	  	 from systemdictionaryitem item join systemdictionary d on item.parentId = d.id
+	  	 where d.sn = #{sn}
+	  	 order by item.sequence
+	  </select>
+</mapper>

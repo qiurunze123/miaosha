@@ -1,8 +1,8 @@
-package com.geekq.order.service.impl;
+package com.geekq.admin.service.impl;
 
-import com.geekq.order.mapper.OrdersMapper;
-import com.geekq.order.pojo.Orders;
-import com.geekq.order.service.OrdersService;
+import com.geekq.admin.mapper.OrdersMapper;
+import com.geekq.admin.pojo.Orders;
+import com.geekq.admin.service.OrdersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
