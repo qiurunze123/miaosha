@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author 邱润泽
  */
-@Service
+@Service("logininfoServiceImpl")
 public class LogininfoServiceImpl implements ILogininfoService {
 
 	private static final Logger logger = LoggerFactory.getLogger(LogininfoServiceImpl.class);

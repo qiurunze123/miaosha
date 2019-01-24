@@ -2,10 +2,10 @@ package com.geekq.admin.service;
 
 import com.geekq.admin.entity.Logininfo;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-
 public interface ILogininfoService {
 
 	/**
