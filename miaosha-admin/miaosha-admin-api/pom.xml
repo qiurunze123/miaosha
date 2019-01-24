@@ -7,4 +7,21 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>miaosha-admin-api</artifactId>
+
+	<dependencies>
+		<!--lombook引用-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
 </project>
