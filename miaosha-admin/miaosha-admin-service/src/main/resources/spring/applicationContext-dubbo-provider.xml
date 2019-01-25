@@ -6,19 +6,19 @@
 	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 		
 	<!-- 为当前服务提供者取个名字，并且提供给注册中心 -->
-	<dubbo:application name="imooc-dubbo-order-service"></dubbo:application>
+	<dubbo:application name="miaosha-service"></dubbo:application>
 	
 	<!-- 注册中心的配置，使用zk暴露服务 -->
-	<dubbo:registry protocol="zookeeper" address="39.107.245.253:2181"></dubbo:registry>
+	<dubbo:registry protocol="zookeeper" address="localhost:2181"></dubbo:registry>
 
 	<!-- 定义暴露服务的端口号 -->
-	<dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>
+	<dubbo:protocol name="dubbo" port="20881" ></dubbo:protocol>
 
 	<!-- 暴露具体的服务接口 -->
 	<dubbo:service retries="3" interface="com.geekq.admin.service.OrdersService"
-		ref="ordersService" timeout="6000"></dubbo:service>
+		ref="ordersService" timeout="60000"></dubbo:service>
 
 
 	<dubbo:service retries="3" interface="com.geekq.admin.service.ILogininfoService"
-				   ref="logininfoServiceImpl" timeout="6000"></dubbo:service>
+				   ref="logininfoServiceImpl" timeout="60000"></dubbo:service>
 </beans>

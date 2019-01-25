@@ -30,7 +30,7 @@
 		<!-- 使用redisTamplate结合jedisPoolConifg 必须使用jedis版本2.9.0 -->
 		<jedis.version>2.9.0</jedis.version>
 		<commons.httpclient.version>3.1</commons.httpclient.version>
-		<dubbo.version>2.5.3</dubbo.version>
+		<dubbo.version>2.6.0</dubbo.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
 		<zkclient.version>0.1</zkclient.version>
 		<apache.curator.version>4.0.0</apache.curator.version>
@@ -145,6 +145,12 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!--<dependency>-->
+				<!--<groupId>org.springframework</groupId>-->
+				<!--<artifactId>spring-web</artifactId>-->
+				<!--<version>4.0.0.RELEASE</version>-->
+			<!--</dependency>-->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
@@ -215,6 +221,12 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
 				<version>${dubbo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>

@@ -49,7 +49,7 @@
 				data:{username:value},
 				async:false,
 				success:function(data){
-					ret= data.success;
+					ret= data.data;
 				}
 			});
 			return ret;
@@ -85,7 +85,7 @@
 			},
 			submitHandler:function(form){
 				$(form).ajaxSubmit(function(data){
-					if(data.success){
+					if(data.data){
 						$.messager.confirm("提示","注册成功,请重新登录系统!",function(){
 							window.location.href="/login.html";
 						});	
@@ -121,7 +121,7 @@
 	<div class="navbar navbar-default el-navbar">
 		<div class="container">
 			<div class="navbar-header">
-				<a href=""><img alt="Brand" src="/images/logo.png"></a>
+				<a href=""><img alt="Brand" src="/images/miaoshaxitong.png"></a>
 				<span class="el-page-title">用户注册</span>
 			</div>
 		</div>

@@ -42,7 +42,7 @@
 			//验证成功后，提交操作；
 			submitHandler:function(form){
 				$(form).ajaxSubmit(function(data){
-					if(data.success){
+					if(data.status='success'){
 						$.messager.confirm("提示","登陆成功,点击确定跳转到个人中心",function(){
 							window.location.href="/personal.do";
 						});
@@ -91,7 +91,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2">手机号码</label>
 				<div class="col-sm-10">
-					<input type="text" autocomplete="off" name="mobile" class="form-control" value="stef"/>
+					<input type="text" autocomplete="off" name="username" class="form-control" value="stef"/>
 				</div> 
 			</div>
 			<div class="form-group">

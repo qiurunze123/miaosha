@@ -2,7 +2,6 @@ package com.geekq.admin.service;
 
 import com.geekq.admin.entity.Logininfo;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ public interface ILogininfoService {
 	 * @param username
 	 * @param password
 	 */
-	ResultGeekQ<Boolean> register(String username, String password);
+	void register(String username, String password);
 
 	/**
 	 * 检查是否有重复的用户名
@@ -26,7 +25,7 @@ public interface ILogininfoService {
 	 * @param password
 	 * @return
 	 */
-	Logininfo login(String name, String password, int userType, String ip);
+	ResultGeekQ<Logininfo> login(String name, String password, int userType, String ip);
 
 	/**
 	 * 是否有管理员

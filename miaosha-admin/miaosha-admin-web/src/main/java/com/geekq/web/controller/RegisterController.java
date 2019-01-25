@@ -4,6 +4,7 @@ import com.geekq.admin.service.ILogininfoService;
 import com.geekq.common.enums.Constants;
 import com.geekq.common.enums.ResultStatus;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
+import com.geekq.common.utils.resultbean.ResultJSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,16 @@ public class RegisterController extends  BaseController{
 
     @RequestMapping("/register")
     @ResponseBody
-    public ResultGeekQ<Boolean> register(String username, String password) {
-        /**
-         * 登录注册
-         */
-       return logininfoService.register(username,password);
-
+    public ResultJSON register(String username, String password) {
+        ResultJSON json = new ResultJSON();
+        try {
+            this.logininfoService.register(username, password);
+            json.setSuccess(true);
+        } catch (RuntimeException e) {
+            logger.error("注册失败",e);
+            json.setMsg("注册失败,请联系相关人员!");
+        }
+        return json;
     }
 
     @RequestMapping("/checkUsername")

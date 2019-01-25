@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Logininfo {
+public class Logininfo implements Serializable {
 
 	private Long id;
 	private String nickname;

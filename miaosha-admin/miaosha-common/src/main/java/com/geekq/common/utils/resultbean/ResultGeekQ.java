@@ -1,14 +1,16 @@
 package com.geekq.common.utils.resultbean;
 
+
 import com.geekq.common.enums.ResultStatus;
 
 import java.io.Serializable;
 
 public class ResultGeekQ<T> extends AbstractResult implements Serializable {
-    private static final long serialVersionUID = 867933019328199779L;
     private T data;
     private Integer count;
 
+    protected ResultGeekQ() {
+    }
     protected ResultGeekQ(ResultStatus status, String message) {
         super(status, message);
     }
@@ -16,7 +18,7 @@ public class ResultGeekQ<T> extends AbstractResult implements Serializable {
         super(status);
     }
     public static <T> ResultGeekQ<T> build() {
-        return new ResultGeekQ(ResultStatus.SUCCESS, (String)null);
+        return new ResultGeekQ(ResultStatus.SUCCESS, "构造函数");
     }
 
     public static <T> ResultGeekQ<T> build(String message) {

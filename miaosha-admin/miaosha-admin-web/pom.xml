@@ -31,12 +31,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>

@@ -10,6 +10,11 @@
 		<result column="state" jdbcType="TINYINT" property="state" />
 		<result column="admin" property="admin" />
 		<result column="usertype" property="userType" />
+		<result column="salt" property="salt" />
+		<result column="usertype" property="userType" />
+		<result column="registerDate" property="registerDate" />
+		<result column="lastLoginDate" property="lastLoginDate" />
+
 	</resultMap>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -19,18 +24,20 @@
 	</delete>
 	
 	<insert id="insert" keyProperty="id" parameterType="com.geekq.admin.entity.Logininfo" useGeneratedKeys="true">
-		insert into logininfo (username,password, state,usertype,admin)
-		values	(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},#{userType},#{admin})
+		insert into logininfo (nickname,password, state,usertype,admin,salt,registerdate,lastlogindate)
+		values	(#{nickname,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},#{userType},#{admin}
+		,#{salt},#{registerDate},#{lastLoginDate})
 	</insert>
 	
 	<update id="updateByPrimaryKey" parameterType="com.geekq.admin.entity.Logininfo">
-		update logininfo set username = #{username,jdbcType=VARCHAR},password =#{password,jdbcType=VARCHAR},
-			state = #{state,jdbcType=TINYINT},usertype = #{userType},admin=#{admin}
+		update logininfo set nickname = #{nickname,jdbcType=VARCHAR},password =#{password,jdbcType=VARCHAR},
+			state = #{state,jdbcType=TINYINT},usertype = #{userType},admin=#{admin},salt = #{salt},
+			registerdate = #{registerDate},lastlogindate = #{lastLoginDate}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	
 	<sql id="base_column">
-		id, username, password, state,usertype,admin
+		id, nickname, password, state,usertype,admin ,salt , registerdate , lastlogindate
 	</sql>
 	
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap" useCache="true">
@@ -43,17 +50,24 @@
 		from logininfo
 	</select>
 	
-	<select id="getCountByUsername" resultType="int" useCache="false">
-		select count(id) from logininfo where username=#{username} and usertype = #{userType}
+	<select id="getCountByNickname" resultType="int" useCache="false">
+		select count(id) from logininfo where nickname=#{nickname} and usertype = #{userType}
 	</select>
-	
+
+
+	<select id="getLoginInfoByNickname" resultMap="BaseResultMap" useCache="false">
+		select <include refid="base_column" />
+		from logininfo where nickname=#{nickname} and usertype = #{userType}
+	</select>
+
+
 	<select id="login" resultMap="BaseResultMap" useCache="true">
 		select <include refid="base_column"/>
-		from logininfo where username= #{name} and password=#{password} and usertype=#{userType}
+		from logininfo where nickname= #{name} and password=#{password} and usertype=#{userType}
 	</select>
 	
 	<select id="autoComplate" resultType="hashmap" useCache="false">
-		select id,username as name
-		from logininfo where username LIKE concat(#{word},'%') AND usertype = #{userType}
+		select id,nickname as name
+		from logininfo where nickname LIKE concat(#{word},'%') AND usertype = #{userType}
 	</select>
 </mapper>

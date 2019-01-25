@@ -18,8 +18,11 @@ public interface LogininfoMapper {
 
 	int updateByPrimaryKey(Logininfo record);
 
-	int getCountByUsername(@Param("username") String username,
+	int getCountByNickname(@Param("nickname") String nickname,
                            @Param("userType") int userType);
+
+	Logininfo getLoginInfoByNickname(@Param("nickname") String nickname,
+						   @Param("userType") int userType);
 
 	Logininfo login(@Param("name") String name,
                     @Param("password") String password, @Param("userType") int userType);

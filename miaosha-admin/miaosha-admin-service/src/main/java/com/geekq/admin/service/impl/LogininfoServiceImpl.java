@@ -1,14 +1,15 @@
 package com.geekq.admin.service.impl;
 
+import com.geekq.admin.entity.IpLog;
 import com.geekq.admin.entity.Logininfo;
 import com.geekq.admin.entity.Userinfo;
 import com.geekq.admin.mapper.IpLogMapper;
 import com.geekq.admin.mapper.LogininfoMapper;
 import com.geekq.admin.mapper.UserinfoMapper;
 import com.geekq.admin.service.ILogininfoService;
+import com.geekq.admin.utils.UserContext;
 import com.geekq.common.enums.Constants;
 import com.geekq.common.enums.ResultStatus;
-import com.geekq.common.utils.Constanst;
 import com.geekq.common.utils.MD5.MD5Utils;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
 import org.slf4j.Logger;
@@ -37,12 +38,10 @@ public class LogininfoServiceImpl implements ILogininfoService {
 	private UserinfoMapper userinfoMapper;
 
 	@Override
-	public ResultGeekQ<Boolean> register(String username, String password) {
+	public void register(String username, String password) {
 
-	ResultGeekQ<Boolean> resultGeekQ = ResultGeekQ.build();
-	int count = loginInfoMapper.getCountByUsername(username, Constants.USERTYPE_NORMAL);
-	if(count > 0) {
-		try {
+	int count = loginInfoMapper.getCountByNickname(username, Constants.USERTYPE_NORMAL);
+	if(count <= 0) {
 			Logininfo logininfo =new Logininfo();
 			logininfo.setNickname(username);
 			//获取随机salt
@@ -52,29 +51,44 @@ public class LogininfoServiceImpl implements ILogininfoService {
 			logininfo.setState(Constants.STATE_NORMAL);
 			logininfo.setUserType(Constants.USERTYPE_NORMAL);
 			logininfo.setRegisterDate(new Date());
+			logininfo.setLastLoginDate(new Date());
 			logininfo.setSalt(salt);
 			this.loginInfoMapper.insert(logininfo);
 			//初始化一个Userinfo
 			Userinfo userinfo = Userinfo.empty(logininfo.getId());
-			this.userinfoMapper.insert(userinfo);
-		} catch (Exception e) {
-			logger.error("注册失败!",e);
-			resultGeekQ.withError(ResultStatus.RESIGETER_FAIL);
-		}
+			int result = this.userinfoMapper.insert(userinfo);
 	}else{
-		resultGeekQ.withError(ResultStatus.RESIGETER_NICKNAMEEXIST);
+		throw new RuntimeException("用户名已经存在!");
 	}
-		return resultGeekQ;
 	}
 
 	@Override
 	public boolean checkUsername(String name, int userType) {
-		return this.loginInfoMapper.getCountByUsername(name, userType)<=0;
+		return this.loginInfoMapper.getCountByNickname(name, userType)<=0;
 	}
 
 	@Override
-	public Logininfo login(String name, String password, int userType, String ip) {
-		return null;
+	public 	ResultGeekQ<Logininfo>  login(String name, String password, int userType, String ip) {
+		ResultGeekQ<Logininfo> resultGeekQ = ResultGeekQ.build();
+
+		try {
+			IpLog log = new IpLog(name,new Date(),ip,userType,null);
+			Logininfo logininfo = loginInfoMapper.getLoginInfoByNickname(name,Constants.USERTYPE_NORMAL);
+			String salt = logininfo.getSalt();
+			Logininfo current = this.loginInfoMapper.login(name,
+					MD5Utils.formPassToDBPass(password,salt), userType);
+			if(current != null){
+				UserContext.putLogininfo(current);
+				log.setLoginInfoId(current.getId());
+				log.setLoginState(IpLog.LOGINSTATE_SUCCESS);
+			}
+			ipLogMapper.insert(log);
+			resultGeekQ.setData(logininfo);
+		} catch (Exception e) {
+			logger.error("登录发生错误!",e);
+			resultGeekQ.withError(ResultStatus.LOGIN_FIAL);
+		}
+		return resultGeekQ;
 	}
 
 	@Override
