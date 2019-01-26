@@ -28,4 +28,10 @@
 
 	<dubbo:reference id="redisCacheStorageService" interface="com.geekq.admin.service.RedisCacheStorageService"
 					 retries="3" check="false" init="true"></dubbo:reference>
+
+	<dubbo:reference id="accountService" interface="com.geekq.admin.service.IAccountService"
+					 retries="3" check="false" init="true"></dubbo:reference>
+
+	<dubbo:reference id="iSystemDictionaryServiceImpl" interface="com.geekq.admin.service.ISystemDictionaryService"
+					 retries="3" check="false" init="true"></dubbo:reference>
 </beans>

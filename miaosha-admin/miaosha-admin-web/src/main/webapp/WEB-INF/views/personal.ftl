@@ -9,76 +9,7 @@
 		
 		<script type="text/javascript">
 			$(function(){
-				<#if !userinfo.isBindPhone>
-				$("#goto_bindphone").click(function(){
-					$("#bindPhoneModal").modal('show');
-				});
-				
-				$("#sendVerifyCode").click(function(){
-					var pn=$("#phoneNumber");
-					var _me=$(this);
-					if(pn.val()){
-						_me.attr("disabled","disabled");
-						$.ajax({
-							dataType:"json",
-							type:"post",
-							url:"/sendVerifyCode.do",
-							data:{phoneNumber:pn.val()},
-							success:function(data){
-								if(data.success){
-									var time=5;
-									var timer=window.setInterval(function(){
-										time--;
-										if(time>=0){
-											_me.html(time+"秒后重新发送");
-										}else{
-											_me.html("重新发送验证码");
-											_me.attr("disabled",false);
-											window.clearInterval(timer);
-										}
-									},1000);
-								}else{
-									_me.attr("disabled",false);
-									$.messager.alert("提示",data.msg);
-								}
-							}
-						});
-					}
-				});
-				
-				$("#bindPhone").click(function(){
-					$("#bindForm").ajaxSubmit(function(data){
-						if(data.success){
-							$.messager.confirm("提示","手机绑定成功!",function(){
-								window.location.reload();
-							});
-						}else{
-							$.messager.popup("绑定手机失败");
-						}
-					});	
-				});
-				</#if>
-				
-				
-				<#if !userinfo.isBindEmail>
-					$("#goto_bindemail").click(function(){
-						$("#bindEmailModal").modal("show");
-					});
-					
-					$("#bindEmail").click(function(){
-						if($("#email").val()){
-							$("#bindEmailForm").ajaxSubmit(function(data){
-								if(data.success){
-									$.messager.confirm("提示","已发送验证邮件,请尽快激活!",function(){
-										window.location.reload();
-									});
-								}else{
-									$.messager.popup("发送验证邮件失败");
-								}
-							});
-						}
-					});
-				</#if>
+
 			});
 		</script>
 	</head>
@@ -105,7 +36,7 @@
 									<img class="icon" src="images/person_icon.png" />
 								</div>
 								<div class="pull-left el-head">
-									<p>用户名：${logininfo.username}</p>
+									<p>用户名：${logininfo.nickname}</p>
 									<p>最后登录时间：2015-01-25 15:30:10</p>
 								</div>
 								<div class="pull-left" style="text-align: center;width: 400px;margin:30px auto 0px auto;">
@@ -167,7 +98,7 @@
 									<div class="col-sm-4">
 										<div class="el-accoun-auth">
 											<div class="el-accoun-auth-left">
-												<img src="images/shouji.jpg" />
+                                                _DicUtil							<img src="images/shouji.jpg" />
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>手机认证</h5>

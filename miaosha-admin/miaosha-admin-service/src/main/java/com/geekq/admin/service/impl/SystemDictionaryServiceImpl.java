@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author 邱润泽
- */
-@Service
+@Service("iSystemDictionaryServiceImpl")
 public class SystemDictionaryServiceImpl implements ISystemDictionaryService {
 	@Autowired
 	private SystemDictionaryMapper systemDictionaryMapper;

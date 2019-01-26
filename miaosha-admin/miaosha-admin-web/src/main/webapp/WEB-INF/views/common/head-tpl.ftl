@@ -8,7 +8,7 @@
 					<#else>
 					<li>
 						  <a class="el-current-user" href="/personal.do">
-						  ${logininfo.username}
+						  ${logininfo.nickname}
 						  </a>
 					</li>
 					<li>

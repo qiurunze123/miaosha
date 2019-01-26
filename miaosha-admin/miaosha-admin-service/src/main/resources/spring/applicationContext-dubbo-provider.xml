@@ -27,4 +27,10 @@
 
 	<dubbo:service timeout="60000" retries="3"
 				   interface="com.geekq.admin.service.RedisCacheStorageService" ref="redisCacheStorageServiceImpl" />
+
+	<dubbo:service timeout="60000" retries="3"
+				   interface="com.geekq.admin.service.IAccountService" ref="accountServiceImpl" />
+
+	<dubbo:service timeout="60000" retries="3"
+				   interface="com.geekq.admin.service.ISystemDictionaryService" ref="iSystemDictionaryServiceImpl" />
 </beans>

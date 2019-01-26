@@ -20,6 +20,8 @@ public class PersonController extends BaseController {
     @Autowired
     private IAccountService accountService;
 
+
+
     @Autowired
     private RedisCacheStorageService redisService;
 
@@ -29,7 +31,9 @@ public class PersonController extends BaseController {
         //从中拿到 用户信息对象
         Logininfo info = redisService.get("Loginqiurunze11");
         model.addAttribute("userinfo", userinfoService.get(info.getId()));
-//        model.addAttribute("account", accountService.get(info.getId()));
+        model.addAttribute("account", accountService.get(info.getId()));
+        model.addAttribute("logininfo", info);
+
         return "personal";
     }
 }
