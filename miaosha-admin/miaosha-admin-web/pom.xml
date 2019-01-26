@@ -21,6 +21,12 @@
 			<artifactId>miaosha-admin-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-admin-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- freemarker -->
 		<dependency>
 			<groupId>org.freemarker</groupId>

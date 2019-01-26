@@ -37,6 +37,7 @@ public class AbstractResult {
     }
 
     public AbstractResult withError(int code, String message) {
+        this.status = ResultStatus.SYSTEM_ERROR;
         this.code = code;
         this.message = message;
         return this;

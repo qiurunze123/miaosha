@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.admin.mapper.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.geekq.admin.entity.Account" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tradePassword" property="tradePassword" jdbcType="VARCHAR" />
+    <result column="usableAmount" property="usableAmount" jdbcType="DECIMAL" />
+    <result column="freezedAmount" property="freezedAmount" jdbcType="DECIMAL" />
+    <result column="borrowLimitAmount" property="borrowLimitAmount" jdbcType="DECIMAL" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="unReceiveInterest" property="unReceiveInterest" jdbcType="DECIMAL" />
+    <result column="unReceivePrincipal" property="unReceivePrincipal" jdbcType="DECIMAL" />
+    <result column="unReturnAmount" property="unReturnAmount" jdbcType="DECIMAL" />
+    <result column="remainBorrowLimit" property="remainBorrowLimit" jdbcType="DECIMAL" />
+    <result column="abstractInfo" property="abstractInfo" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account
+    where id = #{id,jdbcType=BIGINT} and version=#{version}
+  </delete>
+  
+  <insert id="insert" parameterType="com.geekq.admin.entity.Account" keyProperty="id" >
+    insert into account (id,tradePassword, usableAmount, freezedAmount, 
+      borrowLimitAmount, version, unReceiveInterest, 
+      unReceivePrincipal, unReturnAmount, remainBorrowLimit,abstractInfo)
+    values (#{id},#{tradePassword,jdbcType=VARCHAR}, #{usableAmount,jdbcType=DECIMAL}, #{freezedAmount,jdbcType=DECIMAL}, 
+      #{borrowLimitAmount,jdbcType=DECIMAL}, 0, #{unReceiveInterest,jdbcType=DECIMAL}, 
+      #{unReceivePrincipal,jdbcType=DECIMAL}, #{unReturnAmount,jdbcType=DECIMAL}, #{remainBorrowLimit,jdbcType=DECIMAL},#{abstractInfo})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.geekq.admin.entity.Account" >
+    update account
+    set tradePassword = #{tradePassword,jdbcType=VARCHAR},
+      usableAmount = #{usableAmount,jdbcType=DECIMAL},
+      freezedAmount = #{freezedAmount,jdbcType=DECIMAL},
+      borrowLimitAmount = #{borrowLimitAmount,jdbcType=DECIMAL},
+      version = version+1,
+      unReceiveInterest = #{unReceiveInterest,jdbcType=DECIMAL},
+      unReceivePrincipal = #{unReceivePrincipal,jdbcType=DECIMAL},
+      unReturnAmount = #{unReturnAmount,jdbcType=DECIMAL},
+      remainBorrowLimit = #{remainBorrowLimit,jdbcType=DECIMAL},
+      abstractInfo=#{abstractInfo}
+    where id = #{id,jdbcType=BIGINT} and version=#{version}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, tradePassword, usableAmount, freezedAmount, borrowLimitAmount, version, 
+    unReceiveInterest, unReceivePrincipal, unReturnAmount, remainBorrowLimit,abstractInfo
+    from account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, tradePassword, usableAmount, freezedAmount, borrowLimitAmount, version, 
+    unReceiveInterest, unReceivePrincipal, unReturnAmount, remainBorrowLimit,abstractInfo
+    from account
+  </select>
+</mapper>

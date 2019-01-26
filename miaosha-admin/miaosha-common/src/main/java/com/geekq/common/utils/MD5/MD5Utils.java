@@ -61,5 +61,4 @@ public class MD5Utils {
         return MD5(str);
     }
 
-
 }

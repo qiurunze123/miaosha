@@ -85,7 +85,7 @@
 			},
 			submitHandler:function(form){
 				$(form).ajaxSubmit(function(data){
-					if(data.data){
+					if(data.success){
 						$.messager.confirm("提示","注册成功,请重新登录系统!",function(){
 							window.location.href="/login.html";
 						});	

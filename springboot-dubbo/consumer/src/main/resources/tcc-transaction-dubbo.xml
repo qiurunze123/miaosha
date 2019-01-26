@@ -10,7 +10,7 @@
 
     <dubbo:application name="dubbo-consumer" />
 
-    <dubbo:registry protocol="zookeeper" address="localhost:2181"/>
+    <dubbo:registry protocol="zookeeper" address="39.107.245.253:2181"/>
 
     <dubbo:reference id="serviceAPI" timeout="50000" interface="com.geekq.dubbo.springboot.ServiceAPI" />
 

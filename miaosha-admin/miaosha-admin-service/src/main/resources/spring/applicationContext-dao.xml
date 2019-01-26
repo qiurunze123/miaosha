@@ -52,4 +52,5 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.geekq.admin.mapper"></property>
 	</bean>
+
 </beans>

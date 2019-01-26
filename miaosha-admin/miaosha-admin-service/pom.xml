@@ -11,6 +11,20 @@
 	<packaging>war</packaging>
 	
 	<dependencies>
+
+
+		<!-- jedis依赖 -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.8.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.geekq</groupId>
 			<artifactId>miaosha-admin-api</artifactId>
@@ -58,7 +72,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
 		<!-- Mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>

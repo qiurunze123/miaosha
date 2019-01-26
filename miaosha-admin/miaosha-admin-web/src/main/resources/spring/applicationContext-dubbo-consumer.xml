@@ -9,7 +9,7 @@
 	<dubbo:application name="miaosha-dubbo-web"></dubbo:application>
 	
 	<!-- 注册中心的配置，用于消费者的监听 -->
-	<dubbo:registry protocol="zookeeper" address="localhost:2181"></dubbo:registry>
+	<dubbo:registry protocol="zookeeper" address="39.107.245.253:2181"></dubbo:registry>
 	
 	<!--&lt;!&ndash; 监听服务，通过注册中心去进行查找，查找到后进行服务调用 &ndash;&gt;-->
 	<!--<dubbo:reference id="itemService" interface="com.imooc.item.service.ItemsService"-->
@@ -19,4 +19,13 @@
 	<dubbo:reference id="iLogininfoService" interface="com.geekq.admin.service.ILogininfoService"
 					 retries="3" check="false" init="true"></dubbo:reference>
 
+	<dubbo:reference id="iUserService" interface="com.geekq.admin.service.IUserService"
+					 retries="3" check="false" init="true"></dubbo:reference>
+
+	<dubbo:reference id="iAccountService" interface="com.geekq.admin.service.IAccountService"
+					 retries="3" check="false" init="true"></dubbo:reference>
+
+
+	<dubbo:reference id="redisCacheStorageService" interface="com.geekq.admin.service.RedisCacheStorageService"
+					 retries="3" check="false" init="true"></dubbo:reference>
 </beans>

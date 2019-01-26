@@ -42,12 +42,13 @@
 			//验证成功后，提交操作；
 			submitHandler:function(form){
 				$(form).ajaxSubmit(function(data){
-					if(data.status='success'){
+					if(data.status == "SUCCESS"){
+					    var username = data.data.nickname;
 						$.messager.confirm("提示","登陆成功,点击确定跳转到个人中心",function(){
-							window.location.href="/personal.do";
+							window.location.href="/personal.do?username="+username;
 						});
 					}else{
-						$.messager.alert("提示",data.msg);
+						$.messager.alert("提示","登录失败！");
 					}
 				});
 			},

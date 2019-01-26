@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!-- 加载redis参数 -->
+    <context:property-placeholder location="classpath:resource/redis.properties" />
+
+    <!-- 自动注解 -->
+    <!--<context:component-scan base-package="service.impl" />-->
+
+    <!-- jedis 连接池配置参数： -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 设置最大连接数 -->
+        <property name="maxTotal" value="${redis.maxActive}"></property>
+        <!-- 设置最大空闲数 -->
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <!-- 设置超时时间 -->
+        <property name="maxWaitMillis" value="${redis.maxWait}"></property>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+        <property name="testOnReturn" value="${redis.testOnReturn}"></property>
+    </bean>
+
+    <!-- jedis 连接池 连接本地redis服务 构造器注入 -->
+    <bean id="pool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="poolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}"/>
+        <constructor-arg index="3" value="${redis.maxWait}"/>
+        <constructor-arg index="4" value="${redis.pass}"/>
+    </bean>
+
+    <!-- redis cache config -->
+   <!-- <bean id="redisCache" class="client.RedisCache">
+        <property name="pool" ref="pool"/>
+    </bean>-->
+
+</beans>

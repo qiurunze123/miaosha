@@ -1,13 +1,20 @@
 package com.geekq.web.interceptor;
 
-import com.geekq.web.utils.UserContext;
+import com.geekq.admin.entity.Logininfo;
+import com.geekq.admin.service.RedisCacheStorageService;
+import com.geekq.admin.utils.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
+
+	@Autowired
+	private RedisCacheStorageService redisService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -15,9 +22,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod hm = (HandlerMethod) handler;
 			RequiredLogin rl = hm.getMethodAnnotation(RequiredLogin.class);
-			if (rl != null) {
-				if (request.getSession().getAttribute(
-						UserContext.LOGIN_IN_SESSION) == null) {
+			System.out.println(request.getParameter("username"));
+			String username =request.getParameter("username");
+		if (rl != null) {
+			Logininfo current = redisService.get("Login"+username);
+				if (current == null) {
 					response.sendRedirect("/login.html");
 					return false;
 				}

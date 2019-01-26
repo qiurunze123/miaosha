@@ -1,12 +1,15 @@
 package com.geekq.admin.service.impl;
 
+import com.geekq.admin.entity.Account;
 import com.geekq.admin.entity.IpLog;
 import com.geekq.admin.entity.Logininfo;
 import com.geekq.admin.entity.Userinfo;
+import com.geekq.admin.mapper.AccountMapper;
 import com.geekq.admin.mapper.IpLogMapper;
 import com.geekq.admin.mapper.LogininfoMapper;
 import com.geekq.admin.mapper.UserinfoMapper;
 import com.geekq.admin.service.ILogininfoService;
+import com.geekq.admin.service.RedisCacheStorageService;
 import com.geekq.admin.utils.UserContext;
 import com.geekq.common.enums.Constants;
 import com.geekq.common.enums.ResultStatus;
@@ -37,6 +40,11 @@ public class LogininfoServiceImpl implements ILogininfoService {
 	@Autowired
 	private UserinfoMapper userinfoMapper;
 
+	@Autowired
+	private AccountMapper accountMapper;
+
+	@Autowired
+	private RedisCacheStorageService redisService;
 	@Override
 	public void register(String username, String password) {
 
@@ -54,7 +62,13 @@ public class LogininfoServiceImpl implements ILogininfoService {
 			logininfo.setLastLoginDate(new Date());
 			logininfo.setSalt(salt);
 			this.loginInfoMapper.insert(logininfo);
-			//初始化一个Userinfo
+
+			//初始化一个account
+			Account account = Account.empty(logininfo.getId());
+			accountMapper.insert(account);
+
+
+		    //初始化一个Userinfo
 			Userinfo userinfo = Userinfo.empty(logininfo.getId());
 			int result = this.userinfoMapper.insert(userinfo);
 	}else{
@@ -78,7 +92,8 @@ public class LogininfoServiceImpl implements ILogininfoService {
 			Logininfo current = this.loginInfoMapper.login(name,
 					MD5Utils.formPassToDBPass(password,salt), userType);
 			if(current != null){
-				UserContext.putLogininfo(current);
+				redisService.set("Login"+current.getNickname(),current);
+//				RedisCacheStorageService.set("login"+current.getId().toString(),10000,current);
 				log.setLoginInfoId(current.getId());
 				log.setLoginState(IpLog.LOGINSTATE_SUCCESS);
 			}
