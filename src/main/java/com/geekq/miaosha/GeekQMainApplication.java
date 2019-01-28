@@ -7,8 +7,6 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
-@ImportResource({"classpath:dubbo/applicationContext-dubbo-consumer.xml"})
-@ComponentScan(basePackages={"com.geekq.admin.*","com.geekq.miaosha.*"})
 @SpringBootApplication
 @EnableScheduling
 public class GeekQMainApplication {
