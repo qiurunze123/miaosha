@@ -1,6 +1,7 @@
 package com.geekq.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,12 +107,19 @@ public class RedisService {
         jedisPool.returnResource(jedis);
         return result;
     }
+
 	/**
-	 * 设置对象
-	 * */
+	 * 向redis中存放
+	 * @param prefix
+	 * @param key
+	 * @param value
+	 * @param <T>
+	 * @return
+	 */
 	public <T> boolean set(KeyPrefix prefix, String key,  T value) {
 		 Jedis jedis = null;
 		 try {
+		 	 //从池中获取一个连接
 			 jedis =  jedisPool.getResource();
 			 String str = beanToString(value);
 			 if(str == null || str.length() <= 0) {
@@ -256,7 +264,13 @@ public class RedisService {
 			}
 		}
 	}
-	
+
+	/**
+	 * 将bean转化为String
+	 * @param value
+	 * @param <T> 表示可以传入任何类型的数据
+	 * @return
+	 */
 	public static <T> String beanToString(T value) {
 		if(value == null) {
 			return null;
@@ -275,7 +289,7 @@ public class RedisService {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T stringToBean(String str, Class<T> clazz) {
-		if(str == null || str.length() <= 0 || clazz == null) {
+			if(str == null || str.length() <= 0 || clazz == null) {
 			 return null;
 		}
 		if(clazz == int.class || clazz == Integer.class) {
@@ -289,6 +303,10 @@ public class RedisService {
 		}
 	}
 
+	/**
+	 * 关闭获取的redis连接
+	 * @param jedis
+	 */
 	private void returnToPool(Jedis jedis) {
 		 if(jedis != null) {
 			 jedis.close();

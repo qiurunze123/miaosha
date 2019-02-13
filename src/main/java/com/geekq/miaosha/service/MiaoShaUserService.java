@@ -89,16 +89,26 @@ public class MiaoShaUserService {
         return true;
     }
 
-
+    /**
+     * 注册用户信息
+     * @param response
+     * @param userName
+     * @param passWord
+     * @param salt
+     * @return
+     */
     public boolean register(HttpServletResponse response , String userName , String passWord , String salt) {
         MiaoshaUser miaoShaUser =  new MiaoshaUser();
         miaoShaUser.setNickname(userName);
+        //salt与用户输入的密码进行密码的计算
         String DBPassWord =  MD5Utils.formPassToDBPass(passWord , salt);
         miaoShaUser.setPassword(DBPassWord);
         miaoShaUser.setRegisterDate(new Date());
+        //设置salt值
         miaoShaUser.setSalt(salt);
         miaoShaUser.setNickname(userName);
         try {
+            //将用户信息存放到数据库
             miaoShaUserDao.insertMiaoShaUser(miaoShaUser);
             MiaoshaUser user = miaoShaUserDao.getByNickname(miaoShaUser.getNickname());
             if(user == null){
@@ -114,11 +124,11 @@ public class MiaoShaUserService {
             vo.setMessageType(MessageStatus.messageType.system_message.ordinal());
             vo.setUserId(miaoShaUser.getId());
             vo.setMessageHead(MessageStatus.ContentEnum.system_message_register_head.getMessage());
+            //注册成功之后向消息队列中发送消息,这里为什么使用消息队列发送消息，就是为了达到异步的场景，减少系统的耗时，加快响应速度
             sender.sendRegisterMessage(vo);
-
-
             //生成cookie 将session返回游览器 分布式session
             String token= UUIDUtil.uuid();
+            //将用户信息存放到redis中
             addCookie(response, token, user);
         } catch (Exception e) {
             logger.error("注册失败",e);
@@ -174,11 +184,20 @@ public class MiaoShaUserService {
         }
         //生成cookie 将session返回游览器 分布式session
         String token= UUIDUtil.uuid();
+        //添加cookie信息
         addCookie(response, token, user);
         return token ;
     }
+
+    /**
+     * 将用户信息以及token放入到redis缓存中
+     * @param response
+     * @param token
+     * @param user
+     */
     private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
         redisService.set(MiaoShaUserKey.token, token, user);
+        //返回的cookie中只存放用户的token信息
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //设置有效期
         cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());

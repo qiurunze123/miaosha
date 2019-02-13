@@ -56,6 +56,7 @@ public class RegisterController {
             return result;
 
         }
+        //service调用注册
         boolean registerInfo  = miaoShaUserService.register(response , userName,passWord,salt);
         if(!registerInfo){
            result.withError(RESIGETER_FAIL.getCode(),RESIGETER_FAIL.getMessage());

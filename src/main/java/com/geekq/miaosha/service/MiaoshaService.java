@@ -128,6 +128,7 @@ public class MiaoshaService {
 		if(codeOld == null || codeOld - verifyCode != 0 ) {
 			return false;
 		}
+		//验证成功之后删除redis中的值
 		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, "regitser");
 		return true;
 	}
