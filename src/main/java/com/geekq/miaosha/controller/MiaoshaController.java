@@ -13,6 +13,7 @@ import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
 import com.geekq.miaosha.service.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
+import com.google.common.util.concurrent.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.geekq.miaosha.common.enums.ResultStatus.*;
 
@@ -79,22 +81,21 @@ public class MiaoshaController implements InitializingBean {
             result.withError(REQUEST_ILLEGAL.getCode(), REQUEST_ILLEGAL.getMessage());
             return result;
         }
-//		//使用RateLimiter 限流
-//		RateLimiter rateLimiter = RateLimiter.create(10);
-//		//判断能否在1秒内得到令牌，如果不能则立即返回false，不会阻塞程序
-//		if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
-//			System.out.println("短期无法获取令牌，真不幸，排队也瞎排");
-//			return ResultGeekQ.error(CodeMsg.MIAOSHA_FAIL);
-//
-//		}
+		//使用RateLimiter 限流 每秒最多处理１０个请求
+		RateLimiter rateLimiter = RateLimiter.create(10);
+		//判断能否在1秒内得到令牌，如果不能则立即返回false，不会阻塞程序
+		if (!rateLimiter.tryAcquire(1000, TimeUnit.MILLISECONDS)) {
+			System.out.println("短期无法获取令牌，真不幸，排队也瞎排");
+			return ResultGeekQ.error(MIAOSHA_FAIL);
 
-        //是否已经秒杀到
+		}
+        //是否已经秒杀到,避免用户重复秒杀
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
         }
-        //内存标记，减少redis访问
+        //内存标记，减少redis访问,标识货物是否卖完
         boolean over = localOverMap.get(goodsId);
         if (over) {
             result.withError(MIAO_SHA_OVER.getCode(), MIAO_SHA_OVER.getMessage());

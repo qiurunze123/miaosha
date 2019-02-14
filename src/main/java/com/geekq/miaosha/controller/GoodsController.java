@@ -49,6 +49,7 @@ public class GoodsController extends BaseController {
      * QPS:1267 load:15 mysql
      * 5000 * 10
      * QPS:2884, load:5
+     * produces作用：指定返回值的类型
      * */
     @RequestMapping(value="/to_list", produces="text/html")
     @ResponseBody
