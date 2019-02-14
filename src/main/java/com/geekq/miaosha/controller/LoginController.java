@@ -31,7 +31,7 @@ public class LoginController {
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
-        //未完成
+        //访问次数增加一次
         RedisLua.vistorCount(COUNTLOGIN);
         String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
         logger.info("访问网站的次数为:{}",count);
