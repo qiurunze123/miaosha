@@ -36,4 +36,10 @@
     <update id="update" parameterType="miaoshauser" >
    update miaosha_user set password = #{password} where id = #{id}
   </update>
+
+    <select id="getCountByUserName" resultType="int" >
+        select count(*)
+        from miaosha_user where nickname = #{userName}
+    </select>
+
 </mapper>

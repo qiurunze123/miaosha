@@ -12,6 +12,7 @@ public class UserContext {
 	}
 	
 	public static MiaoshaUser getUser() {
+
 		return userHolder.get();
 	}
 

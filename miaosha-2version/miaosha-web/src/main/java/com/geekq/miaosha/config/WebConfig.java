@@ -1,6 +1,6 @@
 package com.geekq.miaosha.config;
 
-import com.geekq.miaosha.access.AccessInterceptor;
+import com.geekq.miaosha.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -16,12 +16,14 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
     UserArgumentResolver resolver;
 
     @Autowired
-    private AccessInterceptor interceptor;
+    private LoginInterceptor interceptor;
 
+    final String[] notLoginInterceptPaths = {"/do_login/**"};
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
-        registry.addInterceptor(interceptor);
+        registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(notLoginInterceptPaths);
+//        registry.addInterceptor(interceptor);
     }
 
     @Override

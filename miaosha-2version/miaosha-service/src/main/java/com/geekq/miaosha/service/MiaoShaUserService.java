@@ -6,14 +6,10 @@ import com.geekq.miaosha.redis.MiaoShaUserKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miasha.entity.IpLog;
 import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.enums.Constants;
-import com.geekq.miasha.enums.MessageStatus;
 import com.geekq.miasha.exception.GlobleException;
 import com.geekq.miasha.utils.MD5Utils;
-import com.geekq.miasha.utils.SnowflakeIdWorker;
 import com.geekq.miasha.utils.UUIDUtil;
 import com.geekq.miasha.vo.LoginVo;
-import com.geekq.miasha.vo.MiaoShaMessageVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import static com.geekq.miasha.enums.enums.ResultStatus.MOBILE_NOT_EXIST;
-import static com.geekq.miasha.enums.enums.ResultStatus.PASSWORD_ERROR;
-import static com.geekq.miasha.enums.enums.ResultStatus.SYSTEM_ERROR;
+import static com.geekq.miasha.enums.Constants.USERTYPE_NORMAL;
+import static com.geekq.miasha.enums.enums.ResultStatus.*;
 
 
 @Service
@@ -46,6 +41,11 @@ public class MiaoShaUserService {
     private MQSender sender ;
 
 
+    public boolean getNickNameCount(String userName){
+
+      return   miaoShaUserMapper.getCountByUserName(userName,USERTYPE_NORMAL) <=0;
+
+    }
     public MiaoshaUser getByToken(HttpServletResponse response , String token) {
 
         if(StringUtils.isEmpty(token)){
@@ -94,11 +94,13 @@ public class MiaoShaUserService {
     }
 
 
-    public boolean register(String userName , String passWord , String salt ,
+    public boolean register(String userName , String passWord ,
                             HttpServletResponse response , HttpServletRequest request) {
         MiaoshaUser miaoShaUser =  new MiaoshaUser();
         miaoShaUser.setNickname(userName);
-        String DBPassWord =  MD5Utils.formPassToDBPass(passWord , MD5Utils.getSaltT());
+        //password  应该在前段进行一次MD5 在后端在进行一个MD5 在入库
+        String salt = MD5Utils.getSaltT();
+        String DBPassWord =  MD5Utils.formPassToDBPass(passWord ,salt);
         miaoShaUser.setPassword(DBPassWord);
         miaoShaUser.setRegisterDate(new Date());
         miaoShaUser.setSalt(salt);
@@ -106,7 +108,7 @@ public class MiaoShaUserService {
         try {
             miaoShaUserMapper.insertMiaoShaUser(miaoShaUser);
             IpLog log = new IpLog(userName,new Date(),request.getRemoteAddr(),
-                    Constants.USERTYPE_NORMAL,null);
+                    USERTYPE_NORMAL,null);
 
             MiaoshaUser user = miaoShaUserMapper.getByNickname(miaoShaUser.getNickname());
             if(user == null){
@@ -129,7 +131,7 @@ public class MiaoShaUserService {
             throw  new GlobleException(SYSTEM_ERROR);
         }
 
-        String mobile =loginVo.getMobile();
+        String mobile =loginVo.getNickname();
         String password =loginVo.getPassword();
         MiaoshaUser user = getByNickName(mobile);
         if(user == null) {
@@ -139,7 +141,7 @@ public class MiaoShaUserService {
         String dbPass = user.getPassword();
         String saltDb = user.getSalt();
         String calcPass = MD5Utils.formPassToDBPass(password,saltDb);
-        if(!"b7797cce01b4b131b433b6acf4add449".equals(dbPass)){
+        if(!calcPass.equals(dbPass)){
             throw new GlobleException(PASSWORD_ERROR);
         }
         //生成cookie 将session返回游览器 分布式session
@@ -156,7 +158,7 @@ public class MiaoShaUserService {
             throw  new GlobleException(SYSTEM_ERROR);
         }
 
-        String mobile =loginVo.getMobile();
+        String mobile =loginVo.getNickname();
         String password =loginVo.getPassword();
         MiaoshaUser user = getByNickName(mobile);
         if(user == null) {

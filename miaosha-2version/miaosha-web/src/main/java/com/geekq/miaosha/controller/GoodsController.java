@@ -1,5 +1,6 @@
 package com.geekq.miaosha.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
@@ -39,6 +40,9 @@ public class GoodsController extends BaseController {
     @Autowired
     private GoodsService goodsService;
 
+    @Reference(version = "${demo.service.version}")
+    private com.geekq.api.service.GoodsService goodsServiceRpc;
+
     @Autowired
     ThymeleafViewResolver viewResolver;
 
@@ -54,6 +58,7 @@ public class GoodsController extends BaseController {
     @ResponseBody
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
         model.addAttribute("user", user);
+//        ResultGeekQ<List<com.geekq.api.entity.GoodsVo>> goodsList1 =  goodsServiceRpc.listGoodsVo();
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
         return render(request,response,model,"goods_list", GoodsKey.getGoodsList,"");

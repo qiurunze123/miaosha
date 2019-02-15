@@ -1,0 +1,705 @@
+/********************************************
+   AUTHOR:  			Erwin Aligam 
+   WEBSITE:   			http://www.styleshout.com/
+   TEMPLATE NAME: 	Techmania 1.0
+	TEMPLATE CODE: 	S-0003
+    VERSION:         1.1          	
+ *******************************************/
+	/********************************************
+   HTML ELEMENTS
+********************************************/ /* Top elements */
+	/** { margin:0; padding: 0; }*/
+body {
+	background-color: #000;
+	color: #555;
+	font: 78%/ 1.6 Verdana, 'Trebuchet MS', arial, sans-serif;
+	text-align: center;
+	margin: 15px 0;
+}
+
+/* links */
+a {
+	color: #213540;
+	background: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #3e4255;
+	text-decoration: underline;
+	background: inherit;
+}
+
+/* headers */
+h1,h2,h3 {
+	font-family: 'Trebuchet MS', Arial, sans-serif;
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 1.5em;
+	margin: 10px 15px;
+}
+
+h2 {
+	font-size: 1.3em;
+	text-transform: uppercase;
+	color: #339900;
+	margin: 10px 15px;
+}
+
+h3 {
+	font-size: 1.1em;
+	color: #333;
+	margin: 16px 0 0 18px;
+}
+
+h1,h2,h3 {
+	padding: 0;
+}
+
+p {
+	line-height: 1.4em;
+	padding: 0 15px;
+}
+
+p.error {
+	color: #CC0033;
+}
+
+ul,ol {
+	margin: 10px 6px;
+	padding: 0 15px;
+	color: #006699;
+}
+
+ul span,ol span {
+	color: #666666;
+}
+
+/* images */
+img {
+	border: 2px solid #CCC;
+}
+
+img.float-right {
+	margin: 5px 0px 10px 10px;
+}
+
+img.float-left {
+	margin: 5px 10px 10px 0px;
+}
+
+code {
+	margin: 5px 0;
+	padding: 10px;
+	text-align: left;
+	display: block;
+	overflow: auto;
+	font: 500 1em/ 1.5em 'Lucida Console', 'courier new', monospace;
+	/* white-space: pre; */
+	background: #FAFAFA;
+	border: 1px solid #EAEAEA;
+	border-left: 5px solid #72A545;
+}
+
+acronym {
+	cursor: help;
+	border-bottom: 1px solid #777;
+}
+
+blockquote {
+	margin: 15px;
+	padding: 0 0 0 32px;
+	background: #FAFAFA url(quote.gif) no-repeat 5px 10px !important;
+	background-position: 8px 10px;
+	border: 1px solid #EAEAEA;
+	border-left: 5px solid #72A545;
+	font-weight: bold;
+}
+
+/* form elements */
+fieldset {
+	margin: 12px 12px 18px;
+	padding-left: 6px;
+	border: 1px solid #004080;
+	color: #006699;
+}
+
+fieldset fieldset {
+	border: 1px solid #9ea190;
+	margin: 17px 14px;
+}
+
+form {
+	margin: 10px 15px;
+	padding: 0;
+}
+
+label {
+	font-weight: bold;
+	margin: 5px 3px 0 0;
+	width: 160px;
+	text-align: right;
+	float: left;
+}
+
+legend {
+	font-size: 1.2em;
+	padding: 0 12px;
+	font-weight: 900;
+	background-color: #F9F9F9;
+}
+
+fieldset fieldset legend {
+	font-size: 1em;
+	color: #1a2129;
+	padding: 0 18px;
+	margin-left: 75px;
+}
+
+input {
+	padding: 3px;
+	margin: 4px 0;
+	border: 1px solid #CFCED3;
+	font: normal 1em Verdana, sans-serif;
+	color: #777;
+}
+
+textarea {
+	width: 400px;
+	padding: 4px;
+	font: normal 1em Verdana, sans-serif;
+	border: 1px solid #eee;
+	height: 100px;
+	display: block;
+	color: #777;
+}
+
+input.button {
+	margin: 0;
+	font: bold 12px Arial, Sans-serif;
+	border: 1px solid #EAEAEA;
+	padding: 3px 4px;
+	background: #CCC url(buttonbg.gif) repeat-x left bottom;
+	color: #333; /* color: #339900; */
+	cursor: pointer;
+}
+
+input.submitbutton {
+	background-color: #006699;
+	color: #FFF;
+	background-image: none;
+	font-weight: 900;
+	border: 1px solid #EAEAEA;
+	margin: 0 0 0 200px;
+}
+
+/* search */
+#sidebar #search {
+	background: #f2f2f2;
+	margin: 0 15px;
+	padding: 5px 0;
+}
+
+#sidebar #search img {
+	vertical-align: bottom;
+}
+
+#sidebar #search .textbox {
+	background: #FFF url(input.png) no-repeat top left;
+	border: 1px solid #EAEAEA;
+	font-size: 11px;
+	padding: 3px;
+	width: 110px;
+}
+
+#sidebar #search input.searchbutton {
+	margin: 0;
+	font: bold 100% Arial, Sans-serif;
+	border: 1px solid #CCC;
+	background: #CCC url(buttonbg.gif) repeat-x left bottom;
+	padding: 1px;
+	height: 25px;
+	color: #333;
+	width: 55px;
+}
+
+/*****************************
+      LAYOUT 
+******************************/
+#wrap {
+	margin: 0 auto;
+	padding: 0;
+	text-align: left;
+	background-color: #FFF;
+	width: 790px;
+}
+
+#content-wrap {
+	clear: both;
+	margin: 0;
+	padding: 0;
+	width: 790px;
+}
+
+/* header */
+#header {
+	position: relative;
+	clear: left;
+	width: 790px;
+	height: 137px;
+	margin: 0;
+	padding: 0;
+	background: #000 url(headerbg.jpg) no-repeat left bottom;
+}
+
+#header h1#logo-text {
+	float: right;
+	margin: 39px 58px 0 0;
+	padding: 0;
+	font: bolder 3.2em 'Trebuchet MS', Arial, Sans-serif;
+	letter-spacing: -2px;
+	color: #FFF;
+	text-transform: none;
+	/* change the values of top and right to adjust the position of the logo*/
+	top: 35px;
+	right: 30px;
+}
+
+#header h2#slogan {
+	float: right;
+	margin: 0 38px 0 0;
+	padding: 0;
+	font: bold 1.5em 'Trebuchet MS', Arial, Sans-serif;
+	text-transform: none;
+	letter-spacing: 1px;
+	color: #FFF;
+	clear: both;
+	text-align: right;
+}
+
+#header h1#logo-text span {
+	color: #CFCED3;
+}
+
+/* menu tabs */
+#header #header-tabs {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 25px;
+	background: #000;
+	font: bold 1.1em Verdana, Tahoma, 'Trebuchet MS', Sans-serif;
+}
+
+#header-tabs ul {
+	margin: 0;
+	padding: 2px 0px 0px 0px;
+	list-style: none;
+}
+
+#header-tabs li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#header-tabs a {
+	float: left;
+	background: url(tableft.gif) no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 4px;
+	text-decoration: none;
+}
+
+#header-tabs a span {
+	float: left;
+	display: block;
+	background: url(tabright.gif) no-repeat right top;
+	padding: 7px 15px 4px 8px;
+	color: #CCC;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#header-tabs a span {
+	float: none;
+}
+
+/* End IE5-Mac hack */
+#header-tabs a:hover span {
+	color: #FFF;
+}
+
+#header-tabs a:hover {
+	background-position: 0% -42px;
+}
+
+#header-tabs a:hover span {
+	background-position: 100% -42px;
+}
+
+#header-tabs #current a {
+	background-position: 0% -42px;
+}
+
+#header-tabs #current a span {
+	background-position: 100% -42px;
+	color: #FFF;
+}
+
+/* main content */
+#main {
+	width: 748px;
+	margin: 0;
+	padding: 8px 16px;
+	background-color: #F9F9F9;
+	border-left: 5px solid #000;
+	border-right: 5px solid #000;
+}
+
+#main h1 {
+	padding: 8px 0 3px 25px;
+	text-transform: none;
+	border-bottom: 2px solid #f2f2f2;
+	color: #339900;
+}
+
+/* sidebar */
+#sidebar { /*	float: right;
+	width: 245px;
+	margin: 0 0 10px 0; padding: 0;
+	background-color: inherit;	*/
+	display: none;
+}
+
+#sidebar h1 {
+	padding: 8px 0px 3px 25px;
+	background: url(square_arrow.gif) no-repeat 0% .7em;
+	text-transform: none;
+	color: #339900;
+}
+
+#sidebar ul.sidemenu {
+	list-style: none;
+	margin: 10px 15px;
+	padding: 0;
+}
+
+#sidebar ul.sidemenu li {
+	margin-bottom: 1px;
+	border: 1px solid #f2f2f2;
+}
+
+#sidebar ul.sidemenu a {
+	display: block;
+	font-weight: bold;
+	color: #333;
+	text-decoration: none;
+	padding: 2px 5px 2px 10px;
+	background: #f2f2f2;
+	border-left: 5px solid #CCC;
+	min-height: 18px;
+}
+
+* html body #sidebar ul.sidemenu a {
+	height: 18px;
+}
+
+#sidebar ul.sidemenu a:hover {
+	padding: 2px 5px 2px 10px;
+	background: #f2f2f2;
+	color: #339900;
+	border-left: 5px solid #72A545;
+}
+
+/* footer */
+#footer {
+	clear: both;
+	height: 40px;
+	color: #CCC;
+	background: #000;
+	margin: 0;
+	font-size: 92%;
+}
+
+#footer a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #FFF;
+}
+
+#footer #footer-left {
+	width: 68%;
+	float: left;
+	text-align: left;
+	margin: 0;
+	padding: 10px;
+}
+
+#footer #footer-right {
+	width: 25%;
+	float: right;
+	text-align: right;
+	margin: 0;
+	padding: 10px;
+}
+
+/* alignment classes */
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+
+/* additional classes */
+.clear {
+	clear: both;
+}
+
+.hide {
+	display: none;
+}
+
+.gray {
+	color: #CCC;
+}
+
+.comments {
+	color: #333;
+	background: #FFF;
+	text-align: right;
+	border-top: 1px dashed #EFF0F1;
+	border-bottom: 1px dashed #EFF0F1;
+	padding: 5px 0;
+	margin-top: 20px;
+}
+
+html {
+	min-height: 100.1%;
+}
+
+/* ------ one ------------*/
+body .mainText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+#demoText h1,.mainText h1 {
+	font-size: 130%;
+	color: #0099FF;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 5px 4px 5px 24px;
+	background: none;
+	padding: 0;
+	border: none;
+	text-transform: capitalize;
+}
+
+.mainText h2 {
+	font-size: 110%;
+	color: #000033;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	background: none;
+	margin: 4px 32px 6px 22px;
+	text-transform: capitalize;
+}
+
+.mainText h3 {
+	font-size: 120%;
+	font-weight: 900;
+	margin: 14px 0 0 0;
+	text-align: center;
+	color: #000033;
+}
+
+.mainText table {
+	width: 95%;
+	border: 1px solid #0099FF;
+	border-collapse: collapse;
+	margin: 18px 7px;
+}
+
+.mainText table td {
+	background-color: #99CCFF;
+	color: #000033;
+	padding: 4px;
+}
+
+.mainText table th {
+	background-color: #000033;
+	color: #99CCFF;
+	padding: 4px;
+}
+
+.mainText .linkPar a {
+	color: #000033;
+	text-decoration: underline;
+}
+
+.mainText .linkPar a:hover {
+	color: #660033;
+	text-decoration: none;
+	font-weight: 900;
+}
+
+.pusher {
+	cursor: pointer;
+	padding: 3px 10px 3px 22px;
+	font-weight: 900;
+	font-size: 14px;
+}
+
+/* ------------- form specific styles are here  -------------- */
+fieldset {
+	margin: 0;
+	border: 1px solid #C3DE00;
+	padding: 10px;
+	/*border:none;
+padding:0;*/
+	color: #7563A5;
+}
+
+legend {
+	background-color: #FFFFFF;
+	text-align: center;
+	color: #097981;
+	padding: 0 12px;
+}
+
+label {
+	text-align: right;
+	width: 298px;
+	border-right: 1px dotted #099;
+	padding-right: 5px;
+	margin: 0 0 8px 0;
+	float: left;
+	clear: left;
+	display: block;
+	color: #7563A5;
+}
+
+label.checkbox,label.textarea {
+	border: none;
+}
+
+label.lgfield {
+	border: none;
+	text-align: center;
+	clear: both;
+	float: none;
+	width: 100%;
+}
+
+fieldset input,fieldset select,fieldset textarea {
+	margin-left: 10px;
+	margin-bottom: 8px;
+}
+
+select.longfield {
+	margin: 0 0 0 115px;
+}
+
+input [type="radio"],input [type="checkbox"] {
+	margin: 2px 0 0 4px;
+}
+
+textarea {
+	width: 250px;
+	float: left;
+}
+
+/*Get Help Form Styles*/
+p.formDisclaimer {
+	text-align: center;
+	margin: 32px 24px 12px 0;
+	font-style: italic;
+}
+
+div.buttonWrapper {
+	margin: 28px 0 14px 0;
+	clear: both;
+	text-align: center;
+}
+
+.formspacer {
+	height: 1em;
+	clear: both;
+}
+
+.hideField {
+	display: none;
+}
+
+.pushOpen {
+	height: 18em;
+}
+
+/* ----- error message for field validation ----- */
+#stepForm label.warning {
+	text-align: left;
+	width: auto;
+	padding: 0;
+	margin: 0 0 0 10px;
+	float: none;
+	clear: none;
+	display: inline;
+	color: #CC3366;
+	font-size: 10px;
+	border: none;
+	border-top: 1px dotted #CC3366;
+}
+
+div.requiredNotice {
+	width: 140px;
+	float: right;
+	margin: 0 24px 0 0;
+	padding: 0;
+}
+
+h3.stepHeader {
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0 0 24px 24px;
+	color: #676cac;
+}
+
+ul#stepForm,ul#stepForm li {
+	margin: 0;
+	padding: 0;
+}
+
+ul#stepForm li {
+	list-style: none;
+}
+
+/* Form Buttons  */
+input.submitbutton,.nextbutton,.prevbutton {
+	width: 100px;
+	height: 40px;
+	background-color: #663399;
+	padding: 4px;
+	border: 1px solid #339933;
+	cursor: pointer;
+	text-align: center;
+	color: #FFFFFF;
+	margin: 7px;
+}
+
+input.submitbutton {
+	background-color: #006699;
+}

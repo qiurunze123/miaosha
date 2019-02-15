@@ -1,0 +1,39 @@
+{
+    "name": "flipcountdown",
+    "title": "jQuery Clock or Timer plugin in retro flip-count down style",
+    "description": "jQuery Clock,Timer or Counter plugin in retro flip-count down style. The plugin can display the time and number, including floating point.",
+    "keywords": [
+        "count",
+        "down",
+        "flip",
+        "flipcount",
+        "flipcountdown",
+        "countdown",
+        "time",
+        "tablo",
+        "counter",
+        "ticker",
+        "timer",
+        "clock",
+		"form"
+    ],
+    "version": "3.0.5",
+    "author": {
+		"name": 	"Chupurnov Valeriy",
+		"email": 	"chupurnov@gmail.com",
+		"url": 		"http://xdsoft.net/contacts.html"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/xdan/flipcountdown/blob/master/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/xdan/flipcountdown/issues",
+    "homepage": "http://xdsoft.net/jqplugins/flipcountdown/",
+    "docs": "http://xdsoft.net/jqplugins/flipcountdown/",
+    "download": "https://github.com/xdan/flipcountdown/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}

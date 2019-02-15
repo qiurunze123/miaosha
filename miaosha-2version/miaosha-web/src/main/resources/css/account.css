@@ -1,0 +1,95 @@
+#menu>li.active {
+	background: none;
+	border: 1px solid #ddd;
+}
+
+#menu>li.list-group-item {
+	padding: 0px;
+}
+
+#menu>li>a {
+	outline: none;
+	display: block;
+	padding: 10px 15px;
+	background: #F5F5F5;
+	text-decoration: none;
+}
+
+#menu>li:first-child>a {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+#menu>li.active>a {
+	background: #337ab7;
+	color: #FFFFFF;
+	border-color: #337ab7;
+}
+
+#menu>li>ul {
+	border-top: 1px solid #ddd;
+	padding-left:0px;
+	list-style: none;
+}
+
+#menu>li>ul>li {
+	height: 40px;
+	padding-left:40px;
+	line-height: 40px;
+}
+#menu>li>ul>li.active{
+	background-color: #337ab7;
+}
+#menu>li>ul>li.active a{
+	color: #fff;
+}
+
+.el-account .el-account-info {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 26px;
+	margin-bottom: 20px;
+}
+
+.el-account .el-account-info .el-head-img {
+	border: 1px solid #ddd;
+	padding: 10px;
+	float: left;;
+}
+
+.account-info{
+	margin:26px;
+}
+
+.top-margin{
+	margin-top: 30px;
+	border-top: 1px solid #ddd;
+}
+
+.el-account .el-account-info .el-head {
+	margin-top: 5px;
+	margin-left: 15px;
+}
+
+.el-account .el-accoun-auth {
+	padding: 40px 0px 0px 10px;
+}
+
+.el-account .el-accoun-auth h5 {
+	font-weight: bold;
+	padding: 0px;
+	margin: 0px 0px 10px 0px;
+}
+
+.el-account .el-accoun-auth .info {
+	font-size: 13px;
+	margin-top: 8px;
+}
+
+.el-account .el-accoun-auth .el-accoun-auth-left {
+	float: left;
+}
+
+.el-account .el-accoun-auth .el-accoun-auth-right {
+	float: left;
+	margin-left: 10px;
+}

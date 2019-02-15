@@ -25,6 +25,11 @@
         <org.mybatis.version>1.3.2</org.mybatis.version>
         <com.alibaba.druid>1.1.10</com.alibaba.druid>
         <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+        <com.dubbo>1.0.0</com.dubbo>
+        <com.zk.version>3.4.6</com.zk.version>
+        <com.zk.client>0.1</com.zk.client>
+        <curator-framework.version>4.0.1</curator-framework.version>
+        <dubbo.starter.version>0.2.0</dubbo.starter.version>
     </properties>
 
     <dependencies>
@@ -120,12 +125,56 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.38</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>${dubbo.starter.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>${curator-framework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>${com.zk.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>${com.zk.client}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
+            <version>1.18.2</version>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>${com.zk.client}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.geekq.api</groupId>
+            <artifactId>miaosha-order-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

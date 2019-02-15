@@ -1,31 +1,39 @@
 package com.geekq.miasha.vo;
 
-import com.geekq.miasha.validator.MobileCheck;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginVo {
     @NotNull
-    @MobileCheck
-    private String mobile ;
+    private String nickname ;
 
     @NotNull
-    @Length(min=32)
     private String password;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
         return "LoginVo{" +
-                "mobile='" + mobile + '\'' +
+                "nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

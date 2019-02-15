@@ -1,0 +1,35 @@
+img.png {
+    background-image: expression(
+        this.runtimeStyle.backgroundImage = "none",
+        this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + this.src + "', sizingMethod='image')",
+        this.src = "images/blank.gif"
+    );
+}
+
+
+
+.hidden {
+  display:none
+}
+
+
+
+div.login { width: 120px;}
+div.nav-global LI,
+div.nav-global LI A {  display:inline !important;  zoom: 1;}
+
+div.nav-global LI A:hover,
+div.nav-left li a:hover {  text-decoration: none;}
+
+div.buttonSubmit {  height: 36px;}
+
+div.buttonSubmit input {  position: absolute;}
+
+div.offerHeader {margin-left: 3px;}
+
+#col-left {  height: 340px;}
+
+span#cancellation {
+  position: relative;
+  top: 20px;
+}

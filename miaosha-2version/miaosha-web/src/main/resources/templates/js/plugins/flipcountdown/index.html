@@ -1,0 +1,180 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<!--<base href="" /><!-- -->
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>jquery.flipCountDown Demo Flip Count Down Retro Clock </title>
+<meta name="description" content="retro flip clock plugin for jQuery.">
+<meta name="keywords" content="Плагин jQuery, retro часы, flip часы,jQuery, plugin, count down">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>-->
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.flipcountdown.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery.flipcountdown.css" />
+<script>
+jQuery(function($){
+	var i = 1000;
+	$('#retroclockbox1').flipcountdown();
+	var i = 1;
+	$('#retroclockbox_counter').flipcountdown({
+		tick:function(){
+			return i++;
+		}
+	});
+	$('#retroclockbox2').flipcountdown({showHour:false,showMinute:false,showSecond:true});
+	$('#retroclockbox3').flipcountdown({tzoneOffset:3,showSecond:false});
+	$('#retroclockbox4').flipcountdown({am:true});
+	$('#retroclockbox5').flipcountdown({speedFlip:50});
+	$('#retroclockbox6').flipcountdown({tick:function(){
+		return new Date('5/10/2012 12:34:23');
+	}});
+})
+</script>
+</head>
+<body>
+<div id="main">
+	<header>
+		<h1>jquery.flipCountDown Plugin</h1>
+		<p><a href="http://xdsoft.net/jqplugins/flipcountdown/">Page project</a>&nbsp;|&nbsp;<a href="https://github.com/xdan/flipcountdown/archive/master.zip">Download</a></p>
+		<p>Unusual retro clock count down plugin for jQuery</p>
+	</header>
+	<h3>Until the new year left</h3>
+	<table style="border:0px;">
+		<tr>
+			<td style="width:110px;text-align:center;">Days</td>
+			<td style="width:120px;text-align:center;">Hours</td>
+			<td style="width:110px;text-align:center;">Minutes</td>
+			<td style="width:120px;text-align:center;">Seconds</td>
+		</tr>
+		<tr>
+			<td colspan="4"><span id="new_year"></span></td>
+		</tr>
+	</table>
+	
+	
+	<script>
+	jQuery(function($){
+		//var NY = Math.round((new Date('1/01/2015 00:00:01')).getTime()/1000);
+		$('#new_year').flipcountdown({
+			size:'lg',
+			beforeDateTime:'1/01/2015 00:00:01'
+			/*tick:function(){
+				var nol = function(h){
+					return h>9?h:'0'+h;
+				}
+				var	range  	= NY-Math.round((new Date()).getTime()/1000),
+					secday = 86400, sechour = 3600,
+					days 	= parseInt(range/secday),
+					hours	= parseInt((range%secday)/sechour),
+					min		= parseInt(((range%secday)%sechour)/60),
+					sec		= ((range%secday)%sechour)%60;
+				return nol(days)+' '+nol(hours)+' '+nol(min)+' '+nol(sec);
+			}*/
+		});
+	});
+	</script>
+	<h2>Fast start</h2>
+	<p>Add in html page</p><pre style="width:535px;">
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;jquery.flipcountdown.css&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.flipcountdown.js&quot;&gt;&lt;/script&gt;</pre>
+	<p>add div element</p>
+<pre style="width:535px;">&lt;div id=&quot;retroclockbox1&quot;&gt;&lt;/div&gt;</pre>
+	<p>and init flipcountdown</p>
+	<pre >jQuery(function($){
+	$('#retroclockbox1').flipcountdown();
+})</pre>
+<p>Result</p>
+<div id="retroclockbox1"></div>
+<h2>Settings</h2>
+<p>- Sizes (use bootstrap sizes notation)</p>
+<pre >jQuery(function($){
+	$(&quot;#retroclockbox1&quot;).flipcountdown({
+		size:&quot;lg&quot;
+	});
+})</pre>
+<div><strong>lg</strong>-large</div>
+<div id="retroclockbox_lg"></div>
+<div><strong>md</strong>-middle, default</div>
+<div id="retroclockbox_md"></div>
+<div><strong>sm</strong>-small</div>
+<div id="retroclockbox_sm"></div>
+<div><strong>xs</strong>-Extra small</div>
+<div id="retroclockbox_xs"></div>
+<script>
+jQuery(function($){
+	$('#retroclockbox_lg').flipcountdown({size:'lg'});
+	$('#retroclockbox_md').flipcountdown({size:'md'});
+	$('#retroclockbox_sm').flipcountdown({size:'sm'});
+	$('#retroclockbox_xs').flipcountdown({size:'xs'});
+})
+</script>
+
+<p>- Counter</p>
+<pre>jQuery(function($){
+	var i = 1;
+	$(&#39;#retroclockbox_counter&#39;).flipcountdown({
+		tick:function(){
+			return i++;
+		}
+	});
+})</pre>
+<div id="retroclockbox_counter"></div>
+
+<p>- Float</p>
+<pre>$('#retroclockbox_float').flipcountdown({size:'lg',tick:22.3434});</pre>
+<div id="retroclockbox_float"></div>
+<script>
+jQuery(function($){
+	$('#retroclockbox_float').flipcountdown({size:'lg',tick:22.3434});
+});
+</script>
+<p>- Hide second or minute or hour</p>
+<pre >jQuery(function($){
+	$('#retroclockbox1').flipcountdown({showHour:false,showMinute:false,showSecond:true});
+})</pre>
+<div id="retroclockbox2"></div>
+<p>- offset timezone</p>
+<pre >jQuery(function($){
+	$('#retroclockbox3').flipcountdown({tzoneOffset:3,showSecond:false});
+})</pre>
+<div id="retroclockbox3"></div>
+<p>- am,pm format hours</p>
+<pre >jQuery(function($){
+	$('#retroclockbox4').flipcountdown({am:true});
+})</pre>
+<div id="retroclockbox4"></div>
+<p>- speed animate flip digit (multiply 6 must by less than 1000) default 100</p>
+<pre >jQuery(function($){
+	$('#retroclockbox5').flipcountdown({speedFlip:50});
+})</pre>
+<div id="retroclockbox5"></div>
+<p>- set time</p>
+<pre >jQuery(function($){
+	$('#retroclockbox6').flipcountdown({time:function(){
+		return new Date('5.10.2012 12:34:23');
+	}});
+})</pre>
+<div id="retroclockbox6"></div>
+<footer>
+	<p>Licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a> Project page <a href="http://xdsoft.net/jqplugins/flipCountDown/">Link</a> 
+	Author: <a href="http://xdsoft.net/contacts.html">Chupurnov Valeriy</a> (chupurnov@gmail.com)</p>
+</footer>
+<style>
+body{margin:0px; padding:0px;}
+#main{margin:0px auto; padding:0px; width:900px;position:relative;}
+pre{
+	background:#F7F7F9;padding:10px;
+	border: 1px solid #E1E1E8;
+	border-radius: 3px;
+	color: #222222;
+}
+#langbox{
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+</style>
+</div>
+</body>
+</html>

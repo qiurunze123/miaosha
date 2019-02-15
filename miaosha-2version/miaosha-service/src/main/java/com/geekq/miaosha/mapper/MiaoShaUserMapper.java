@@ -16,4 +16,6 @@ public interface MiaoShaUserMapper {
 
     public void insertMiaoShaUser(MiaoshaUser miaoshaUser);
 
+    public int getCountByUserName(@Param("userName")String userName , @Param("userType")int userType);
+
 }

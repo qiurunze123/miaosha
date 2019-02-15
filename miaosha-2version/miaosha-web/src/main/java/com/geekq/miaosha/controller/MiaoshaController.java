@@ -1,6 +1,6 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.miaosha.access.AccessLimit;
+import com.geekq.miaosha.interceptor.RequireLogin;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.GoodsKey;
@@ -63,7 +63,7 @@ public class MiaoshaController implements InitializingBean {
      * 5000 * 10
      * get　post get 幂等　从服务端获取数据　不会产生影响　　post 对服务端产生变化
      */
-    @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
+    @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value="/{path}/do_miaosha", method= RequestMethod.POST)
     @ResponseBody
     public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
@@ -121,7 +121,7 @@ public class MiaoshaController implements InitializingBean {
      * -1：秒杀失败
      * 0： 排队中
      */
-    @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
+    @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<Long> miaoshaResult(Model model, MiaoshaUser user,
@@ -137,7 +137,7 @@ public class MiaoshaController implements InitializingBean {
         return result;
     }
 
-    @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
+    @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaPath(HttpServletRequest request, MiaoshaUser user,

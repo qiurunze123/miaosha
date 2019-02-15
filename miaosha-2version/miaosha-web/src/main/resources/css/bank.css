@@ -1,0 +1,84 @@
+.bank {
+	background: url("../images/bank_list.png") no-repeat scroll 0 0
+		transparent;
+	cursor: pointer;
+	display: block;
+	height: 32px;
+	text-indent: -9999px;
+	vertical-align: 0;
+	width: 140px;
+}
+
+.bank_1 {
+	background-position: 0 0;
+}
+.bank_2 {
+	background-position: 0 -35px;
+}
+.bank_3 {
+	background-position: 0 -70px;
+}
+.bank_4 {
+	background-position: 0 -105px;
+}
+.bank_5 {
+	background-position: 0 -140px;
+}
+.bank_6 {
+	background-position: 0 -175px;
+}
+.bank_7 {
+	background-position: 0 -210px;
+}
+.bank_8 {
+	background-position: 0 -245px;
+}
+.bank_9 {
+	background-position: 0 -280px;
+}
+.bank_10 {
+	background-position: 0 -315px;
+}
+.bank_11 {
+	background-position: 0 -350px;
+}
+.bank_12 {
+	background-position: 0 -385px;
+}
+.bank_13 {
+	background-position: 0 -420px;
+}
+.bank_14 {
+	background-position: 0 -455px;
+}
+.bank_15 {
+	background-position: 0 -490px;
+}
+.bank_16 {
+	background-position: 0 -525px;
+}
+.bank_17 {
+	background-position: 0 -700px;
+}
+.bank_18 {
+	background-position: 0 -737px;
+}
+.bank_19 {
+	background-position: 0 -594px;
+}
+.bank_20 {
+	background-position: 0 -631px;
+}
+.bank_21 {
+	background-position: 0 -560px;
+}
+.bank_28 {
+	background-position: 0 -665px;
+}
+
+.bank_33 {
+	background-position: 0 -770px;
+}
+.bank_34 {
+	background-position: 0 -805px;
+}

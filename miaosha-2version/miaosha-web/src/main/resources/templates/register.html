@@ -12,76 +12,87 @@
 		<link rel="stylesheet" th:href="@{/css/reset.css}" />
 		<link rel="stylesheet" th:href="@{/css/common.css}" />
 		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
-<script>
-    $(function() {// 初始化内容
-        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
-        $("#verifyCodeImg").show();
-    });
-    function refreshVerifyCode(){
-        $("#verifyCodeImg").attr("src", "/miaosha/verifyCodeRegister");
-    };
+<script type="text/javascript">
 
-    function checkPhone(phone){
-        if(!(/^1[34578]\d{9}$/.test(phone))){
-            alert("手机号码有误，请重填");
-            return false;
-        }
-    }
+        /**
+         $("#registerForm").ajaxForm(function(data){
+		console.debug(data);
+	});
+         */
 
-    function register_go() {
-		var username =$("#username").val();
-	    var inputPass = $("#password").val();
-		var passwordrepeat = $("#repassword").val();
-		var verifyCode = $("#verifyCode").val();
-		var check = checkPhone(username);
-		if(check){
-		    alert("手机号不符合要求");
-		    return ;
-		}
-        if(inputPass==""||inputPass==null||inputPass == undefined ){
-            alert("密码不能为空！");
-            return ;
+        /*
+        第一种远程验证方式
+        remote:{
+            url:"/checkUsername.do",
+            type:"post"
         }
-        if(username==""||username==null||username == undefined ){
-            alert("用户名不能为空！");
-            return ;
-        }
-        if(inputPass!=passwordrepeat){
-            alert("密码不一致！");
-		}
-        if(verifyCode!=verifyCode){
-            alert("验证码不能为空！");
-        }
-        var salt = g_passsword_salt;
-        var str = ""+salt.charAt(0)+salt.charAt(2) + inputPass +salt.charAt(5) + salt.charAt(4);
-        var password = md5(str);
-	    g_showLoading();
-        $.ajax({
-            url: "/user/register",
-            type: "POST",
-            data:{
-                username:$("#username").val(),
-                password: password,
-				salt:salt,
-                verifyCode:verifyCode
-            },
-            success:function(data){
-                layer.closeAll();
-                if(data.code == 0){
-                    layer.msg("成功");
-                    window.location.href="/goods/to_list";
-                }else{
-                    layer.msg(data.message);
+        */
+        $(function(){
+            $.validator.addMethod("checkUsername", function(value, element) {
+                var ret=false;
+                $.ajax({
+                    dataType:"json",
+                    type:"post",
+                    url:"/checkUsername.do",
+                    data:{username:value},
+                    async:false,
+                    success:function(data){
+                        ret= data.data;
+                    }
+                });
+                return ret;
+            }, "用户名已经存在!");
+
+            $("#registerForm").validate({
+                rules:{
+                    "username":{
+                        required:true,
+                        rangelength:[4,16],
+                        checkUsername:true
+                    },
+                    "password":{
+                        required:true,
+                        rangelength:[4,16]
+                    },
+                    "confirmPwd":{
+                        equalTo:"#password"
+                    }
+                },
+                messages:{
+                    "username":{
+                        required:"请填写用户名!",
+                        rangelength:"用户名的长度在{0}到{1}之间!",
+                    },
+                    "password":{
+                        required:"请填写密码!",
+                        rangelength:"密码的长度在{0}到{1}之间!"
+                    },
+                    "confirmPwd":{
+                        equalTo:"两次输入的密码不一致!"
+                    }
+                },
+                submitHandler:function(form){
+                    $(form).ajaxSubmit(function(data){
+                        if(data.success){
+                            $.messager.confirm("提示","注册成功,请重新登录系统!",function(){
+                                window.location.href="/login.html";
+                            });
+                        }else{
+                            $.messager.alert("提示",data.msg);
+                        }
+                    });
+                },
+                errorClass:"text-danger",
+                highlight:function(element,errorClass){
+                    $(element).closest(".form-group").addClass("has-error");
+                },
+                unhighlight:function(element,errorClass){
+                    $(element).closest(".form-group").removeClass("has-error");
                 }
-            },
-            error:function(){
-                layer.closeAll();
-            }
+            });
         });
-    }
-
-
 </script>
+
 	</head>
 	<body>
 	<form name="registerForm" id="registerForm" method="post"  >
@@ -137,7 +148,6 @@
 			</div>
 		</div>
 		<div style="text-align:center;">
-<p>秒杀系统登陆--by GeekQ</p>
 </div>
 	</form>
 	</body>

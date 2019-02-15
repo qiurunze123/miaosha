@@ -1,0 +1,47 @@
+{
+	"name":"flipcountdown",
+	"version": "3.0.5",
+	"main": [
+		"jquery.flipcountdown.js",
+		"jquery.flipcountdown.css"
+	],
+	"ignore": [
+		"**/screen",
+		"**/flipcountdown.jquery.json",
+		"**/screen/*.png",
+		"**/img/*.psd",
+		"**/*.txt",
+		"**/*.md",
+		"**/*.html",
+		"**/*.tpl"
+	  ],
+	"keywords": [
+        "count",
+        "down",
+        "flip",
+        "flipcount",
+        "flipcountdown",
+        "countdown",
+        "time",
+        "tablo",
+        "counter",
+        "ticker",
+        "timer",
+        "clock",
+		"form"
+    ],
+	"dependencies": {
+    "jquery": ">= 1.7.2"
+  },
+	"authors": [
+		{
+			"name": 	"Chupurnov Valeriy",
+			"email": 	"chupurnov@gmail.com",
+			"homepage": "http://xdsoft.net/contacts.html"
+    }
+	],
+	"homepage":"http://xdsoft.net/jqplugins/flipcountdown/",
+	"repository": {
+		"type": "git", "url": "git://github.com:xdan/flipcountdown.git"
+	}
+}

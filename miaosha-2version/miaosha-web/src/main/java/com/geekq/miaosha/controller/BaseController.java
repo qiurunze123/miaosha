@@ -28,7 +28,6 @@ public class BaseController {
     @Autowired
     RedisService redisService;
 
-
     public String render(HttpServletRequest request, HttpServletResponse response, Model model, String tplName, KeyPrefix prefix, String key) {
         if(!pageCacheEnable) {
             return tplName;
