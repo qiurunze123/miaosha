@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -71,7 +72,13 @@ public class DruidConfig {
 	        }
 	        return datasource;
 	}
-	
+
+	@Bean
+	public JdbcTemplate jdbcTemplate(){
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(druidDataSource());
+		return jdbcTemplate;
+	}
+
 	public String getUrl() {
 		return url;
 	}

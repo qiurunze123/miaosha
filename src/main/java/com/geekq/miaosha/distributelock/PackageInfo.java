@@ -1,4 +1,4 @@
-package com.jianfei.impl.distributelock;
+package com.geekq.miaosha.distributelock;
 
 /**
  * 分布式锁的实现
@@ -22,3 +22,6 @@ package com.jianfei.impl.distributelock;
  */
 
 //实现方式二：通过数据库悲观锁实现分布式锁
+
+
+//实现方法三：通过redis实现分布式锁

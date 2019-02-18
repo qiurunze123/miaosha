@@ -1,4 +1,4 @@
-package com.jianfei.impl.distributelock.dbtable;
+package com.geekq.miaosha.distributelock.dbtable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +28,19 @@ public class Lock {
      * @return
      */
     public boolean tryLock(String name, String desc){
-        String sql = "insert into  method_lock(method_name,desc) values (?, ?)";
-        int row = jdbcTemplate.update(sql, new String[]{name, desc});
-        if (row == 0) {
+        try {
+            String sql = "insert into  method_lock(`method_name`,`desc`) values (?, ?)";
+            int row = jdbcTemplate.update(sql, new String[]{name, desc});
+            if (row == 0) {
+                LOGGER.info("获取分布式锁失败");
+                return false;
+            }
+            LOGGER.info("获取分布式锁成功");
+            return true;
+        }catch (Exception e) {
             LOGGER.info("获取分布式锁失败");
             return false;
         }
-        LOGGER.info("获取分布式锁成功");
-        return true;
     }
 
     /**

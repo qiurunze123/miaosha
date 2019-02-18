@@ -1,4 +1,4 @@
-package com.jianfei.impl.distributelock.dbexclusivelock;
+package com.geekq.miaosha.distributelock.dbexclusivelock;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidPooledConnection;
@@ -15,8 +15,8 @@ import java.sql.SQLException;
  * 基于数据库悲观锁实现分布式锁
  */
 @Component
-public class Lock {
-    private static final Logger LOGGER = LoggerFactory.getLogger(com.jianfei.impl.distributelock.dbtable.Lock.class);
+public class NewLock {
+    private static final Logger LOGGER = LoggerFactory.getLogger(com.geekq.miaosha.distributelock.dbtable.Lock.class);
 
     @Autowired
     private DruidDataSource druidDataSource;
@@ -29,7 +29,7 @@ public class Lock {
      * @return
      */
     public boolean lock(String methodName) {
-        String sql = "select * from methon_lock where method_name = ? for update";
+        String sql = "select * from method_lock where method_name = ? for update";
         PreparedStatement statement = null;
         if (connection == null) {
             initConnection();
@@ -44,7 +44,7 @@ public class Lock {
             while (true) {
                 statement.setString(1, methodName);
                 ResultSet resultSet = statement.executeQuery();
-                if (resultSet == null) {
+                if (resultSet.getFetchSize() == 0) {
                     LOGGER.info("自动获取锁成功");
                     return true;
                 }
@@ -85,7 +85,7 @@ public class Lock {
 
     private void initConnection() {
         if (connection == null) {
-            synchronized (Lock.class) {
+            synchronized (NewLock.class) {
                 if (connection == null) {
                     try {
                         connection = druidDataSource.getConnection();
