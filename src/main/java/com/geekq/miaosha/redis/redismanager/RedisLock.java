@@ -7,6 +7,9 @@ import redis.clients.jedis.Transaction;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 基于redis实现的分布式锁
+ */
 public class RedisLock {
 
     public String getLock(String key , int timeOut){
