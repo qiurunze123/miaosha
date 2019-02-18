@@ -20,7 +20,8 @@
 一点小建议：学习本系列知识之前，如果你完全没接触过 `MQ`、`SpringBoot`、`Redis`、`Dubbo`、`ZK` 、`Maven`,`lua`等，那么我建议你可以先在网上搜一下每一块知识的快速入门，
 也可以下载本项目边做边学习，我的项目完全是实战加讲解不想写一堆的文章，浪费我们的生命，你还不懂内层含义，想要明白就边实际操作边学习，效果会更好！加油💪💪
 
-### 最近正在进行dobbo+zk 登录与下单等 设计方式 + 业务逻辑 全面修改 有可能会出现下载后启动错误 最初版本请下载 (https://pan.baidu.com/s/1sld8RBSvLe2q4gc-Z-fVAQ) 
+### 最近正在进行dobbo+zk 登录与下单等 设计方式 + 业务逻辑 全面修改 有可能会出现下载后启动错误 最初版本请下载 (https://pan.baidu.com/s/1sld8RBSvLe2q4gc-Z-fVAQ)
+### 如果想先看dubbo + zk 了解请下载we-miaosha ，miaosha-order  为项目分离示例项目！会不断完善！此版本为springboot2.0+ 请使JDK1.8+
 ### 秒杀高并发架构 -- 架构图 
 
 > 软件环境 : 请选择稳定版 
@@ -45,7 +46,7 @@
 
 ###  以下所有内容都已完成，但是因内容多需逐渐整理上传！ 专题的部分也会尽快上传更新！ 立个flag 半年内吧争取全部更新完！各位稍安勿躁！ 
 
-###  [如要提交代码请先看--提交合并代码规范提交者的后面都会有署名方面大家问问题](/docs/code-criterion.md)
+###  [如要提交代码请先看--提交合并代码规范提交者的后面都会有署名方便大家问问题](/docs/code-criterion.md)
 
 | ID | Problem  | Article | 
 | --- | ---   | :--- |
@@ -86,7 +87,7 @@
 #### [mybatis源码解析与使用--未更新](/docs/mybatis-code.md)
 #### [redis 使用与进阶以及如何进行集群--已更新](/docs/redis-good.md)
 #### [spring源码--未更新](/docs/redis-code.md)
-#### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/redis-code.md)
+#### [分布式治理框架-dubbo - zk - 解析--未更新](/docs/dubbo-zk.md)
 #### [通信mq-Kafka--未更新](/docs/redis-code.md)
 #### [微服务框架--未更新](/docs/redis-code.md)
 -------------------------------------------------|
