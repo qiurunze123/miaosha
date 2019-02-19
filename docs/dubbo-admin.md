@@ -2,7 +2,7 @@
 
     有问题或者宝贵意见联系我的QQ,非常希望你的加入！
     
-#### [dubbo-admin-2.6.0 war包](/docs/dubbo-admin/dubbo-admin-2.6.0.war)
+#### [dubbo-admin-2.6.0 war包 请进入/docs/dubbo-admin/下载](/docs/dubbo-admin/dubbo-admin-2.6.0.war)
 
 1.可直接 https://github.com/apache/incubator-dubbo/releases/tag/dubbo-2.6.0 下载后将dubbo-admin-2.6.0达成war包
 
