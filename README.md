@@ -80,6 +80,7 @@
 | 027 |如何利用lua脚本进行分布式锁操作？|[解决思路](/docs/redis-good.md)   |
 | 028 |网站访问统计实现？|[解决思路](/docs/code-solve.md)   |
 | 028 |项目进行dubbo + zk 改造 (已完成dubbo嵌入--springboot 与dubbo结合xml版本)？|[解决思路](/docs/code-solve.md)   |
+| 029 |dubbo客户端 dubbo-admin管理平台 搭建安装|[解决思路](/docs/dubbo-admin.md)   |
 
 
 #### [分布式系统发展历程（已更新）](/docs/fenbushi.md)
