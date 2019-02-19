@@ -46,3 +46,8 @@
   impl
   
   ![使用](https://raw.githubusercontent.com/qiurunze123/imageall/master/dubbo8.png)
+
+
+**5.参数含义**
+
+   ![使用](https://raw.githubusercontent.com/qiurunze123/imageall/master/dubbo9.png)
