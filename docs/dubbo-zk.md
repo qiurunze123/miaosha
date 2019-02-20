@@ -51,3 +51,13 @@
 **5.参数含义**
 
    ![使用](https://raw.githubusercontent.com/qiurunze123/imageall/master/dubbo9.png)
+   
+------------------------------------------------------------------------------------------------------
+
+**6.自定义服务降级**
+
+   ![使用](https://raw.githubusercontent.com/qiurunze123/imageall/master/dubbo10.png)
+
+**7.自定义服务降级---类 必须为service加上mock**
+
+   ![使用](https://raw.githubusercontent.com/qiurunze123/imageall/master/dubbo11.png)
