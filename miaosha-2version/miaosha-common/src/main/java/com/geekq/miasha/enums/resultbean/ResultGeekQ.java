@@ -10,6 +10,8 @@ public class ResultGeekQ<T> extends AbstractResult implements Serializable {
     private T data;
     private Integer count;
 
+    protected ResultGeekQ() {
+    }
     protected ResultGeekQ(ResultStatus status, String message) {
         super(status, message);
     }

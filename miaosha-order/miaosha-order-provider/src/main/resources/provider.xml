@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+		
+	<!-- 为当前服务提供者取个名字，并且提供给注册中心 -->
+	<dubbo:application name="miaosha-order-service"></dubbo:application>
+	
+	<!-- 注册中心的配置，使用zk暴露服务 -->
+	<dubbo:registry protocol="zookeeper" address="localhost:2181"></dubbo:registry>
+
+	<!-- 定义暴露服务的端口号 -->
+	<dubbo:protocol name="dubbo" port="20880" ></dubbo:protocol>
+
+	<!-- 暴露具体的服务接口 本地伪装-->
+	<dubbo:service retries="3" interface="com.geekq.api.service.GoodsService"
+		ref="goodsService" group="goods2" timeout="6000" mock="true">
+		<dubbo:method name="listGoodsVo" timeout="3000" ></dubbo:method>
+	</dubbo:service>
+
+	<dubbo:service interface="com.geekq.api.service.GoodsService" ref="goodGroupService" group="goods1"></dubbo:service>
+
+
+</beans>

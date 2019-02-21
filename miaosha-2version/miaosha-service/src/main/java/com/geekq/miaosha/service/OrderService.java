@@ -1,5 +1,6 @@
 package com.geekq.miaosha.service;
 
+import com.geekq.api.entity.GoodsVoOrder;
 import com.geekq.miaosha.mapper.OrderMapper;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
@@ -37,7 +38,7 @@ public class OrderService {
 	}
 
 	@Transactional
-	public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
+	public OrderInfo createOrder(MiaoshaUser user, GoodsVoOrder goods) {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setCreateDate(new Date());
 		orderInfo.setDeliveryAddrId(0L);

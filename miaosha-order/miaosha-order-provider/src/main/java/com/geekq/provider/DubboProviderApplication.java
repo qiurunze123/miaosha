@@ -1,9 +1,9 @@
 package com.geekq.provider;
 
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * DubboProviderApplication
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author geekq
  * @date 2018/6/7
  */
-@EnableDubbo
+@ImportResource(value={"classpath:provider.xml"})
 @SpringBootApplication
 @MapperScan("com.geekq.provider.mapper")
 public class DubboProviderApplication {

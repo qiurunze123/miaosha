@@ -38,7 +38,32 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
-
-
+        <resources>
+    <resource>
+        <directory>src/main/java</directory>
+        <includes>
+            <include>**/*.properties</include>
+            <include>**/*.xml</include>
+        </includes>
+        <filtering>true</filtering>
+    </resource>
+    <resource>
+        <directory>src/main/resources</directory>
+        <!--<includes>-->
+        <!--<include>**/*.properties</include>-->
+        <!--<include>**/*.xml</include>-->
+        <!--<include>**/*.ini</include>-->
+        <!--</includes>-->
+        <filtering>false</filtering>
+    </resource>
+    <resource> <!--配置文件路径 -->
+        <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
+        <filtering>true</filtering>
+        <includes>
+            <!--<include>application-${activatedProperties}.properties</include>-->
+            <include>application.properties</include>
+        </includes>
+    </resource>
+</resources>
+</build>
 </project>

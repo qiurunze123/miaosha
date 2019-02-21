@@ -30,21 +30,20 @@ public class LoginController {
     @Autowired
     private MiaoShaUserService userService;
 
-    @Reference(version = "${demo.service.version}")
+    @Reference(version = "${demo.service.version}",mock = "return null")
     private DemoService demoService;
 
-    @RequestMapping("/sayHello/{name}")
-    @ResponseBody
-    public String sayHello(@PathVariable("name") String name) {
-
-        return demoService.sayHello(name);
+    @RequestMapping("/sayHello")
+    public String sayHello() throws Exception {
+        return "login222";
     }
 
 
 
     @RequestMapping("/to_login")
-    public String tologin(LoginVo loginVo, Model model) {
+    public String tologin(LoginVo loginVo, Model model)  {
         logger.info(loginVo.toString());
+
         //未完成
           RedisLua.vistorCount(COUNTLOGIN);
         String count = RedisLua.getVistorCount(COUNTLOGIN).toString();

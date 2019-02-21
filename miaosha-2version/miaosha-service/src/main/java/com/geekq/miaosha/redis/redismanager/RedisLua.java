@@ -7,6 +7,8 @@ import redis.clients.jedis.Jedis;
 import java.util.ArrayList;
 import java.util.List;
 
+import static redis.clients.jedis.Protocol.Command.INCRBY;
+
 /**
  * lua脚本使用
  */
@@ -92,4 +94,37 @@ public class RedisLua {
             logger.error("统计访问次数失败！！！",e);
         }
     }
+
+
+    public static void currentlimitMinute() {
+
+        Jedis jedis = null;
+        try {
+            jedis = RedisManager.getJedis();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String lua =
+                "local key = KEYS[1] " +
+                        "local limit = tonumber(ARGV[1]) " +
+                        "local current = tonumber(redis.call('get', key) or '0') " +
+            "if current + 1 > limit then return 0 " +
+                        "else redis.call('INCRBY', key,'1')" +
+            " redis.call('expire', key,'2') " +
+                        "end return 1";
+
+        List<String> keys = new ArrayList<String>();
+        keys.add("ip:limit:127.0.0.1");
+        List<String> argves = new ArrayList<String>();
+        argves.add("6000");
+        argves.add("5");
+        jedis.auth("xxxx");
+
+//        Object evalSha = jedis.evalsha(lua);
+        String luaScript = jedis.scriptLoad(lua);
+        System.out.println(luaScript);
+        Object object = jedis.evalsha(luaScript, keys, argves);
+        System.out.println(object);
+    }
+
 }

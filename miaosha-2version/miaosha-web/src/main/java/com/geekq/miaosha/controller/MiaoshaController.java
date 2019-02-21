@@ -5,6 +5,7 @@ import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
@@ -25,7 +26,9 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,6 +91,19 @@ public class MiaoshaController implements InitializingBean {
 //			return ResultGeekQ.error(CodeMsg.MIAOSHA_FAIL);
 //
 //		}
+
+        /**
+         * 分布式限流
+         */
+        try {
+            RedisLimitRateWithLUA.accquire();
+        } catch (IOException e) {
+            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        } catch (URISyntaxException e) {
+            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        }
 
         //是否已经秒杀到
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);

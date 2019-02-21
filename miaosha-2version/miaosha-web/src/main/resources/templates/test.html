@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>拖拽滑动验证码插件 slideunlock.js</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/css/slide-unlock.css" type="text/css" />
+
+    <script type="text/javascript" src="js/slideunlock/slideunlock.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <style>
+        html, body, h1 {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #393939;
+            color: #d5d4ff;
+            overflow: hidden
+        }
+        #demo {
+            width: 600px;
+            margin: 150px auto;
+            padding: 10px;
+            border: 1px dashed #d5d4ff;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div id="demo">
+    <div id="slider">
+        <div id="slider_bg"></div>
+        <span id="label">>></span> <span id="labelTip">拖动滑块验证</span> </div>
+    <script>
+        $(function () {
+            var slider = new SliderUnlock("#slider",{
+                successLabelTip : "欢迎访问业余草网站"
+            },function(){
+                alert("验证成功,即将跳转至业余草首页");
+                //window.location.href="http://www.xttblog.com"
+            });
+            slider.init();
+        })
+    </script>
+</div>
+</body>
+</html>

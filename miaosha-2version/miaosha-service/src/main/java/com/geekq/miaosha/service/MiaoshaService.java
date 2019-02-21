@@ -1,5 +1,7 @@
 package com.geekq.miaosha.service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.geekq.api.entity.GoodsVoOrder;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miasha.entity.MiaoshaOrder;
@@ -29,10 +31,14 @@ public class MiaoshaService {
 	@Autowired
     RedisService redisService;
 
+	@Reference(version = "${demo.service.version}",retries = 3,timeout = 6000)
+	private com.geekq.api.service.GoodsService goodsServiceRpc;
+
 	@Transactional
-	public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
+	public OrderInfo miaosha(MiaoshaUser user, GoodsVoOrder goods) {
 		//减库存 下订单 写入秒杀订单
-		boolean success = goodsService.reduceStock(goods);
+//		boolean success = goodsService.reduceStock(goods);
+		boolean success =goodsServiceRpc.reduceStock(goods);
 		if(success){
 			return orderService.createOrder(user,goods) ;
 		}else {

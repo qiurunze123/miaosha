@@ -1,6 +1,7 @@
 package com.geekq.provider.mapper;
 
-import com.geekq.api.entity.GoodsVo;
+import com.geekq.api.entity.GoodsVoOrder;
+import com.geekq.api.entity.MiaoshaGoods;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,9 +11,10 @@ import java.util.List;
  */
 public interface GoodsMapper {
 
-    public List<GoodsVo> listGoodsVo();
+    public List<GoodsVoOrder> listGoodsVo();
 
-    public GoodsVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
+    public GoodsVoOrder getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
 
+    public int reduceStock(MiaoshaGoods g);
 
 }

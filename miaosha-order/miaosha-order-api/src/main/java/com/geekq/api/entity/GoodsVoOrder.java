@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Alias("goodsVo")
-public class GoodsVo {
+@Alias("goodsVoOrder")
+public class GoodsVoOrder implements Serializable {
 	private Long id;
 	private String goodsName;
 	private String goodsTitle;

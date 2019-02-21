@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.geekq.provider.mapper.GoodsMapper" >
 
-    <resultMap id="BaseResultMap" type="goodsVo" >
+    <resultMap id="BaseResultMap" type="goodsVoOrder" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
         <result column="goods_title" property="goodsTitle" jdbcType="VARCHAR" />
@@ -32,4 +32,8 @@
         WHERE miaosha_goods.goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
 
+    <update id="reduceStock" >
+       update miaosha_goods set stock_count = stock_count - 1
+       where goods_id = #{goodsId} and stock_count > 0
+    </update>
 </mapper>
