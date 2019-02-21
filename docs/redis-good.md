@@ -168,5 +168,8 @@
    
    ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualimit1.png)
    
+   
+  ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualimit2.png)
+
    lua脚本一致存在于redis 中可以 限制每秒钟的请求数实现限流！
 
