@@ -2,7 +2,7 @@
 
     有问题或者宝贵意见联系我的QQ,非常希望你的加入！
     
->目标 （希望大家仔细研究dubbo文档）
+>目标 （希望大家仔细研究dubbo文档 源码分析正在更新中打算实现自己的rpc框架 请看dubbo-die ）
 
   http://dubbo.apache.org/zh-cn/docs/user/references/xml/dubbo-method.html dubbo文档地址
   
