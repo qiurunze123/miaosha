@@ -82,6 +82,7 @@ public class RedisDistributeLock {
      * @return
      */
     public boolean releaseLock(String lockName, String identifier) {
-
+        //todo
+        return false;
     }
 }

@@ -31,7 +31,7 @@ public class RedisService {
 			jedis = jedisPool.getResource();
 			result = jedis.setnx(key,value);
 		}catch (Exception e){
-			log.error("expire key:{} error",key,e);
+//			log.error("expire key:{} error",key,e);
 		jedisPool.returnResource(jedis);
 		return  result;
 		}
@@ -52,7 +52,7 @@ public class RedisService {
 			jedis =  jedisPool.getResource();
 			result = jedis.expire(key,exTime);
 		} catch (Exception e) {
-			log.error("expire key:{} error",key,e);
+//			log.error("expire key:{} error",key,e);
 			jedisPool.returnBrokenResource(jedis);
 			return result;
 		}
@@ -84,7 +84,7 @@ public class RedisService {
             jedis =  jedisPool.getResource();
             result = jedis.get(key);
         } catch (Exception e) {
-            log.error("expire key:{} error",key,e);
+//            log.error("expire key:{} error",key,e);
             jedisPool.returnBrokenResource(jedis);
             return result;
         }
@@ -100,7 +100,7 @@ public class RedisService {
             jedis =  jedisPool.getResource();
             result = jedis.getSet(key,value);
         } catch (Exception e) {
-            log.error("expire key:{} error",key,e);
+//            log.error("expire key:{} error",key,e);
             jedisPool.returnBrokenResource(jedis);
             return result;
         }
@@ -207,7 +207,6 @@ public class RedisService {
             jedis =  jedisPool.getResource();
             result = jedis.del(key);
         } catch (Exception e) {
-            log.error("del key:{} error",key,e);
             jedisPool.returnBrokenResource(jedis);
             return result;
         }
