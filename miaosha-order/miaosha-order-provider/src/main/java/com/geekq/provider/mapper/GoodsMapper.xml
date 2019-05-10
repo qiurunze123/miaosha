@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.provider.mapper.GoodsMapper" >
+
+    <resultMap id="BaseResultMap" type="goodsVoOrder" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_title" property="goodsTitle" jdbcType="VARCHAR" />
+        <result column="goods_img" property="goodsImg" jdbcType="VARCHAR" />
+        <result column="goods_detail" property="goodsDetail" jdbcType="VARCHAR" />
+        <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE" />
+        <result column="goods_stock" property="goodsStock" jdbcType="BIGINT" />
+        <result column="stock_count" property="stockCount" jdbcType="BIGINT" />
+        <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+        <result column="miaosha_price" property="miaoshaPrice" jdbcType="DOUBLE" />
+    </resultMap>
+
+    <sql id="base_column">
+  	miaosha_goods.id as id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock,stock_count,start_date
+  	,end_date,miaosha_price
+  </sql>
+
+    <select id="listGoodsVo" resultMap="BaseResultMap" >
+        select <include refid="base_column" />
+        from miaosha_goods  left join goods  on miaosha_goods.goods_id = goods.id
+    </select>
+
+    <select id="getGoodsVoByGoodsId" resultMap="BaseResultMap" >
+        select <include refid="base_column" />
+        from miaosha_goods  left join goods  on miaosha_goods.goods_id = goods.id
+        WHERE miaosha_goods.goods_id = #{goodsId,jdbcType=BIGINT}
+    </select>
+
+    <update id="reduceStock" >
+       update miaosha_goods set stock_count = stock_count - 1
+       where goods_id = #{goodsId} and stock_count > 0
+    </update>
+</mapper>

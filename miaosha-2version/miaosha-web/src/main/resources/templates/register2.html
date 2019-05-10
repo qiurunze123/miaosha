@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>秒杀平台->用户注册</title>
+<link rel="stylesheet" href="/js/bootstrap-3.3.2-dist/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="/css/core.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery/jquery-2.1.3.js"></script>
+<script type="text/javascript" src="/js/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery-validation/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery-validation/localization/messages_zh.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery.form.js"></script>
+<script type="text/javascript" src="/js/jquery.bootstrap.min.js"></script>
+
+<style type="text/css">
+	.el-register-form{
+		width:600px; 
+		margin-left:auto;
+		margin-right:auto;
+		margin-top: 20px;
+	}
+	.el-register-form .form-control{
+		width: 220px;
+		display: inline;
+	}
+</style>
+<script type="text/javascript">
+	
+	/**
+	$("#registerForm").ajaxForm(function(data){
+		console.debug(data);
+	});
+	*/
+	
+	/*
+	第一种远程验证方式
+	remote:{
+		url:"/checkUsername.do",
+		type:"post"
+	}
+	*/
+	$(function(){
+		$.validator.addMethod("checkUsername", function(value, element) {
+			var ret=false;
+			$.ajax({
+				dataType:"json",
+				type:"post",
+				url:"/checkUsername",
+				data:{username:value},
+				async:false,
+				success:function(data){
+					ret= data.data;
+				}
+			});
+			return ret;
+		}, "用户名已经存在!");
+		
+		$("#registerForm").validate({
+			rules:{
+				"username":{
+					required:true,
+					rangelength:[4,16],
+					checkUsername:true
+				},
+				"password":{
+					required:true,
+					rangelength:[4,16]
+				},
+				"confirmPwd":{
+					equalTo:"#password"
+				}
+			},
+			messages:{
+				"username":{
+					required:"请填写用户名!",
+					rangelength:"用户名的长度在{0}到{1}之间!",
+				},
+				"password":{
+					required:"请填写密码!",
+					rangelength:"密码的长度在{0}到{1}之间!"
+				},
+				"confirmPwd":{
+					equalTo:"两次输入的密码不一致!"
+				}
+			},
+			submitHandler:function(form){
+				$(form).ajaxSubmit(function(data){
+					if(data.data){
+						$.messager.confirm("提示","注册成功,请重新登录系统!",function(){
+							window.location.href="/do_login";
+						});	
+					}else{
+						$.messager.alert("提示","注册失败，请联系管理员!");
+					}
+				});
+			},
+			errorClass:"text-danger",
+			highlight:function(element,errorClass){
+				$(element).closest(".form-group").addClass("has-error");
+			},
+			unhighlight:function(element,errorClass){
+				$(element).closest(".form-group").removeClass("has-error");
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<!-- 网页内容 -->
+	<div class="container" style="min-height: 433px;">  
+		<form id="registerForm" class="form-horizontal el-register-form" action="/register" method="post" >
+			<p class="h4" style="margin: 10px 10px 20px;color:#999;">请填写注册信息，点击“提交注册”即可完成注册！</p>
+			<div class="form-group">
+				<label class="control-label col-sm-2">用户名</label>
+				<div class="col-sm-10">
+					<input type="text" autocomplete="off" name="username" class="form-control" />
+					<p class="help-block">用户名为4~16位字母，数字，符号或中文</p>
+				</div> 
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">密&emsp;码</label>
+				<div class="col-sm-10">
+					<input type="password" autocomplete="off" name="password" id="password" class="form-control" />
+					<p class="help-block">密码为4~16位字符组成,采用数字、字母、符号安全性更高</p>
+				</div> 
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2">确认密码</label>
+				<div class="col-sm-10">
+					<input type="password" autocomplete="off" name="confirmPwd" class="form-control" />
+					<p class="help-block">请再次填写密码</p>	 
+				</div>
+			</div> 
+			<div class="form-gorup">   
+				<div class="col-sm-offset-2">  
+					<button type="submit" class="btn btn-success">
+						同意协议并注册  
+					</button>
+					&emsp;&emsp;
+					<a href="/do_login" class="text-primary">已有账号，马上登录</a>
+					
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

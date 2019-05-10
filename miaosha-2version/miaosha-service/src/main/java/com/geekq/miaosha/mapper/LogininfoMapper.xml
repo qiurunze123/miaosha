@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geekq.miaosha.mapper.LogininfoMapper">
+	<!--<cache type="redis" />-->
+
+	<resultMap id="BaseResultMap" type="com.geekq.miasha.entity.Logininfo">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="state" jdbcType="TINYINT" property="state" />
+		<result column="admin" property="admin" />
+		<result column="usertype" property="userType" />
+		<result column="salt" property="salt" />
+		<result column="usertype" property="userType" />
+		<result column="registerDate" property="registerDate" />
+		<result column="lastLoginDate" property="lastLoginDate" />
+
+	</resultMap>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		logininfo
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" keyProperty="id" parameterType="com.geekq.miasha.entity.Logininfo" useGeneratedKeys="true">
+		insert into logininfo (nickname,password, state,usertype,admin,salt,registerdate,lastlogindate)
+		values	(#{nickname,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},#{userType},#{admin}
+		,#{salt},#{registerDate},#{lastLoginDate})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.geekq.miasha.entity.Logininfo">
+		update logininfo set nickname = #{nickname,jdbcType=VARCHAR},password =#{password,jdbcType=VARCHAR},
+			state = #{state,jdbcType=TINYINT},usertype = #{userType},admin=#{admin},salt = #{salt},
+			registerdate = #{registerDate},lastlogindate = #{lastLoginDate}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<sql id="base_column">
+		id, nickname, password, state,usertype,admin ,salt , registerdate , lastlogindate
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap" useCache="true">
+		select <include refid="base_column" />
+		from logininfo	where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap" useCache="false">
+		select <include refid="base_column" />
+		from logininfo
+	</select>
+	
+	<select id="getCountByNickname" resultType="int" useCache="false">
+		select count(id) from logininfo where nickname=#{nickname} and usertype = #{userType}
+	</select>
+
+
+	<select id="getLoginInfoByNickname" resultMap="BaseResultMap" useCache="false">
+		select <include refid="base_column" />
+		from logininfo where nickname=#{nickname} and usertype = #{userType}
+	</select>
+
+
+	<select id="login" resultMap="BaseResultMap" useCache="true">
+		select <include refid="base_column"/>
+		from logininfo where nickname= #{name} and password=#{password} and usertype=#{userType}
+	</select>
+	
+	<select id="autoComplate" resultType="hashmap" useCache="false">
+		select id,nickname as name
+		from logininfo where nickname LIKE concat(#{word},'%') AND usertype = #{userType}
+	</select>
+</mapper>

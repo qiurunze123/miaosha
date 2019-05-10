@@ -160,3 +160,16 @@
    **Redis（2.6以后）--lua分布式锁**
     
    ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualock.png)
+   
+   **如何利用lua + redis  取代 nigix + lua 脚本进行分布式限流**
+   
+   分布式限流的关键就是把限流做成具有原子性的功能，可以使用redis + lua 来进行技术实现，高并发和高性能，实现时间窗口内的流量控制 
+   操作在lua脚本中又因为redis是单线程的，因此线程安全！Redis 将整个脚本作为一个原子执行, 无需担心并发, 也就无需事务;
+   
+   ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualimit1.png)
+   
+   
+  ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/lualimit2.png)
+
+   lua脚本一致存在于redis 中可以 限制每秒钟的请求数实现限流！
+

@@ -1,0 +1,236 @@
+/* GENERAL ELEMENTS */
+
+* { margin: 0; padding: 0; }
+
+body, input, select, textarea { font-family: verdana, arial, helvetica, sans-serif; font-size: 11px; }
+body { color: #333;  background-color: #fff; text-align: center; }
+
+a:link { color:#0060BF; text-decoration: underline; }
+a:visited { color:#0060BF; text-decoration: underline; }
+a:active { color:#0060BF; text-decoration: underline; }
+a:hover { color:#000000; text-decoration: underline; }
+	
+h1, h2, h3, h4, h5, h6 { font-family: "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, arial, helvetica, sans-serif; font-weight: bold; color: #666; }
+h1 { font-size: 1.8em; margin: 0em 0em 0.6em 0em; color: #EC5800; }
+h2 { font-size: 1.5em; margin: 1.2em 0em 0.4em 0em; }
+h3 { font-size: 1.4em; margin: 1.2em 0em 0.4em 0em; color: #EC5800; }
+h4 { font-size: 1.2em; margin: 1.2em 0em 0.4em 0em; }
+h5 { font-size: 1.0em; margin: 1.2em 0em 0.4em 0em; }
+h6 { font-size: 0.8em; margin: 1.2em 0em 0.4em 0em; }
+
+img { border: 0px; }
+
+p { font-size: 1.0em; line-height: 1.3em; margin: 1.2em 0em 1.2em 0em; }
+li > p { margin-top: 0.2em; }
+pre { font-family: monospace; font-size: 1.0em; }
+strong, b { font-weight: bold; }
+
+/* PAGE ELEMENTS */
+
+/* Content */
+
+#content { margin: 0em auto; width: 765px; padding: 10px 0 10px 0; text-align: left; /* Win IE5 */ }
+.content { margin-left: 4.5em; margin-right: 4.5em; }
+.content ol, .content ul, .content li { font-size: 1.0em; line-height: 1.3em; margin: 0.2em 0 0.1em 1.5em; }
+.content ol.terms li { margin-bottom: 1em; }
+
+/* Header */
+
+#header { padding-bottom: 10em; }
+#headerlogo { float: left; }
+#headerlogo img { width: 188px; height: 83px;  }
+#headernav { float: right; }
+
+label { font-weight: bold; }
+#reminders label { font-weight: normal; }
+
+table.tabbedtable { padding-left: 3em; }
+table.tabbedtable td { padding-bottom: 5px; }
+table.tabbedtable label { text-align: right; padding-right: 9px; }
+.hiddenlabel { visibility: hidden; }
+.largelink { border: 1px solid #cacaca; padding: 10px; background-color: #E8EEF7; font-size: 1.2em; font-weight: bold; }
+.largelinkwrap { padding-top: 10px; padding-bottom: 10px; }
+
+
+
+#signuptab {
+  float:left;
+  width:100%;
+  background:#fff url("bg.gif") repeat-x bottom;
+  font-size: 1.0em;
+  line-height: normal;
+}
+#signuptab ul {
+  margin:0;
+  padding: 0px 10px 0px 10px;
+  list-style:none;
+}
+#signuptab li {
+  float:left;
+  background:url("left_white.png") no-repeat left top;
+  margin:0;
+  padding:0 3px 0 9px;
+  border-bottom:1px solid #CACACA;
+}
+#signuptab a {
+  float:left;
+  display:block;
+  width:.1em;
+  background:url("right_white.png") no-repeat right top;
+  padding:2px 15px 0px 6px;
+  text-decoration:none;
+  font-weight:bold;
+  color:#fff;
+  white-space: nowrap;
+}
+#signuptab > ul a {width:auto;}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#signuptab a {float:none;}
+/* End IE5-Mac hack */
+#signuptab a:hover {
+  color:#333;
+}
+#signuptab #signupcurrent {
+  background-position:0 -150px;
+  border-width:0;
+}
+#signuptab #signupcurrent a {
+  background-position:100% -150px;
+  padding-bottom:1px;
+  color:#000;
+}
+#signuptab li:hover, #signuptab li:hover a {
+  background-position:0% -150px;
+  color:#000;
+}
+#signuptab li:hover a {
+  background-position:100% -150px;
+}
+
+/* Signup box */
+
+#signupbox {
+  width: 100%;
+  text-align: center;
+  margin: 0em auto;
+}
+
+#signupwrap {
+  border: 1px solid #CACACA;
+  border-top: 0;
+  text-align: left;
+  padding: 35px 10px 20px 30px;
+  clear: both;
+}
+
+/* Unsupported browsers */
+
+.orange_rbcontent { padding: 0.4em; }
+.orange_rbroundbox { width: 100%; }
+
+#unsupported {
+  font-weight: bold;
+  text-align: left;
+}
+
+/*#content {
+  padding-top: 15px;
+}*/
+
+/* Signup form */
+
+#signupform table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+
+#signupform .label {
+  padding-top: 2px;
+  padding-right: 8px;
+  vertical-align: top;
+  text-align: right;
+  width: 125px;
+  white-space: nowrap;
+}
+
+#signupform .field {
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+#signupform .status {
+  padding-top: 2px;
+  padding-left: 8px;
+  vertical-align: top;
+  width: 246px;
+  white-space: nowrap;
+}
+
+#signupform .textfield {
+  width: 150px;
+}
+
+#signupform label.error {
+  background:url("../images/unchecked.gif") no-repeat 0px 0px;
+  padding-left: 16px;
+  padding-bottom: 2px;
+  font-weight: bold;
+  color: #EA5200;
+}
+
+#signupform label.checked {
+  background:url("../images/checked.gif") no-repeat 0px 0px;
+}
+
+#signupform .success_msg {
+  font-weight: bold;
+  color: #0060BF;
+  margin-left: 19px;
+}
+
+#signupform #dateformatStatus, #signupform #termsStatus {
+  margin-left: 6px;
+}
+
+#signupform #dateformat_eu {
+ vertical-align: middle;
+}
+
+#signupform #ldateformat_eu {
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+#signupform #dateformat_am {
+  vertical-align: middle;
+}
+
+#signupform #ldateformat_am {
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+#signupform #termswrap {
+  float: left;
+}
+
+#signupform #terms {
+  vertical-align: middle;
+  float: left;
+  display: block;
+  margin-right: 5px;
+}
+
+#signupform #lterms {
+  font-weight: normal;
+  vertical-align: middle;
+  float: left;
+  display: block;
+  width: 350px;
+  white-space: normal;
+}
+
+#signupform #lsignupsubmit {
+  visibility: hidden;
+}

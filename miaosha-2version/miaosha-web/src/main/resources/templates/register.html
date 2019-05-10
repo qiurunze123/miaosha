@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<script type="text/javascript" th:src="@{/js/common1.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+		<meta charset="utf-8" />
+		<title>注册界面</title>
+		<link rel="stylesheet" th:href="@{/css/reset.css}" />
+		<link rel="stylesheet" th:href="@{/css/common.css}" />
+		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+<script type="text/javascript">
+
+        /**
+         $("#registerForm").ajaxForm(function(data){
+		console.debug(data);
+	});
+         */
+
+        /*
+        第一种远程验证方式
+        remote:{
+            url:"/checkUsername.do",
+            type:"post"
+        }
+        */
+        $(function(){
+            $.validator.addMethod("checkUsername", function(value, element) {
+                var ret=false;
+                $.ajax({
+                    dataType:"json",
+                    type:"post",
+                    url:"/checkUsername.do",
+                    data:{username:value},
+                    async:false,
+                    success:function(data){
+                        ret= data.data;
+                    }
+                });
+                return ret;
+            }, "用户名已经存在!");
+
+            $("#registerForm").validate({
+                rules:{
+                    "username":{
+                        required:true,
+                        rangelength:[4,16],
+                        checkUsername:true
+                    },
+                    "password":{
+                        required:true,
+                        rangelength:[4,16]
+                    },
+                    "confirmPwd":{
+                        equalTo:"#password"
+                    }
+                },
+                messages:{
+                    "username":{
+                        required:"请填写用户名!",
+                        rangelength:"用户名的长度在{0}到{1}之间!",
+                    },
+                    "password":{
+                        required:"请填写密码!",
+                        rangelength:"密码的长度在{0}到{1}之间!"
+                    },
+                    "confirmPwd":{
+                        equalTo:"两次输入的密码不一致!"
+                    }
+                },
+                submitHandler:function(form){
+                    $(form).ajaxSubmit(function(data){
+                        if(data.success){
+                            $.messager.confirm("提示","注册成功,请重新登录系统!",function(){
+                                window.location.href="/login.html";
+                            });
+                        }else{
+                            $.messager.alert("提示",data.msg);
+                        }
+                    });
+                },
+                errorClass:"text-danger",
+                highlight:function(element,errorClass){
+                    $(element).closest(".form-group").addClass("has-error");
+                },
+                unhighlight:function(element,errorClass){
+                    $(element).closest(".form-group").removeClass("has-error");
+                }
+            });
+        });
+</script>
+
+	</head>
+	<body>
+	<form name="registerForm" id="registerForm" method="post"  >
+		<div class="wrap login_wrap">
+			<div class="content">
+				<div class="logo"></div>
+				<div class="login_box">
+					<div class="login_form">
+						<div class="login_title">
+							注册
+						</div>
+						<form action="#" method="post">
+							
+							<div class="form_text_ipt">
+								<input id="username" name="username" type="text" placeholder="手机号" />
+							</div>
+							<div class="ececk_warning"><span>手机号/邮箱不能为空</span></div>
+							<div class="form_text_ipt">
+								<input id="password" name="password" type="password" placeholder="密码" />
+							</div>
+							<div class="ececk_warning"><span>密码不能为空</span></div>
+							<div class="form_text_ipt">
+								<input id="repassword" name="repassword" type="password" placeholder="重复密码" />
+							</div>
+							<div class="ececk_warning"><span>密码不能为空</span></div>
+							<div class="form_text_ipt">
+								<img id="verifyCodeImg" width="80" height="32" src="/miaosha/verifyCodeRegister" type="text" onclick="refreshVerifyCode()" />
+							</div>
+							<div class="form_text_ipt">
+							<input id="verifyCode"  name="verifyCode"  type="text" placeholder="验证码"/>
+							</div>
+							<div class="ececk_warning"><span>验证码不能为空</span></div>
+							
+							<div class="form_btn">
+								<button type="button" onclick="register_go()">注册</button>
+							</div>
+							<div class="form_reg_btn">
+								<span>已有帐号？</span><a href="/login/to_login">马上登录</a>
+							</div>
+						</form>
+						<div class="other_login">
+							<div class="left other_left">
+								<span>其它登录方式</span>
+							</div>
+							<div class="right other_right">
+								<a href="#"><i class="fa fa-qq fa-2x"></i></a>
+								<a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+								<a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;">
+</div>
+	</form>
+	</body>
+</html>

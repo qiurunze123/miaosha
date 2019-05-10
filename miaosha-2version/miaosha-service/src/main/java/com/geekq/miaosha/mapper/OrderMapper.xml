@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.geekq.miaosha.mapper.OrderMapper" >
+
+    <resultMap id="BaseResultMap" type="OrderInfo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+        <result column="delivery_addr_id" property="deliveryAddrId" jdbcType="BIGINT" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_count" property="goodsCount" jdbcType="BIGINT" />
+        <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE" />
+        <result column="order_channel" property="orderChannel" jdbcType="DOUBLE" />
+        <result column="status" property="status" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapMiaoShaOrder" type="miaoshaorder" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="order_id" property="orderId" jdbcType="BIGINT" />
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="base_column">
+    id,user_id,goods_id,delivery_addr_id,goods_name,goods_count,goods_price,order_channel
+    ,status,create_date,pay_date
+    </sql>
+
+    <sql id="base_column_miaosha_order">
+    id,user_id,goods_id,order_id
+    </sql>
+
+    <select id="getMiaoshaOrderByUserIdGoodsId" resultMap="BaseResultMapMiaoShaOrder" >
+       select <include refid="base_column_miaosha_order" />
+        from miaosha_order where user_id=#{userNickName} and goods_id=#{goodsId}
+    </select>
+
+    <select id="getOrderById" resultMap="BaseResultMap" >
+       select * from order_info where id = #{orderId}
+    </select>
+
+    <insert id="insert" parameterType="miaoshaorder" useGeneratedKeys="true" keyProperty="id" >
+    insert into order_info(user_id, goods_id, goods_name, goods_count, goods_price, order_channel, status, create_date)values( #{userId}, #{goodsId}, #{goodsName}, #{goodsCount}, #{goodsPrice}, #{orderChannel},#{status},#{createDate} )
+    </insert>
+
+    <insert id="insertMiaoshaOrder" parameterType="OrderInfo" useGeneratedKeys="true" keyProperty="id" >
+        insert into miaosha_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})
+    </insert>
+
+    <select id="selectOrderStatusByCreateTime" resultMap="BaseResultMap" >
+        select * from order_info where status=#{status} and create_Date $lt;=#{createDate}
+    </select>
+
+
+    <update id="closeOrderByOrderInfo" parameterType="int" >
+        update order_info set status=0 where id=#{id}
+  </update>
+
+</mapper>

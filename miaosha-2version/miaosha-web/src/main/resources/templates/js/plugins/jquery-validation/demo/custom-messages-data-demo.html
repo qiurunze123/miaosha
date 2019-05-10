@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>jQuery validation plug-in - comment form example</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/screen.css" />
+
+<script src="../lib/jquery.js" type="text/javascript"></script>
+<script src="../jquery.validate.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#commentForm").validate();
+	$("#commentForm2").validate({
+		messages: {
+			email: {
+				required: 'Enter this!'
+			}
+		}
+	});
+
+});
+</script>
+
+<style type="text/css">
+form { width: 500px; }
+form label { width: 250px; }
+form label.error,
+form input.submit { margin-left: 253px; }
+</style>
+
+</head>
+<body>
+
+<h1 id="banner"><a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a> Demo</h1>
+<div id="main">
+
+<p>Take a look at the source to see how messages can be customized with metadata.</p>
+
+<!-- Custom rules and messages via data- attributes -->
+<form class="cmxform" id="commentForm" method="post" action="">
+	<fieldset>
+		<legend>Please enter your email address</legend>
+		<p>
+
+			<label for="cemail">E-Mail *</label>
+			<input id="cemail" name="email" data-rule-required="true" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address" />
+		</p>
+		<p>
+			<input class="submit" type="submit" value="Submit"/>
+		</p>
+	</fieldset>
+</form>
+
+<!-- Custom message for "required" in metadata is overriden by a validate option -->
+<form class="cmxform" id="commentForm2" method="post" action="">
+	<fieldset>
+		<legend>Please enter your email address</legend>
+		<p>
+
+			<label for="cemail">E-Mail *</label>
+			<input id="cemail" name="email" data-rule-required="true" data-rule-email="true" data-msg-email="Please enter a valid email address" />
+		</p>
+		<p>
+			<input class="submit" type="submit" value="Submit"/>
+		</p>
+	</fieldset>
+</form>
+
+<a href="index.html">Back to main page</a>
+
+</body>
+</html>

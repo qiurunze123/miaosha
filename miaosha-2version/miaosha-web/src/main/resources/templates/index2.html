@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8">
+	<title>登录界面</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<script type="text/javascript" src="js/jquery.min.js" ></script>
+	<script type="text/javascript" src="js/common.js" ></script>
+	<script type="text/javascript" src="js/md5.min.js"></script>
+	<script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="/css/slide-unlock.css" type="text/css" />
+	<script type="text/javascript" src="js/slideunlock/slideunlock.js"></script>
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+	<style>
+		html, body, h1 {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #393939;
+			color: #d5d4ff;
+			overflow: hidden
+		}
+		#demo {
+			width: 600px;
+			margin: 150px auto;
+			padding: 10px;
+			border: 1px dashed #d5d4ff;
+			border-radius: 10px;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			text-align: left;
+		}
+	</style>
+
+	<script>
+        $(function () {
+            var slider = new SliderUnlock("#slider",{
+                successLabelTip : "欢迎访问业余草网站"
+            },function(){
+                alert("验证成功,即将跳转至业余草首页");
+                //window.location.href="http://www.xttblog.com"
+            });
+            slider.init();
+        })
+	</script>
+</head>
+<body>
+<div id="demo">
+	<div id="slider">
+		<div id="slider_bg"></div>
+		<span id="label">>></span> <span id="labelTip">拖动滑块验证</span> </div>
+</div>
+</body>
+</html>

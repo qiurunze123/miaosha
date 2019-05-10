@@ -26,9 +26,9 @@ public class AccountServiceImpl implements IAccountService {
 	@Override
 	public Account get(Long id) {
 		Account account = accountMapper.selectByPrimaryKey(id);
-		if (!account.checkAbstractInfo()) {
-			throw new RuntimeException("账户信息被篡改:" + id);
-		}
+//		if (!account.checkAbstractInfo()) {
+//			throw new RuntimeException("账户信息被篡改:" + id);
+//		}
 		return account;
 	}
 

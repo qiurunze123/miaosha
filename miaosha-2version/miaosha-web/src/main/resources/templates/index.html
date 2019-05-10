@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8">
+	<title>登录界面</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<script type="text/javascript" src="js/jquery.min.js" ></script>
+	<script type="text/javascript" src="js/common.js" ></script>
+	<script type="text/javascript" src="js/md5.min.js"></script>
+	<script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<script type="text/javascript">
+        function login(){
+            var password = $("#password").val();
+            $.ajax({
+                url: "/login/loginin",
+                type: "POST",
+                data:{
+                    nickname:$("#nickname").val(),
+                    password: password
+                },
+                success:function(data){
+                    // layer.closeAll();
+                    if(data.code == 0){
+                        alert(111);
+                        // layer.msg("成功");
+                        // window.location.href="/goods/to_list";
+                    }else{
+                        layer.msg(data.message);
+                    }
+                },
+                error:function(){
+                    alert(111);
+                }
+            });
+        }
+	</script>
+</head>
+<body>
+<div class="wrap login_wrap">
+	<div class="content">
+		<div class="logo"></div>
+		<div class="login_box">
+
+			<div class="login_form">
+				<div class="login_title">
+					登录
+				</div>
+				<form name="loginForm" id="loginForm"  >
+
+					<div class="form_text_ipt">
+						<input id="nickname" name = "nickname" class="form-control" type="text" placeholder="手机号码" required="true"  />
+					</div>
+					<div class="form_text_ipt">
+						<input id="password" name="password" class="form-control" type="password"  placeholder="密码" required="true"  />
+					</div>
+					<div class="form_check_ipt">
+						<div class="left check_left">
+							<label><input name="" type="checkbox"> 下次自动登录&nbsp;&nbsp;&nbsp;</label>
+						</div>
+						<div class="check_left">
+							<label><p th:text="'访问次数为:'+${count}" ></p>
+							</label>
+						</div>
+						<div class="right check_right">
+							<a href="#">忘记密码</a>
+						</div>
+					</div>
+					<div class="form_btn">
+						<button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>
+					</div>
+					<div class="form_reg_btn">
+						<span>还没有帐号？</span><a href="/registerv2">马上注册</a>
+					</div>
+				</form>
+				<div class="other_login">
+					<div class="left other_left">
+						<span>其它登录方式</span>
+					</div>
+					<div class="right other_right">
+						<a href="#"><i class="fa fa-qq fa-2x"></i></a>
+						<a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+						<a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="text-align:center;">
+	<p>more：<a href="https://github.com/qiurunze123" target="_blank">geekQ</a></p>
+</div>
+</body>
+</html>

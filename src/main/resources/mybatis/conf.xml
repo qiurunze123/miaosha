@@ -7,7 +7,7 @@
     </typeAliases>
 
         <!-- 为实体类me.gacl.domain.User配置一个别名_User -->
-        <!-- <typeAlias type="me.gacl.domain.User" alias="_User"/> -->
+        <!-- <typeAlias type="me.gacl.domain.User" alias="_User"/>-->
          -->
         <!--<package name="com.geekq.miaosha.mybatis.entity.User" alias = />-->
     <mappers>

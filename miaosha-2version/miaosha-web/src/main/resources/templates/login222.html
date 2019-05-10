@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/js/bootstrap-3.3.2-dist/css/bootstrap.css}" />
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-3.3.2-dist/js/bootstrap.js}"></script>
+	<script type="text/javascript" th:src="@{/js/plugins/jquery-validation/jquery.validate.js}"></script>
+	<script type="text/javascript" th:src="@{/js/plugins/jquery-validation/localization/messages_zh.js}"></script>
+	<script type="text/javascript" th:src="@{/js/plugins/jquery.form.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.bootstrap.min.js}"></script>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/slide-unlock.css}" />
+	<script type="text/javascript" th:src="@{/js/slideunlock/slideunlock.js}"></script>
+	<style>
+		html, body, h1 {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #393939;
+			color: #d5d4ff;
+			overflow: hidden
+		}
+		#demo {
+			width: 600px;
+			margin: 150px auto;
+			padding: 10px;
+			border: 1px dashed #d5d4ff;
+			border-radius: 10px;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			text-align: left;
+		}
+	</style>
+
+</head>
+<body>
+<div id="demo">
+	<div id="slider">
+		<div id="slider_bg"></div>
+		<span id="label">>></span> <span id="labelTip">拖动滑块验证</span> </div>
+</div>
+</body>
+<script>
+    $(function () {
+        var slider = new SliderUnlock("#slider",{
+            successLabelTip : "欢迎访问业余草网站"
+        },function(){
+            alert("验证成功,即将跳转至业余草首页");
+            //window.location.href="http://www.xttblog.com"
+        });
+        slider.init();
+    })
+</script>
+</html>

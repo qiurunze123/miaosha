@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class PersonController extends BaseController {
 
@@ -27,9 +29,10 @@ public class PersonController extends BaseController {
 
     @RequiredLogin
     @RequestMapping("/personal")
-    public String personal(Model model) {
+    public String personal(Model model, HttpServletRequest request) {
         //从中拿到 用户信息对象
-        Logininfo info = redisService.get("Loginqiurunze11");
+        String username  = request.getParameter("username");
+        Logininfo info = redisService.get("Login"+username);
         model.addAttribute("userinfo", userinfoService.get(info.getId()));
         model.addAttribute("account", accountService.get(info.getId()));
         model.addAttribute("logininfo", info);
