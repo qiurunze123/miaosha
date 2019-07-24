@@ -6,11 +6,11 @@
 
 > QQ : [3341386488](3341386488)
 
-> QQ群1 :
+> QQ群1(秒杀架构一群) :
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/qq.png)
 
-> QQ群2 :
+> QQ群2(秒杀架构二群) :
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha22.png)
 
