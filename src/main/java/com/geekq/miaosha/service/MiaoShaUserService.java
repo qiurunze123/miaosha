@@ -104,19 +104,6 @@ public class MiaoShaUserService {
             if(user == null){
                 return false;
             }
-
-            MiaoShaMessageVo vo = new MiaoShaMessageVo();
-            vo.setContent("尊敬的用户你好，你已经成功注册！");
-            vo.setCreateTime(new Date());
-            vo.setMessageId(SnowflakeIdWorker.getOrderId(0,0));
-            vo.setSendType(0);
-            vo.setStatus(0);
-            vo.setMessageType(MessageStatus.messageType.system_message.ordinal());
-            vo.setUserId(miaoShaUser.getId());
-            vo.setMessageHead(MessageStatus.ContentEnum.system_message_register_head.getMessage());
-            sender.sendRegisterMessage(vo);
-
-
             //生成cookie 将session返回游览器 分布式session
             String token= UUIDUtil.uuid();
             addCookie(response, token, user);

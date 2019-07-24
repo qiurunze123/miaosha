@@ -6,11 +6,13 @@
 
 > QQ : [3341386488](3341386488)
 
-> QQ群 :
+> QQ群1 :
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/qq.png)
 
+> QQ群2 :
 
+![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/miaosha22.png)
 
 [![Travis](https://img.shields.io/badge/language-Java-yellow.svg)](https://github.com/qiurunze123)
 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。本GitHub还有许多其他的知识，随时欢迎探讨与骚扰！本文还在更新如果文章出现瑕疵请及时与我联系！
