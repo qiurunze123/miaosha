@@ -2,7 +2,6 @@ package com.geekq.miaosha.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
-import com.geekq.api.service.DemoService;
 import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miasha.enums.resultbean.ResultGeekQ;
@@ -30,8 +29,6 @@ public class LoginController {
     @Autowired
     private MiaoShaUserService userService;
 
-    @Reference(version = "${demo.service.version}",mock = "return null")
-    private DemoService demoService;
 
     @RequestMapping("/sayHello")
     public String sayHello() throws Exception {

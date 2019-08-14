@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>miaosha-admin-service</artifactId>
 	
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	
 	<dependencies>
 

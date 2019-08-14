@@ -44,11 +44,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.geekq</groupId>
-            <artifactId>miaosha-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+    
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -163,11 +159,7 @@
             <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
-            <version>${com.zk.client}</version>
-        </dependency>
+    
 
         <dependency>
             <groupId>com.geekq.api</groupId>
@@ -178,12 +170,6 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     <resources>
         <resource>
             <directory>src/main/java</directory>
