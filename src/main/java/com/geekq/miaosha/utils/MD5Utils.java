@@ -22,7 +22,7 @@ public class MD5Utils {
     }
 
     /**
-     * 第二次md5　salt　可随机　
+     * 第二次md5　salt 可随机　
      * @param formPass
      * @param salt
      * @return
