@@ -172,7 +172,7 @@
       
       12.where 从句禁止对列进行函数转换和计算(导致无法使用相关列的索引)
       
-      SELECT（错误写法）
+      SELECT（正确写法）
       	* 
       FROM
       	miaosha_message 
@@ -180,7 +180,7 @@
       	create_time >= '20190101' 
       	AND create_time < '20190102'
       	
-      SELECT （正确写法）
+      SELECT （错误写法）
         	* 
         FROM
         	miaosha_message 
