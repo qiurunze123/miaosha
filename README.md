@@ -28,7 +28,10 @@
 
 ### 最初版本请下载 (https://pan.baidu.com/s/1sld8RBSvLe2q4gc-Z-fVAQ)
 ### 如果想先看dubbo + zk 了解请下载we-miaosha ，miaosha-order  为项目分离示例项目！会不断完善！此版本为springboot2.0+ 请使JDK1.8+
-### start 维护 开始搭建 
+### start 维护 开始搭建  
+## 重点
+*** 如何搭建以及接入新思想 （新版本请进入）*** 
+![新版本如何搭建指南](https://github.com/qiurunze123/aircrafttravel)
 
 > 软件环境 : 请选择稳定版 
 
