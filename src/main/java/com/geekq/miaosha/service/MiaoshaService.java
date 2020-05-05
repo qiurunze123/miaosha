@@ -166,7 +166,7 @@ public class MiaoshaService {
 		return image;
 	}
 
-	private static int calc(String exp) {
+	private static int catchValue(String exp) {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine engine = manager.getEngineByName("JavaScript");
