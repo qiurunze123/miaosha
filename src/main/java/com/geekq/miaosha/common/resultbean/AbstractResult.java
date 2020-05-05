@@ -40,7 +40,7 @@ public class AbstractResult {
         return this;
     }
 
-    public AbstractResult success() {
+    public AbstractResult setSuccess() {
         this.status = ResultStatus.SUCCESS;
         return this;
     }
