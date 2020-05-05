@@ -139,7 +139,7 @@ public class SnowflakeIdWorker {
      * 返回以毫秒为单位的当前时间
      * @return 当前时间(毫秒)
      */
-    protected long timeGen() {
+    protected long currentTime() {
         return System.currentTimeMillis();
     }
 
