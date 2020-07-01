@@ -14,7 +14,7 @@
 		<mybatis.version>3.2.8</mybatis.version>
 		<mybatis.spring.version>1.2.2</mybatis.spring.version>
 		<mybatis.paginator.version>1.2.15</mybatis.paginator.version>
-		<mysql.version>5.1.41</mysql.version>
+		<mysql.version>8.0.16</mysql.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<jackson.version>2.7.4</jackson.version>
 		<druid.version>1.1.0</druid.version>
