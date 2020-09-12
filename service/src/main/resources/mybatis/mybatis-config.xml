@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mybatis的配置 -->
+<configuration>
+
+	<!-- 配置mybatis的默认运行模式 -->
+	<settings>
+		<!-- 全局启用或禁用延迟加载。当禁用时, 所有关联对象都会即时加载。 开启延迟加载,设置为true -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<!-- 按需加载 -->
+		<setting name="aggressiveLazyLoading" value="false"/>
+		<!-- 配置哪些方法会触发所有延迟加载对象加载 -->
+		<setting name="lazyLoadTriggerMethods" value="clone"/>
+			<!-- 打印查询语句 打印mybatis日志-->
+			<setting name="logImpl" value="STDOUT_LOGGING" />
+
+	</settings>
+
+	<!--<typeAliases>-->
+		<!--<typeAlias alias="_user" type="com.geekq.miaosha.mybatis.entity.User"/>-->
+	<!--</typeAliases>-->
+	<!--<mappers>-->
+		<!--<mapper resource="com.geekq.miaosha.mybatis.Mapper.UserMapper"/>-->
+	<!--</mappers>-->
+
+	
+</configuration>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias alias="user" type="com.geekq.miaosha.mybatis.entity."/>
+    </typeAliases>
+
+        <!-- 为实体类me.gacl.domain.User配置一个别名_User -->
+        <!-- <typeAlias type="me.gacl.domain.User" alias="_User"/>-->
+         -->
+        <!--<package name="com.geekq.miaosha.mybatis.entity.User" alias = />-->
+    <mappers>
+        <mapper resource="com.geekq.miaosha.mybatis.Mapper.UserMapper"/>
+    </mappers>
+</configuration>
