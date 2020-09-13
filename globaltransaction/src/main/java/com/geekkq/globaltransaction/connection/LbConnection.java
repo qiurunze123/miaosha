@@ -1,5 +1,8 @@
 package com.geekkq.globaltransaction.connection;
 
+import com.geekkq.globaltransaction.transactional.LbTransaction;
+import com.geekkq.globaltransaction.transactional.TransactionType;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -7,7 +10,7 @@ import java.util.concurrent.Executor;
 
 public class LbConnection implements Connection {
     private Connection conn;
-
+    private LbTransaction transaction;
     public LbConnection(Connection conn) {
         this.conn = conn;
     }
@@ -49,8 +52,13 @@ public class LbConnection implements Connection {
             public void run() {
                 try {
                     //异步任务阻塞
+                    transaction.getTask().waitTask();
+                    if(transaction.getTransactionType().equals(TransactionType.COMMIT)){
+                          conn.commit();
 
-                    conn.commit();
+                    }else{
+                        conn.rollback();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

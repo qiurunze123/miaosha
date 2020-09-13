@@ -11,7 +11,8 @@ import java.util.UUID;
 public class GlobalTransactionManager {
     private static NettyClient nettyClient;
     private static ThreadLocal<String> currentGroupId=new ThreadLocal<>();
-    private static Map<String,String> LB_TRANSACTION_MAP=new HashMap<>();
+    private static ThreadLocal<LbTransaction> current=new ThreadLocal<>();
+    private static Map<String,LbTransaction> LB_TRANSACTION_MAP=new HashMap<>();
     public static String createGroup() throws RemotingException {
         if(currentGroupId.get()!=null){
             return currentGroupId.get();
@@ -30,7 +31,8 @@ public class GlobalTransactionManager {
     public static LbTransaction createLbTransaction(String groupId){
         String transactionId=UUID.randomUUID().toString();
         LbTransaction lbTransaction=new LbTransaction(groupId,transactionId);
-        LB_TRANSACTION_MAP.put(groupId,transactionId);
+        LB_TRANSACTION_MAP.put(groupId,lbTransaction);
+        current.set(lbTransaction);
         System.out.println("创建分支事务");
         return lbTransaction;
     }
@@ -56,4 +58,7 @@ public class GlobalTransactionManager {
     }
 
 
+    public static LbTransaction getCurrentTransaction(String groupId) {
+        return LB_TRANSACTION_MAP.get(groupId);
+    }
 }

@@ -5,6 +5,15 @@ public class LbTransaction {
     private String groupId;
     private String transactionId;
 
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    private Task task;
     public String getTransactionType() {
         return transactionType;
     }
