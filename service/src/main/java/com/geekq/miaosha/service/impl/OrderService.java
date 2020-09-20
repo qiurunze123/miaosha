@@ -1,11 +1,14 @@
-package com.geekq.miaosha.service;
+package com.geekq.miaosha.service.impl;
 
+import com.geekkq.globaltransaction.annotation.GlobalTransaction;
+import com.geekkq.globaltransaction.util.HttpClient;
 import com.geekq.miaosha.dao.OrderDao;
 import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.service.IOrderService;
 import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.GoodsVo;
 import org.apache.commons.lang3.time.DateUtils;
@@ -19,7 +22,7 @@ import java.util.List;
 import static com.geekq.miaosha.common.Constanst.orderStaus.ORDER_NOT_PAY;
 
 @Service
-public class OrderService {
+public class OrderService implements IOrderService {
 	
 	@Autowired
 	OrderDao orderDao;
@@ -36,6 +39,8 @@ public class OrderService {
 	}
 
 	@Transactional
+	@GlobalTransaction(isStart = true)
+	@Override
 	public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setCreateDate(new Date());
@@ -48,12 +53,15 @@ public class OrderService {
 		orderInfo.setStatus(0);
 		orderInfo.setUserId(Long.valueOf(user.getNickname()));
 		orderDao.insert(orderInfo);
-		MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
+		/*MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
 		miaoshaOrder.setGoodsId(goods.getId());
 		miaoshaOrder.setOrderId(orderInfo.getId());
 		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
-		orderDao.insertMiaoshaOrder(miaoshaOrder);
-		redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goods.getId(),miaoshaOrder) ;
+		orderDao.insertMiaoshaOrder(miaoshaOrder);*/
+		//redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goods.getId(),miaoshaOrder) ;
+		String url="http://localhost:18899/testtransaction/createInfo?name='dsfsdafsda'&code='324534534'";
+		HttpClient.get(url);
+		int i=100/0;
 		return orderInfo;
 	}
 

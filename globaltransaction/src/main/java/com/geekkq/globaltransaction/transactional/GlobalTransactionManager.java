@@ -3,16 +3,32 @@ package com.geekkq.globaltransaction.transactional;
 import com.alibaba.dubbo.remoting.RemotingException;
 import com.alibaba.dubbo.remoting.transport.netty.NettyClient;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class GlobalTransactionManager {
+
+
     private static NettyClient nettyClient;
+
+    public static void setCurrentGroupId(String currentGroupId) {
+        GlobalTransactionManager.currentGroupId.set(currentGroupId);
+    }
+
+    public static String getCurrentGroupId() {
+       return GlobalTransactionManager.currentGroupId.get();
+    }
+
     private static ThreadLocal<String> currentGroupId=new ThreadLocal<>();
     private static ThreadLocal<LbTransaction> current=new ThreadLocal<>();
     private static Map<String,LbTransaction> LB_TRANSACTION_MAP=new HashMap<>();
+    @Autowired
+    public void setNettyClient(NettyClient nettyClient) {
+        GlobalTransactionManager.nettyClient = nettyClient;
+    }
     public static String createGroup() throws RemotingException {
         if(currentGroupId.get()!=null){
             return currentGroupId.get();
@@ -49,7 +65,7 @@ public class GlobalTransactionManager {
         return lbTransaction;
     }
 
-    public static void commitGlobalTransaaction(String groupId) throws RemotingException {
+    public static void commitGlobalTransaction(String groupId) throws RemotingException {
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("command","commit");
         jsonObject.put("groupId",groupId);
@@ -61,4 +77,9 @@ public class GlobalTransactionManager {
     public static LbTransaction getCurrentTransaction(String groupId) {
         return LB_TRANSACTION_MAP.get(groupId);
     }
+
+    public static LbTransaction getCurrent(){
+        return current.get();
+    }
+
 }

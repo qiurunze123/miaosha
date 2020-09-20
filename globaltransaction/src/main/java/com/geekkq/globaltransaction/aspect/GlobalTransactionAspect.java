@@ -21,12 +21,15 @@ public class GlobalTransactionAspect implements Ordered {
 
    @Around("@annotation(com.geekkq.globaltransaction.annotation.GlobalTransaction)")
     public void invoke(ProceedingJoinPoint joinPoint) throws Throwable {
+       System.out.println("进入拦截器！！！");
        MethodSignature signature=(MethodSignature)joinPoint.getSignature();
        Method method=signature.getMethod();
        GlobalTransaction globalTransaction=method.getAnnotation(GlobalTransaction.class);
        String groupId=null;
        if(globalTransaction.isStart()){
            groupId=GlobalTransactionManager.createGroup();
+       }else{
+           groupId=GlobalTransactionManager.getCurrentGroupId();
        }
 
        LbTransaction transaction=GlobalTransactionManager.createLbTransaction(groupId);
@@ -37,7 +40,7 @@ public class GlobalTransactionAspect implements Ordered {
            GlobalTransactionManager.addLbTransaction(transaction, TransactionType.ROLLBACK);
        }
 
-
+       System.out.println("退出拦截器!!");
 
    }
 

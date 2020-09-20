@@ -6,12 +6,12 @@ import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.service.impl.OrderService;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -26,7 +26,7 @@ public class MiaoshaService {
 	GoodsService goodsService;
 	
 	@Autowired
-	OrderService orderService;
+    OrderService orderService;
 	@Autowired
 	RedisService redisService;
 

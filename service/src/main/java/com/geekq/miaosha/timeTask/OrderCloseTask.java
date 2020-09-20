@@ -2,11 +2,10 @@ package com.geekq.miaosha.timeTask;
 
 import com.geekq.miaosha.dao.OrderDao;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.service.OrderService;
+import com.geekq.miaosha.service.impl.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import static com.geekq.miaosha.common.Constanst.CLOSE_ORDER_INFO_TASK_LOCK;

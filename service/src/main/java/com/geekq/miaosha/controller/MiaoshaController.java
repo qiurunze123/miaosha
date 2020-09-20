@@ -12,7 +12,7 @@ import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
-import com.geekq.miaosha.service.OrderService;
+import com.geekq.miaosha.service.impl.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -200,11 +201,20 @@ public class MiaoshaController implements InitializingBean {
         }
     }
 
-    @RequestMapping(value = "/createOrderInfo")
+    @RequestMapping(value = "/createOrderInfo",method = RequestMethod.GET)
     @ResponseBody
     public List createOrderInfo(){
         GoodsVo goodsVo=new GoodsVo();
         MiaoshaUser user=new MiaoshaUser();
+        goodsVo.setMiaoshaPrice(29.98);
+        goodsVo.setGoodsName("iphone123");
+        goodsVo.setStartDate(new Date());
+        goodsVo.setEndDate(new Date());
+        goodsVo.setStockCount(12);
+        goodsVo.setGoodsTitle("miaosha");
+        goodsVo.setId(Long.parseLong("24235432534"));
+        user.setNickname("138903654932");
+        user.setPassword("zc142500");
         OrderInfo order=orderService.createOrder(user,goodsVo);
         return null;
     }

@@ -10,10 +10,14 @@ import java.util.concurrent.Executor;
 
 public class LbConnection implements Connection {
     private Connection conn;
-    private LbTransaction transaction;
-    public LbConnection(Connection conn) {
+
+    public LbConnection(Connection conn, LbTransaction transaction) {
         this.conn = conn;
+        this.transaction = transaction;
     }
+
+    private LbTransaction transaction;
+
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -59,6 +63,7 @@ public class LbConnection implements Connection {
                     }else{
                         conn.rollback();
                     }
+                    conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -69,12 +74,24 @@ public class LbConnection implements Connection {
 
     @Override
     public void rollback() throws SQLException {
-
+        System.out.print("rollback...");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    transaction.getTask().waitTask();
+                    conn.rollback();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
     public void close() throws SQLException {
-
+       conn.close();
     }
 
     @Override

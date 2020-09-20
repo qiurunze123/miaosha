@@ -6,7 +6,7 @@ import com.geekq.miaosha.domain.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miaosha.service.OrderService;
+import com.geekq.miaosha.service.impl.OrderService;
 import com.geekq.miaosha.vo.GoodsVo;
 import com.geekq.miaosha.vo.OrderDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
