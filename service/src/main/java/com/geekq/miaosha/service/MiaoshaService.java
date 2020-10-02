@@ -1,6 +1,6 @@
 package com.geekq.miaosha.service;
 
-import com.geekkq.globaltransaction.annotation.GlobalTransaction;
+import com.geekq.globaltransaction.annotation.GlobalTransaction123;
 import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.domain.OrderInfo;
@@ -30,7 +30,6 @@ public class MiaoshaService {
 	@Autowired
 	RedisService redisService;
 
-	@GlobalTransaction
 	public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
 		//减库存 下订单 写入秒杀订单
 		boolean success = goodsService.reduceStock(goods);

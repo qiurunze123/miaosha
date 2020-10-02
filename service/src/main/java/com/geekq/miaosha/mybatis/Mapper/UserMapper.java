@@ -6,7 +6,6 @@ import com.geekq.miaosha.mybatis.vo.TeacherListVo;
 import com.geekq.miaosha.mybatis.vo.TeacherVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.List;
 

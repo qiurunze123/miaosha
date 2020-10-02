@@ -39,7 +39,7 @@ public class MQReceiver {
 		@Autowired
 		MiaoShaMessageService messageService ;
 		
-		@RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
+		//@RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
 		public void receive(String message) {
 			log.info("receive message:"+message);
 			MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage.class);

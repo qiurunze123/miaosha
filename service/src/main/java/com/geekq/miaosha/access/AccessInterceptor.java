@@ -3,7 +3,6 @@ package com.geekq.miaosha.access;
 import com.alibaba.fastjson.JSON;
 import com.geekq.miaosha.common.enums.ResultStatus;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
-import com.geekq.miaosha.controller.LoginController;
 import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.MiaoShaUserService;

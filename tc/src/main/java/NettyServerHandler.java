@@ -17,9 +17,10 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
      private static ChannelGroup channelGroup=new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
      private static Map<String, List<String>> transactionIdMap=new HashMap();
+    private static Map<String,String> ENDGROUPMAP=new HashMap<>();
+
 
      public void handlerAdded(ChannelHandlerContext ctx){
-         Channel channel=ctx.channel();
          channelGroup.add(ctx.channel());
      }
 
@@ -39,12 +40,16 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
              if("rollback".equals(transactionType)){
                  System.out.println("接收到回滚状态");
                  sendMsg(groupId,"rollback");
+                 ENDGROUPMAP.remove(groupId);
+             }
+             if(transactionId.equals(ENDGROUPMAP.get(groupId))){
+                 System.out.println("该组事务提交，组事务id为："+groupId);
+                 sendMsg(groupId,"commit");
+                 ENDGROUPMAP.remove(groupId);
              }
 
-
-         }else if("cpmmit".equals(command)){
-             System.out.println("全局事务提交.");
-             sendMsg(groupId,"commit");
+         }else if("addEndTransaction".equals(command)){
+             ENDGROUPMAP.put(groupId,transactionId);
          }
 
 
@@ -59,6 +64,10 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
          }
 
     }
-
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        ctx.close();
+    }
 
 }

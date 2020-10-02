@@ -1,7 +1,8 @@
 package com.geekq.miaosha.service.impl;
 
-import com.geekkq.globaltransaction.annotation.GlobalTransaction;
-import com.geekkq.globaltransaction.util.HttpClient;
+import com.geekq.globaltransaction.annotation.GlobalTransaction123;
+import com.geekq.globaltransaction.transactional.GlobalTransactionManager;
+import com.geekq.globaltransaction.util.HttpClient;
 import com.geekq.miaosha.dao.OrderDao;
 import com.geekq.miaosha.domain.MiaoshaOrder;
 import com.geekq.miaosha.domain.MiaoshaUser;
@@ -38,9 +39,9 @@ public class OrderService implements IOrderService {
 		return orderDao.getOrderById(orderId);
 	}
 
-	@Transactional
-	@GlobalTransaction(isStart = true)
+
 	@Override
+	@GlobalTransaction123(isStart = true)
 	public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setCreateDate(new Date());
@@ -59,9 +60,11 @@ public class OrderService implements IOrderService {
 		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
 		orderDao.insertMiaoshaOrder(miaoshaOrder);*/
 		//redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goods.getId(),miaoshaOrder) ;
-		String url="http://localhost:18899/testtransaction/createInfo?name='dsfsdafsda'&code='324534534'";
+		/*String url="http://localhost:18899/testtransaction/createInfo?name='dsfsdafsda'&code='324534534'";
+		String groupId= GlobalTransactionManager.getCurrentGroupId();
+		url+="'&groupId='"+groupId;
 		HttpClient.get(url);
-		int i=100/0;
+		int i=100/0;*/
 		return orderInfo;
 	}
 

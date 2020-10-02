@@ -1,5 +1,7 @@
 package com.geekq.miaosha.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.geekq.globaltransaction.transactional.GlobalTransactionManager;
 import com.geekq.miaosha.access.AccessLimit;
 import com.geekq.miaosha.common.resultbean.ResultGeekQ;
 import com.geekq.miaosha.domain.MiaoshaOrder;
@@ -215,7 +217,12 @@ public class MiaoshaController implements InitializingBean {
         goodsVo.setId(Long.parseLong("24235432534"));
         user.setNickname("138903654932");
         user.setPassword("zc142500");
-        OrderInfo order=orderService.createOrder(user,goodsVo);
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("dsfsf","dsfsfsa");
+        GlobalTransactionManager.nettyClient.send(jsonObject);
+
+
+       //OrderInfo order=orderService.createOrder(user,goodsVo);
         return null;
     }
 
@@ -228,13 +235,13 @@ public class MiaoshaController implements InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<GoodsVo> goodsList = goodsService.listGoodsVo();
+       /* List<GoodsVo> goodsList = goodsService.listGoodsVo();
         if (goodsList == null) {
             return;
         }
         for (GoodsVo goods : goodsList) {
             redisService.set(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId(), goods.getStockCount());
             localOverMap.put(goods.getId(), false);
-        }
+        }*/
     }
 }

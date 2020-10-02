@@ -1,6 +1,5 @@
 package com.geekq.miaosha.redis.redismanager;
 
-import com.geekq.miaosha.controller.LoginController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;

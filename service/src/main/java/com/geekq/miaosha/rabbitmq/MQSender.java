@@ -1,6 +1,5 @@
 package com.geekq.miaosha.rabbitmq;
 
-import com.geekq.miaosha.domain.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;

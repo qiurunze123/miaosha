@@ -1,11 +1,8 @@
 package com.geekq.miaosha.service;
 
-import com.geekq.miaosha.common.enums.MessageStatus;
 import com.geekq.miaosha.dao.MiaoShaMessageDao;
 import com.geekq.miaosha.domain.MiaoShaMessageInfo;
 import com.geekq.miaosha.domain.MiaoShaMessageUser;
-import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
-import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

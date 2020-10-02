@@ -1,25 +1,14 @@
 package com.geekq.miaosha.mybatis.controller;
 
-import com.geekq.miaosha.access.AccessLimit;
 import com.geekq.miaosha.mybatis.Mapper.UserMapper;
 import com.geekq.miaosha.mybatis.entity.User;
 import com.geekq.miaosha.mybatis.vo.TeacherListVo;
 import com.geekq.miaosha.mybatis.vo.TeacherVo;
-import com.geekq.miaosha.redis.KeyPrefix;
-import com.geekq.miaosha.redis.RedisService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 

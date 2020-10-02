@@ -1,6 +1,5 @@
 package com.geekq.miaosha.redis.redismanager;
 
-import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
