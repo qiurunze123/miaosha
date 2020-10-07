@@ -10,6 +10,7 @@
         <module>service</module>
         <module>tc</module>
         <module>service2</module>
+        <module>limiter</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -125,6 +126,12 @@
                 </exclusion>
             </exclusions>
         </dependency>-->
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.4</version>
+        </dependency>
 
             <dependency>
                 <groupId>com.baomidou</groupId>
