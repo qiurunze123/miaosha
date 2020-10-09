@@ -61,7 +61,7 @@ Multi-Version Concurrency Control,翻译为中文即多版本并发控制，使�
  
 ![mvcc解决幻读](imgs/mysql-mvcc-4.png)  
  
-以我们的认知可重复不解决幻读问题，此时事务B的数据应该是能插入的，但实际上被阻塞了，这是因为事务A在执行update的时候加上了间隙锁
- ![mvcc解决幻读](imgs/mysql-mvcc-5.png)  
+以我们的认知可重复不解决幻读问题，此时事务B的数据应该是能插入的，但实际上被阻塞了，这是因为事务A在执行update的时候加上了间隙锁  
+![mvcc解决幻读](imgs/mysql-mvcc-5.png)  
   
 导致此时无法插入，需等事务A提交后释放锁（2PL第二步）才能插入。
