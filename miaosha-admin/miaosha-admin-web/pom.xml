@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>5.2.9.RELEASE</version>
 		</dependency>
 
 		<!-- JSP相关 -->
