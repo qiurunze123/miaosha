@@ -146,7 +146,7 @@
             <version>1.2.38</version>
         </dependency>
 
-        <dependency>salt
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
