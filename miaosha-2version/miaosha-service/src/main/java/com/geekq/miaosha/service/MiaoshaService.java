@@ -56,6 +56,8 @@ public class MiaoshaService {
 		boolean success = goodsService.reduceStock(goodsVo);
 		if(success){
 			orderInfo=orderService.createOrderInfoAndMIaoShaOrder(user,goodsVo);
+		}else{
+			setGoodsOver(goodsVo.getId());
 		}
 		return orderInfo;
 	}
@@ -76,7 +78,9 @@ public class MiaoshaService {
 	}
 
 	/*
-	* 同步秒杀订单
+	* 同步秒杀订单。
+	* 订单量较小时，可查询数据库。
+	* 可根据订单量设置是否读写分离
 	* */
 	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId){
 		OrderInfo orderInfo=new OrderInfo();
@@ -86,7 +90,7 @@ public class MiaoshaService {
 			return null;
 		}
 		//判断是否已经秒杀到了
-		MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+		MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
 		if(order != null) {
 			return  null;
 		}
@@ -95,7 +99,7 @@ public class MiaoshaService {
 	}
 
 	/*
-	* 异步处理秒杀订单
+	* 异步处理秒杀订单，异步处理不建议查询数据库，会是db崩溃
 	* */
 	private OrderInfo asyncMiaoSha(MiaoshaUser user, Long goodsId){
 		OrderInfo orderInfo=new OrderInfo();
@@ -109,7 +113,7 @@ public class MiaoshaService {
 
 
 	public long getMiaoshaResult(Long userId, long goodsId) {
-		MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(userId, goodsId);
+		MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(userId, goodsId);
 		if(order != null) {//秒杀成功
 			return order.getOrderId();
 		}else {

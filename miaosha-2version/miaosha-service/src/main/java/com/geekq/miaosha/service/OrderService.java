@@ -1,6 +1,7 @@
 package com.geekq.miaosha.service;
 
 
+import cn.hutool.core.date.DateUtil;
 import com.geekq.api.entity.GoodsVoOrder;
 import com.geekq.miaosha.mapper.OrderMapper;
 import com.geekq.miaosha.redis.OrderKey;
@@ -32,7 +33,7 @@ public class OrderService {
 	@Autowired
 	private RedisService redisService ;
 	
-	public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
+	public MiaoshaOrder getCachedMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
 		return	redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+userId+"_"+goodsId,MiaoshaOrder.class) ;
 	}
 
@@ -56,8 +57,10 @@ public class OrderService {
 
 
 	public OrderInfo addOrderInfo(MiaoshaUser user, GoodsExtVo goods){
+		Date date=new Date();
 		OrderInfo orderInfo = new OrderInfo();
-		orderInfo.setCreateDate(new Date());
+		orderInfo.setCreateDate(date);
+		orderInfo.setPayDate(DateUtil.offsetMinute(date,30));
 		orderInfo.setDeliveryAddrId(0L);
 		orderInfo.setGoodsCount(1);
 		orderInfo.setGoodsId(goods.getId());
@@ -66,7 +69,7 @@ public class OrderService {
 		orderInfo.setOrderChannel(1);
 		orderInfo.setStatus(0);
 		orderInfo.setUserId(Long.valueOf(user.getNickname()));
-		orderMapper.insert(orderInfo);
+		long success=orderMapper.insert(orderInfo);
 		return orderInfo;
 	}
 

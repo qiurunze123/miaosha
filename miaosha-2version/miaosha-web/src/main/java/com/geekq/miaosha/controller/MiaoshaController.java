@@ -108,7 +108,7 @@ public class MiaoshaController implements InitializingBean {
         }
 
         //是否已经秒杀到
-        MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+        MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
@@ -166,7 +166,13 @@ public class MiaoshaController implements InitializingBean {
             result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
             return result;
         }
-        //预见库存
+
+        MiaoshaOrder miaoshaOrder=orderService.getCachedMiaoshaOrderByUserIdGoodsId(user.getId(),goodsId);
+        if(null !=miaoshaOrder){
+            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        }
+        //预减库存
         Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
         if (stock < 0) {
             localOverMap.put(goodsId, true);
