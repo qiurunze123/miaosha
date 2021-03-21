@@ -1,9 +1,8 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.geekq.miasha.enums.Constanst.COUNTLOGIN;
-import static com.geekq.miasha.enums.enums.ResultStatus.RESIGETER_FAIL;
+import static com.geekq.miaosha.enums.enums.ResultStatus.RESIGETER_FAIL;
 
 
 @Controller

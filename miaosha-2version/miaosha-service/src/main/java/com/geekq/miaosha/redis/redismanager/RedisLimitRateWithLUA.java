@@ -31,7 +31,7 @@ public class RedisLimitRateWithLUA {
     }
 
     public static boolean accquire() throws IOException, URISyntaxException {
-        Jedis jedis = new Jedis("39.107.245.253");
+        Jedis jedis = new Jedis("192.168.31.124");
 
         String lua =
                 "local key = KEYS[1] " +
@@ -50,7 +50,7 @@ public class RedisLimitRateWithLUA {
         keys.add(key);
         List<String> args = new ArrayList<String>();
         args.add(limit);
-        jedis.auth("youxin11");
+        //jedis.auth("youxin11");
         String luaScript = jedis.scriptLoad(lua);
         Long result = (Long)jedis.evalsha(luaScript, keys, args);
         return result == 1;

@@ -8,15 +8,16 @@ import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.enums.enums.ResultStatus;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
-import com.geekq.miasha.exception.GlobleException;
-import com.geekq.miasha.vo.GoodsDetailVo;
-import com.geekq.miasha.vo.GoodsVo;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.enums.enums.ResultStatus;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.exception.GlobleException;
+import com.geekq.miaosha.vo.GoodsDetailVo;
+import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -65,13 +66,19 @@ public class GoodsController extends BaseController {
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user)  {
         model.addAttribute("user", user);
 
+        List<GoodsExtVo> goodsList=goodsService.listGoodsVo();
+
         //订单服务化接口 miaosha-order
-        ResultGeekQOrder<List<GoodsVoOrder>> resultGoods = goodsServiceRpc.listGoodsVo();
+       /* ResultGeekQOrder<List<GoodsVoOrder>> resultGoods = goodsServiceRpc.listGoodsVo();
 
         if(!AbstractResultOrder.isSuccess(resultGoods)){
            throw new GlobleException(ResultStatus.SYSTEM_ERROR);
         }
         List<GoodsVoOrder> goodsList = resultGoods.getData();
+        */
+
+
+
         model.addAttribute("goodsList", goodsList);
         return render(request,response,model,"goods_list", GoodsKey.getGoodsList,"");
     }
@@ -88,7 +95,7 @@ public class GoodsController extends BaseController {
             return html;
         }
         //手动渲染
-        GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+        GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
         /**
          * rpc服务化接口
          */
@@ -146,15 +153,26 @@ public class GoodsController extends BaseController {
                                              @PathVariable("goodsId")long goodsId) {
         ResultGeekQ<GoodsDetailVo> result = ResultGeekQ.build();
 
+
+
+        GoodsExtVo goodsVo=goodsService.getGoodsVoByGoodsId(goodsId);
+        GoodsVoOrder goods=new GoodsVoOrder();
+        BeanUtils.copyProperties(goodsVo,goods);
+
+
         /**
          * 服务化rpc接口
          */
-        ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
+       /* ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
         if(!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)){
             throw new GlobleException(ResultStatus.SESSION_ERROR);
         }
 
-        GoodsVoOrder goods = goodsVoOrderResultGeekQOrder.getData();
+        GoodsVoOrder goods = goodsVoOrderResultGeekQOrder.getData();*/
+
+
+
+
         long startAt = goods.getStartDate().getTime();
         long endAt = goods.getEndDate().getTime();
         long now = System.currentTimeMillis();

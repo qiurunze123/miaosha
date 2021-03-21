@@ -1,15 +1,17 @@
 package com.geekq.miaosha.service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+
 import com.geekq.api.entity.GoodsVoOrder;
+import com.geekq.miaosha.rabbitmq.MQSender;
+import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miasha.entity.MiaoshaOrder;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.entity.OrderInfo;
-import com.geekq.miasha.utils.MD5Utils;
-import com.geekq.miasha.utils.UUIDUtil;
-import com.geekq.miasha.vo.GoodsVo;
+import com.geekq.miaosha.entity.MiaoshaOrder;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.entity.OrderInfo;
+import com.geekq.miaosha.utils.MD5Utils;
+import com.geekq.miaosha.utils.UUIDUtil;
+import com.geekq.miaosha.vo.GoodsExtVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,28 +27,85 @@ public class MiaoshaService {
 	
 	@Autowired
 	GoodsService goodsService;
-	
 	@Autowired
     OrderService orderService;
 	@Autowired
     RedisService redisService;
+	@Autowired
+	MQSender mqSender;
 
-	@Reference(version = "${demo.service.version}",retries = 3,timeout = 6000)
 	private com.geekq.api.service.GoodsService goodsServiceRpc;
 
 	@Transactional
-	public OrderInfo miaosha(MiaoshaUser user, GoodsVoOrder goods) {
+	public OrderInfo doMiaosha(MiaoshaUser user, GoodsVoOrder goods) {
 		//减库存 下订单 写入秒杀订单
-//		boolean success = goodsService.reduceStock(goods);
-		boolean success =goodsServiceRpc.reduceStock(goods);
+	//	boolean success = goodsService.reduceStock(goods);
+			boolean success =goodsServiceRpc.reduceStock(goods);
 		if(success){
-			return orderService.createOrder(user,goods) ;
+			return orderService.createOrderInfoAndMIaoShaOrder(user,goods) ;
 		}else {
 			//如果库存不存在则内存标记为true
 			setGoodsOver(goods.getId());
 			return null;
 		}
 	}
+
+
+	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo){
+		OrderInfo orderInfo=new OrderInfo();
+		boolean success = goodsService.reduceStock(goodsVo);
+		if(success){
+			orderInfo=orderService.createOrderInfoAndMIaoShaOrder(user,goodsVo);
+		}
+		return orderInfo;
+	}
+
+	    //生成秒杀订单信息
+        /*如果秒杀商品库存较少时，可以直接访问数据库
+        如果秒杀商品库存量大是，就需要使用消息对列队请求进行削峰
+        *
+        * */
+	public OrderInfo miaosha(MiaoshaUser user, Long goodsId, boolean syncOrder){
+		OrderInfo orderInfo=new OrderInfo();
+		if(syncOrder){//同步订单
+			orderInfo=this.syncMiaoSha(user,goodsId);
+		}else{//订单不同步,异步请求
+            orderInfo=this.asyncMiaoSha(user,goodsId);
+		}
+		return orderInfo;
+	}
+
+	/*
+	* 同步秒杀订单
+	* */
+	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId){
+		OrderInfo orderInfo=new OrderInfo();
+		GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+		int stock = goods.getStockCount();
+		if(stock <= 0) {
+			return null;
+		}
+		//判断是否已经秒杀到了
+		MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+		if(order != null) {
+			return  null;
+		}
+		orderInfo=this.doMiaosha(user,goods);
+		return orderInfo;
+	}
+
+	/*
+	* 异步处理秒杀订单
+	* */
+	private OrderInfo asyncMiaoSha(MiaoshaUser user, Long goodsId){
+		OrderInfo orderInfo=new OrderInfo();
+		MiaoshaMessage mm = new MiaoshaMessage();
+		mm.setGoodsId(goodsId);
+		mm.setUser(user);
+		mqSender.sendMiaoshaMessage(mm);
+		return orderInfo;
+	}
+
 
 
 	public long getMiaoshaResult(Long userId, long goodsId) {

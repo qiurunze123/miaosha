@@ -1,15 +1,18 @@
 package com.geekq.miaosha.service;
 
+
 import com.geekq.api.entity.GoodsVoOrder;
 import com.geekq.miaosha.mapper.OrderMapper;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miasha.entity.MiaoshaOrder;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.entity.OrderInfo;
-import com.geekq.miasha.utils.DateTimeUtils;
-import com.geekq.miasha.vo.GoodsVo;
+
+import com.geekq.miaosha.entity.MiaoshaOrder;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.entity.OrderInfo;
+import com.geekq.miaosha.utils.DateTimeUtils;
+import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-import static com.geekq.miasha.enums.Constanst.orderStaus.ORDER_NOT_PAY;
+import static com.geekq.miaosha.enums.Constanst.orderStaus.ORDER_NOT_PAY;
 
 
 @Service
@@ -37,8 +40,22 @@ public class OrderService {
 		return orderMapper.getOrderById(orderId);
 	}
 
-	@Transactional
-	public OrderInfo createOrder(MiaoshaUser user, GoodsVoOrder goods) {
+
+	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsVoOrder goods) {
+		GoodsExtVo goodsExtVo=new GoodsExtVo();
+		BeanUtils.copyProperties(goods,goodsExtVo);
+		OrderInfo orderInfo=this.createOrderInfoAndMIaoShaOrder(user,goodsExtVo);
+		return orderInfo;
+	}
+    @Transactional
+	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsExtVo goods){
+		OrderInfo orderInfo=this.addOrderInfo(user,goods);
+		MiaoshaOrder miaoshaOrder=this.saveMiaoShaOrderInfo(user,orderInfo.getGoodsId(),orderInfo.getId());
+		return orderInfo;
+	}
+
+
+	public OrderInfo addOrderInfo(MiaoshaUser user, GoodsExtVo goods){
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setCreateDate(new Date());
 		orderInfo.setDeliveryAddrId(0L);
@@ -50,14 +67,25 @@ public class OrderService {
 		orderInfo.setStatus(0);
 		orderInfo.setUserId(Long.valueOf(user.getNickname()));
 		orderMapper.insert(orderInfo);
-		MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
-		miaoshaOrder.setGoodsId(goods.getId());
-		miaoshaOrder.setOrderId(orderInfo.getId());
-		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
-		orderMapper.insertMiaoshaOrder(miaoshaOrder);
-		redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goods.getId(),miaoshaOrder) ;
 		return orderInfo;
 	}
+
+	/*
+	* 记录用户秒杀商品信息
+	* */
+
+	public MiaoshaOrder saveMiaoShaOrderInfo(MiaoshaUser user, Long goodsId, Long orderId ){
+		MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
+		miaoshaOrder.setGoodsId(goodsId);
+		miaoshaOrder.setOrderId(orderId);
+		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
+		int res=orderMapper.insertMiaoshaOrder(miaoshaOrder);
+		redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goodsId,miaoshaOrder) ;
+		return miaoshaOrder;
+	}
+
+
+
 
 	public void closeOrder(int hour){
 		Date closeDateTime = DateUtils.addHours(new Date(),-hour);

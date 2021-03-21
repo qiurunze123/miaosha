@@ -1,7 +1,7 @@
 package com.geekq.miaosha.rabbitmq;
 
 
-import com.geekq.miasha.entity.MiaoshaUser;
+import com.geekq.miaosha.entity.MiaoshaUser;
 
 public class MiaoshaMessage {
 	private MiaoshaUser user;

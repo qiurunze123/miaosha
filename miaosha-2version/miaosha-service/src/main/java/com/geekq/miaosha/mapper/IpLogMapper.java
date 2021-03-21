@@ -1,7 +1,7 @@
 package com.geekq.miaosha.mapper;
 
 
-import com.geekq.miasha.entity.IpLog;
+import com.geekq.miaosha.entity.IpLog;
 
 import java.util.List;
 

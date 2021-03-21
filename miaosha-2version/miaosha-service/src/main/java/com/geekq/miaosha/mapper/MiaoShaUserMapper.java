@@ -1,6 +1,6 @@
 package com.geekq.miaosha.mapper;
 
-import com.geekq.miasha.entity.MiaoshaUser;
+import com.geekq.miaosha.entity.MiaoshaUser;
 import org.apache.ibatis.annotations.Param;
 
 /**

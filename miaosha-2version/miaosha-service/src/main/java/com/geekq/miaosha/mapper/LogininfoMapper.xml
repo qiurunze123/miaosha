@@ -3,7 +3,7 @@
 <mapper namespace="com.geekq.miaosha.mapper.LogininfoMapper">
 	<!--<cache type="redis" />-->
 
-	<resultMap id="BaseResultMap" type="com.geekq.miasha.entity.Logininfo">
+	<resultMap id="BaseResultMap" type="com.geekq.miaosha.entity.Logininfo">
 		<id column="id" jdbcType="BIGINT" property="id" />
 		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
 		<result column="password" jdbcType="VARCHAR" property="password" />
@@ -23,13 +23,13 @@
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
 	
-	<insert id="insert" keyProperty="id" parameterType="com.geekq.miasha.entity.Logininfo" useGeneratedKeys="true">
+	<insert id="insert" keyProperty="id" parameterType="com.geekq.miaosha.entity.Logininfo" useGeneratedKeys="true">
 		insert into logininfo (nickname,password, state,usertype,admin,salt,registerdate,lastlogindate)
 		values	(#{nickname,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},#{userType},#{admin}
 		,#{salt},#{registerDate},#{lastLoginDate})
 	</insert>
 	
-	<update id="updateByPrimaryKey" parameterType="com.geekq.miasha.entity.Logininfo">
+	<update id="updateByPrimaryKey" parameterType="com.geekq.miaosha.entity.Logininfo">
 		update logininfo set nickname = #{nickname,jdbcType=VARCHAR},password =#{password,jdbcType=VARCHAR},
 			state = #{state,jdbcType=TINYINT},usertype = #{userType},admin=#{admin},salt = #{salt},
 			registerdate = #{registerDate},lastlogindate = #{lastLoginDate}

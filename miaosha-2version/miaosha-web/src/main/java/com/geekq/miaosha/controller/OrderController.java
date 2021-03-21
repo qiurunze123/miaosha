@@ -4,11 +4,11 @@ import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.OrderService;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.entity.OrderInfo;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
-import com.geekq.miasha.vo.GoodsVo;
-import com.geekq.miasha.vo.OrderDetailVo;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.entity.OrderInfo;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.vo.GoodsExtVo;
+import com.geekq.miaosha.vo.OrderDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.geekq.miasha.enums.enums.ResultStatus.ORDER_NOT_EXIST;
-import static com.geekq.miasha.enums.enums.ResultStatus.SESSION_ERROR;
+import static com.geekq.miaosha.enums.enums.ResultStatus.ORDER_NOT_EXIST;
+import static com.geekq.miaosha.enums.enums.ResultStatus.SESSION_ERROR;
 
 
 @Controller
@@ -51,7 +51,7 @@ public class OrderController {
 			return result;
     	}
     	long goodsId = order.getGoodsId();
-    	GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+    	GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
     	OrderDetailVo vo = new OrderDetailVo();
     	vo.setOrder(order);
     	vo.setGoods(goods);

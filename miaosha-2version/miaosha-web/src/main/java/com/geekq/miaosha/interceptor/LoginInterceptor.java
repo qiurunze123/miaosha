@@ -3,10 +3,10 @@ package com.geekq.miaosha.interceptor;
 import com.alibaba.fastjson.JSON;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.enums.enums.ResultStatus;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
-import com.geekq.miasha.utils.UserContext;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.enums.enums.ResultStatus;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.utils.UserContext;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 
-import static com.geekq.miasha.enums.enums.ResultStatus.ACCESS_LIMIT_REACHED;
-import static com.geekq.miasha.enums.enums.ResultStatus.SESSION_ERROR;
+import static com.geekq.miaosha.enums.enums.ResultStatus.ACCESS_LIMIT_REACHED;
+import static com.geekq.miaosha.enums.enums.ResultStatus.SESSION_ERROR;
 
 
 @Service

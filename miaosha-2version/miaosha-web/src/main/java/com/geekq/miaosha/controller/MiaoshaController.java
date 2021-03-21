@@ -1,5 +1,6 @@
 package com.geekq.miaosha.controller;
 
+import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.interceptor.RequireLogin;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
@@ -10,10 +11,10 @@ import com.geekq.miaosha.service.GoodsService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
 import com.geekq.miaosha.service.OrderService;
-import com.geekq.miasha.entity.MiaoshaOrder;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
-import com.geekq.miasha.vo.GoodsVo;
+import com.geekq.miaosha.entity.MiaoshaOrder;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.vo.GoodsExtVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -32,7 +33,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.geekq.miasha.enums.enums.ResultStatus.*;
+import static com.geekq.miaosha.enums.enums.ResultStatus.*;
 
 
 @Controller
@@ -65,6 +66,7 @@ public class MiaoshaController implements InitializingBean {
      * QPS:1306
      * 5000 * 10
      * get　post get 幂等　从服务端获取数据　不会产生影响　　post 对服务端产生变化
+     * 此方法并发量太低
      */
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value="/{path}/do_miaosha", method= RequestMethod.POST)
@@ -128,6 +130,51 @@ public class MiaoshaController implements InitializingBean {
         mm.setGoodsId(goodsId);
         mm.setUser(user);
         mqSender.sendMiaoshaMessage(mm);
+        return result;
+    }
+
+
+
+    @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
+    @RequestMapping(value="/{path}/do_miaosha2", method= RequestMethod.POST)
+    @ResponseBody
+    public ResultGeekQ<Integer> miaosha2(Model model, MiaoshaUser user, @PathVariable("path") String path,
+                                        @RequestParam("goodsId") long goodsId) {
+        ResultGeekQ<Integer> result = ResultGeekQ.build();
+
+        if (user == null) {
+            result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
+            return result;
+        }
+
+        /**
+         * 分布式限流
+         */
+        try {
+            RedisLimitRateWithLUA.accquire();
+        } catch (IOException e) {
+            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        } catch (URISyntaxException e) {
+            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+            return result;
+        }
+
+        //内存标记，减少redis访问
+        boolean over = localOverMap.get(goodsId);
+        if (over) {
+            result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
+            return result;
+        }
+        //预见库存
+        Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
+        if (stock < 0) {
+            localOverMap.put(goodsId, true);
+            result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
+            return result;
+        }
+
+        OrderInfo orderInfo=miaoshaService.miaosha(user,goodsId,true);
         return result;
     }
 
@@ -224,11 +271,11 @@ public class MiaoshaController implements InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<GoodsVo> goodsList = goodsService.listGoodsVo();
+        List<GoodsExtVo> goodsList = goodsService.listGoodsVo();
         if (goodsList == null) {
             return;
         }
-        for (GoodsVo goods : goodsList) {
+        for (GoodsExtVo goods : goodsList) {
             redisService.set(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId(), goods.getStockCount());
             localOverMap.put(goods.getId(), false);
         }

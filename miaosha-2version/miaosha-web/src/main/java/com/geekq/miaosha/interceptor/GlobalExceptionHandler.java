@@ -1,7 +1,7 @@
 package com.geekq.miaosha.interceptor;
 
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
-import com.geekq.miasha.exception.GlobleException;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.exception.GlobleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.geekq.miasha.enums.enums.ResultStatus.SESSION_ERROR;
-import static com.geekq.miasha.enums.enums.ResultStatus.SYSTEM_ERROR;
+import static com.geekq.miaosha.enums.enums.ResultStatus.SESSION_ERROR;
+import static com.geekq.miaosha.enums.enums.ResultStatus.SYSTEM_ERROR;
 
 /**
  * @author 邱润泽

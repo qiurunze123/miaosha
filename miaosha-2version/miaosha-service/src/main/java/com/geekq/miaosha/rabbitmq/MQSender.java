@@ -1,7 +1,7 @@
 package com.geekq.miaosha.rabbitmq;
 
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miasha.vo.MiaoShaMessageVo;
+import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;

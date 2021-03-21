@@ -4,12 +4,12 @@ import com.geekq.miaosha.mapper.MiaoShaUserMapper;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.redis.MiaoShaUserKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miasha.entity.IpLog;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.exception.GlobleException;
-import com.geekq.miasha.utils.MD5Utils;
-import com.geekq.miasha.utils.UUIDUtil;
-import com.geekq.miasha.vo.LoginVo;
+import com.geekq.miaosha.entity.IpLog;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.exception.GlobleException;
+import com.geekq.miaosha.utils.MD5Utils;
+import com.geekq.miaosha.utils.UUIDUtil;
+import com.geekq.miaosha.vo.LoginVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import static com.geekq.miasha.enums.Constants.USERTYPE_NORMAL;
-import static com.geekq.miasha.enums.enums.ResultStatus.*;
+import static com.geekq.miaosha.enums.Constants.USERTYPE_NORMAL;
+import static com.geekq.miaosha.enums.enums.ResultStatus.*;
 
 
 @Service

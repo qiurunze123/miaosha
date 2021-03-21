@@ -2,10 +2,8 @@ package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.service.MiaoShaMessageService;
-import com.geekq.miasha.entity.MiaoShaMessageInfo;
-import com.geekq.miasha.enums.MessageStatus;
-import com.geekq.miasha.enums.enums.ResultStatus;
-import com.geekq.miasha.enums.resultbean.ResultGeekQ;
+import com.geekq.miaosha.enums.enums.ResultStatus;
+import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/message")

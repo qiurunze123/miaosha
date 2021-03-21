@@ -1,7 +1,7 @@
 package com.geekq.miaosha.mapper;
 
-import com.geekq.miasha.entity.MiaoshaGoods;
-import com.geekq.miasha.vo.GoodsVo;
+import com.geekq.miaosha.entity.MiaoshaGoods;
+import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface GoodsMapper {
 
-    public List<GoodsVo> listGoodsVo();
+    public List<GoodsExtVo> listGoodsVo();
 
-    public GoodsVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
+    public GoodsExtVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
 
     public int reduceStock(MiaoshaGoods g);
 

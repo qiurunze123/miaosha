@@ -1,8 +1,8 @@
 package com.geekq.miaosha.config;
 
 import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miasha.entity.MiaoshaUser;
-import com.geekq.miasha.utils.UserContext;
+import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.utils.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;

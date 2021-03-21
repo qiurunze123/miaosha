@@ -1,7 +1,7 @@
 package com.geekq.miaosha.mapper;
 
-import com.geekq.miasha.entity.MiaoshaOrder;
-import com.geekq.miasha.entity.OrderInfo;
+import com.geekq.miaosha.entity.MiaoshaOrder;
+import com.geekq.miaosha.entity.OrderInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
