@@ -1,17 +1,14 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.api.entity.GoodsVoOrder;
-import com.geekq.api.utils.AbstractResultOrder;
-import com.geekq.api.utils.ResultGeekQOrder;
+
+import com.geekq.miaosha.entity.GoodsVoOrder;
 import com.geekq.miaosha.interceptor.RequireLogin;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.service.GoodsService;
+import com.geekq.miaosha.service.GoodsComposeService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.entity.MiaoshaUser;
-import com.geekq.miaosha.enums.enums.ResultStatus;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
-import com.geekq.miaosha.exception.GlobleException;
 import com.geekq.miaosha.vo.GoodsDetailVo;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.StringUtils;
@@ -44,10 +41,9 @@ public class GoodsController extends BaseController {
     private RedisService redisService;
 
     @Autowired
-    private GoodsService goodsService;
+    private GoodsComposeService goodsComposeService;
 
-    @Autowired
-    private com.geekq.api.service.GoodsService goodsServiceRpc;
+
 
     @Autowired
     ThymeleafViewResolver viewResolver;
@@ -66,7 +62,7 @@ public class GoodsController extends BaseController {
     public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user)  {
         model.addAttribute("user", user);
 
-        List<GoodsExtVo> goodsList=goodsService.listGoodsVo();
+        List<GoodsExtVo> goodsList= goodsComposeService.listGoodsVo();
 
         //订单服务化接口 miaosha-order
        /* ResultGeekQOrder<List<GoodsVoOrder>> resultGoods = goodsServiceRpc.listGoodsVo();
@@ -95,14 +91,14 @@ public class GoodsController extends BaseController {
             return html;
         }
         //手动渲染
-        GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+        GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
         /**
          * rpc服务化接口
          */
-        ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
-        if(!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)){
+        //ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
+       /* if(!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)){
             throw new GlobleException(ResultStatus.SESSION_ERROR);
-        }
+        }*/
         model.addAttribute("goods", goods);
 
         long startAt = goods.getStartDate().getTime();
@@ -155,7 +151,7 @@ public class GoodsController extends BaseController {
 
 
 
-        GoodsExtVo goodsVo=goodsService.getGoodsVoByGoodsId(goodsId);
+        GoodsExtVo goodsVo= goodsComposeService.getGoodsVoByGoodsId(goodsId);
         GoodsVoOrder goods=new GoodsVoOrder();
         BeanUtils.copyProperties(goodsVo,goods);
 

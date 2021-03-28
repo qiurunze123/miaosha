@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.geekq.miaosha.mapper.IpLogMapper" >
 
-  <resultMap id="BaseResultMap" type="IpLog" >
+  <resultMap id="BaseResultMap" type="com.geekq.miaosha.entity.IpLog" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="ip" property="ip" jdbcType="VARCHAR" />
     <result column="loginState" property="loginState" jdbcType="TINYINT" />
@@ -17,7 +17,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
-  <insert id="insert" parameterType="IpLog" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.geekq.miaosha.entity.IpLog" useGeneratedKeys="true" keyProperty="id" >
     insert into iplog (ip, loginState, username, 
       loginInfoId, loginType, loginTime)
     values (#{ip,jdbcType=VARCHAR}, #{loginState,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR}, 
@@ -25,7 +25,7 @@
   </insert>
   
   
-  <update id="updateByPrimaryKey" parameterType="IpLog" >
+  <update id="updateByPrimaryKey" parameterType="com.geekq.miaosha.entity.IpLog" >
     update iplog
     set ip = #{ip,jdbcType=VARCHAR},
       loginState = #{loginState,jdbcType=TINYINT},

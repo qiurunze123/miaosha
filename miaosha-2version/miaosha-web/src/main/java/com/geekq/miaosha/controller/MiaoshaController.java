@@ -7,14 +7,16 @@ import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;
-import com.geekq.miaosha.service.GoodsService;
+import com.geekq.miaosha.service.GoodsComposeService;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miaosha.service.MiaoshaService;
-import com.geekq.miaosha.service.OrderService;
+import com.geekq.miaosha.service.OrderComposeService;
 import com.geekq.miaosha.entity.MiaoshaOrder;
 import com.geekq.miaosha.entity.MiaoshaUser;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import com.geekq.miaosha.vo.GoodsExtVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -38,6 +40,7 @@ import static com.geekq.miaosha.enums.enums.ResultStatus.*;
 
 @Controller
 @RequestMapping("/miaosha")
+@Api(tags = "秒杀服务")
 public class MiaoshaController implements InitializingBean {
 
     private static Logger logger = LoggerFactory.getLogger(MiaoshaController.class);
@@ -49,10 +52,10 @@ public class MiaoshaController implements InitializingBean {
     RedisService redisService;
 
     @Autowired
-    GoodsService goodsService;
+    GoodsComposeService goodsComposeService;
 
     @Autowired
-    OrderService orderService;
+    OrderComposeService orderComposeService;
 
     @Autowired
     MiaoshaService miaoshaService;
@@ -69,9 +72,9 @@ public class MiaoshaController implements InitializingBean {
      * 此方法并发量太低
      */
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
-    @RequestMapping(value="/{path}/do_miaosha", method= RequestMethod.POST)
+    @RequestMapping(value="/{path}/do_miaosha2", method= RequestMethod.POST)
     @ResponseBody
-    public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
+    public ResultGeekQ<Integer> miaosha2(Model model, MiaoshaUser user, @PathVariable("path") String path,
                                         @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Integer> result = ResultGeekQ.build();
 
@@ -108,7 +111,7 @@ public class MiaoshaController implements InitializingBean {
         }
 
         //是否已经秒杀到
-        MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+        MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
@@ -136,9 +139,10 @@ public class MiaoshaController implements InitializingBean {
 
 
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
-    @RequestMapping(value="/{path}/do_miaosha2", method= RequestMethod.POST)
+    @RequestMapping(value="/{path}/do_miaosha", method= RequestMethod.POST)
     @ResponseBody
-    public ResultGeekQ<Integer> miaosha2(Model model, MiaoshaUser user, @PathVariable("path") String path,
+    @ApiOperation(value="秒杀商品")
+    public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
                                         @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Integer> result = ResultGeekQ.build();
 
@@ -167,7 +171,7 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
 
-        MiaoshaOrder miaoshaOrder=orderService.getCachedMiaoshaOrderByUserIdGoodsId(user.getId(),goodsId);
+        MiaoshaOrder miaoshaOrder= orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(user.getId(),goodsId);
         if(null !=miaoshaOrder){
             result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
@@ -193,6 +197,7 @@ public class MiaoshaController implements InitializingBean {
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value="获取秒杀结果")
     public ResultGeekQ<Long> miaoshaResult(Model model, MiaoshaUser user,
                                            @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Long> result = ResultGeekQ.build();
@@ -209,6 +214,7 @@ public class MiaoshaController implements InitializingBean {
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value="获取秒杀商品路径")
     public ResultGeekQ<String> getMiaoshaPath(HttpServletRequest request, MiaoshaUser user,
                                               @RequestParam("goodsId") long goodsId,
                                               @RequestParam(value = "verifyCode", defaultValue = "0") int verifyCode
@@ -277,7 +283,7 @@ public class MiaoshaController implements InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        List<GoodsExtVo> goodsList = goodsService.listGoodsVo();
+        List<GoodsExtVo> goodsList = goodsComposeService.listGoodsVo();
         if (goodsList == null) {
             return;
         }

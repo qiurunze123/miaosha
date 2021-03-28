@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.geekq.miaosha.mapper.OrderMapper" >
+<mapper namespace="com.geekq.miaosha.mapper.OrderComposeMapper" >
 
-    <resultMap id="BaseResultMap" type="OrderInfo" >
+    <resultMap id="BaseResultMap" type="com.geekq.miaosha.entity.OrderInfo" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_id" property="userId" jdbcType="BIGINT" />
         <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
@@ -16,7 +16,7 @@
         <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <resultMap id="BaseResultMapMiaoShaOrder" type="miaoshaorder" >
+    <resultMap id="BaseResultMapMiaoShaOrder" type="com.geekq.miaosha.entity.MiaoshaOrder" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_id" property="userId" jdbcType="BIGINT" />
         <result column="order_id" property="orderId" jdbcType="BIGINT" />
@@ -41,11 +41,11 @@
        select * from order_info where id = #{orderId}
     </select>
 
-    <insert id="insert" parameterType="miaoshaorder" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.geekq.miaosha.entity.MiaoshaOrder" useGeneratedKeys="true" keyProperty="id" >
     insert into order_info(user_id, goods_id, goods_name, goods_count, goods_price, order_channel, status, create_date)values( #{userId}, #{goodsId}, #{goodsName}, #{goodsCount}, #{goodsPrice}, #{orderChannel},#{status},#{createDate} )
     </insert>
 
-    <insert id="insertMiaoshaOrder" parameterType="OrderInfo" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insertMiaoshaOrder" parameterType="com.geekq.miaosha.entity.OrderInfo" useGeneratedKeys="true" keyProperty="id" >
         insert into miaosha_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})
     </insert>
 

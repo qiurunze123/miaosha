@@ -33,10 +33,13 @@ public class OrderInfo {
 	private Double goodsPrice;
 	@ApiModelProperty(value="")
 	private Integer orderChannel;
-	@ApiModelProperty(value="订单状态")
+	@ApiModelProperty(value="订单状态,0-未完成,1-已完成")
 	private Integer status;
 	@ApiModelProperty(value="订单创建时间")
 	private Date createDate;
 	@ApiModelProperty(value="付款时间")
 	private Date payDate;
+	@ApiModelProperty(value="订单过期时间")
+	private Date expireDate;
+
 }

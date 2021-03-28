@@ -34,10 +34,11 @@ public class RedisService {
 			result = jedis.setnx(key,value);
 		}catch (Exception e){
 			log.error("expire key:{} error",key,e);
-		jedisPool.returnResource(jedis);
+
+
 		return  result;
 		}
-		jedisPool.returnResource(jedis);
+
 		return  result;
 
 	}
@@ -55,10 +56,10 @@ public class RedisService {
 			result = jedis.expire(key,exTime);
 		} catch (Exception e) {
 			log.error("expire key:{} error",key,e);
-			jedisPool.returnBrokenResource(jedis);
+
 			return result;
 		}
-		jedisPool.returnResource(jedis);
+		;
 		return result;
 	}
 
@@ -87,10 +88,10 @@ public class RedisService {
             result = jedis.get(key);
         } catch (Exception e) {
             log.error("expire key:{} error",key,e);
-            jedisPool.returnBrokenResource(jedis);
+
             return result;
         }
-        jedisPool.returnResource(jedis);
+        ;
         return result;
     }
 
@@ -103,10 +104,10 @@ public class RedisService {
             result = jedis.getSet(key,value);
         } catch (Exception e) {
             log.error("expire key:{} error",key,e);
-            jedisPool.returnBrokenResource(jedis);
+
             return result;
         }
-        jedisPool.returnResource(jedis);
+        ;
         return result;
     }
 	/**
@@ -203,10 +204,10 @@ public class RedisService {
             result = jedis.del(key);
         } catch (Exception e) {
             log.error("del key:{} error",key,e);
-            jedisPool.returnBrokenResource(jedis);
+
             return result;
         }
-        jedisPool.returnResource(jedis);
+        ;
         return result;
     }
 
@@ -250,7 +251,7 @@ public class RedisService {
 					keys.addAll(result);
 				}
 				//再处理cursor
-				cursor = ret.getStringCursor();
+
 			}while(!cursor.equals("0"));
 			return keys;
 		} finally {

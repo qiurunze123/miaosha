@@ -1,11 +1,13 @@
 package com.geekq.miaosha.mapper;
 
 import com.geekq.miaosha.entity.MiaoshaUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * @author 邱润泽
  */
+@Mapper
 public interface MiaoShaUserMapper {
 
     public MiaoshaUser getByNickname(@Param("nickname") String nickname) ;

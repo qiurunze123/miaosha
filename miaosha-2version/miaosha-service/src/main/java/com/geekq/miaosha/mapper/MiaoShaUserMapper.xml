@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.geekq.miaosha.mapper.MiaoShaUserMapper" >
 
-    <resultMap id="BaseResultMap" type="MiaoshaUser" >
+    <resultMap id="BaseResultMap" type="com.geekq.miaosha.entity.MiaoshaUser" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="nickname" property="nickname" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="BIGINT" />
@@ -27,13 +27,13 @@
         from miaosha_user where id = #{id}
     </select>
 
-    <insert id="insertMiaoShaUser" parameterType="miaoshauser" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insertMiaoShaUser" parameterType="com.geekq.miaosha.entity.MiaoshaUser" useGeneratedKeys="true" keyProperty="id" >
    insert into miaosha_user (id , nickname ,password , salt ,head,register_date,last_login_date)
    value (#{id},#{nickname},#{password},#{salt},#{head},
    #{registerDate},#{lastLoginDate})
     </insert>
 
-    <update id="update" parameterType="miaoshauser" >
+    <update id="update" parameterType="com.geekq.miaosha.entity.MiaoshaUser" >
    update miaosha_user set password = #{password} where id = #{id}
   </update>
 

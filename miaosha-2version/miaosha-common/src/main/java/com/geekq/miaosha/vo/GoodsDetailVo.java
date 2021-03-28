@@ -1,6 +1,7 @@
 package com.geekq.miaosha.vo;
 
-import com.geekq.api.entity.GoodsVoOrder;
+
+import com.geekq.miaosha.entity.GoodsVoOrder;
 import com.geekq.miaosha.entity.MiaoshaUser;
 
 public class GoodsDetailVo {

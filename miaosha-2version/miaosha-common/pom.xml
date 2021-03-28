@@ -5,12 +5,11 @@
     <parent>
         <artifactId>miaosha</artifactId>
         <groupId>com.geekq</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>miaosha-common</artifactId>
-
+    <packaging>jar</packaging>
     <dependencies>
         <!--lombook引用-->
         <dependency>
@@ -19,6 +18,71 @@
             <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--mybatis依赖-->
+        <!--  <dependency>
+              <groupId>org.mybatis.spring.boot</groupId>
+              <artifactId>mybatis-spring-boot-starter</artifactId>
+              <version>${org.mybatis.version}</version>
+          </dependency>-->
+        <!--mybatis-plus依赖 start-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${com.baomidou.spring.boot.start.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${com.baomidou.spring.boot.start.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>${com.baomidou.spring.boot.start.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.plugin</groupId>
+            <artifactId>spring-plugin-core</artifactId>
+            <version>1.2.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.plugin</groupId>
+            <artifactId>spring-plugin-metadata</artifactId>
+            <version>1.2.0.RELEASE</version>
+        </dependency>
+
+        <!-- velocity 模板引擎, 默认 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version>
+
+        </dependency>
+        <!--mybatis-plus依赖 end-->
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+
+        </dependency>
+
     </dependencies>
+
+
 
 </project>

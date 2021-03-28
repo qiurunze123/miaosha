@@ -13,12 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodeGenerator {
+
+    private static final String module="miaosha-common";
+    private static final String dburl="jdbc:mysql://192.168.31.124:3306/miaosha?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false";
+    private static final String username="root";
+    private static final String password="zc142500";
+    private static final String packagename="com.geekq.miaosha.biz";
+    private static final String tablename="goods";
+
     public static void main(String[] args) throws InterruptedException {
         AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
+        String projectPath = System.getProperty("user.dir")+"/"+module;
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
@@ -26,7 +34,7 @@ public class CodeGenerator {
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(true);// XML columList
         gc.setOpen(false);
-        gc.setAuthor("gf");
+        gc.setAuthor("zhangc");
 
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
@@ -42,14 +50,14 @@ public class CodeGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/test?useSSL=false");
-        dsc.setUsername("xxxxxx");
-        dsc.setPassword("xxxxxx");
+        dsc.setUrl(dburl);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.gf");
+        pc.setParent(packagename);
         pc.setController("controller");
         pc.setEntity("entity");
         //pc.setModuleName("test");
@@ -78,11 +86,11 @@ public class CodeGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         //此处可以修改为您的表前缀
-        strategy.setTablePrefix(new String[]{"tb_"});
+        // strategy.setTablePrefix(new String[]{"tb_"});
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
-        strategy.setInclude(new String[]{"tb_employee"});
+        strategy.setInclude(tablename);
         // 排除生成的表
         //strategy.setExclude(new String[]{"test"});
         strategy.setEntityLombokModel(true);

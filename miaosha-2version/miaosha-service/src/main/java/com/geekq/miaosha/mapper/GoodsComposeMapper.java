@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author 邱润泽
  */
-public interface GoodsMapper {
+public interface GoodsComposeMapper {
 
     public List<GoodsExtVo> listGoodsVo();
 

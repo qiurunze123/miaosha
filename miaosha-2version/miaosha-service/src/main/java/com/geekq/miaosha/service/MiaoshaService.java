@@ -1,7 +1,8 @@
 package com.geekq.miaosha.service;
 
 
-import com.geekq.api.entity.GoodsVoOrder;
+
+import com.geekq.miaosha.entity.Goods;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
 import com.geekq.miaosha.redis.MiaoshaKey;
@@ -26,17 +27,17 @@ import java.util.Random;
 public class MiaoshaService {
 	
 	@Autowired
-	GoodsService goodsService;
+	GoodsComposeService goodsComposeService;
 	@Autowired
-    OrderService orderService;
+	OrderComposeService orderComposeService;
 	@Autowired
     RedisService redisService;
 	@Autowired
 	MQSender mqSender;
 
-	private com.geekq.api.service.GoodsService goodsServiceRpc;
+	//private com.geekq.api.service.GoodsService goodsServiceRpc;
 
-	@Transactional
+	/*@Transactional
 	public OrderInfo doMiaosha(MiaoshaUser user, GoodsVoOrder goods) {
 		//减库存 下订单 写入秒杀订单
 	//	boolean success = goodsService.reduceStock(goods);
@@ -48,14 +49,14 @@ public class MiaoshaService {
 			setGoodsOver(goods.getId());
 			return null;
 		}
-	}
+	}*/
 
 
 	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo){
 		OrderInfo orderInfo=new OrderInfo();
-		boolean success = goodsService.reduceStock(goodsVo);
+		boolean success = goodsComposeService.reduceStock(goodsVo);
 		if(success){
-			orderInfo=orderService.createOrderInfoAndMIaoShaOrder(user,goodsVo);
+			orderInfo= orderComposeService.createOrderInfoAndMIaoShaOrder(user,goodsVo);
 		}else{
 			setGoodsOver(goodsVo.getId());
 		}
@@ -84,13 +85,13 @@ public class MiaoshaService {
 	* */
 	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId){
 		OrderInfo orderInfo=new OrderInfo();
-		GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+		GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
 		int stock = goods.getStockCount();
 		if(stock <= 0) {
 			return null;
 		}
 		//判断是否已经秒杀到了
-		MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
 		if(order != null) {
 			return  null;
 		}
@@ -113,7 +114,7 @@ public class MiaoshaService {
 
 
 	public long getMiaoshaResult(Long userId, long goodsId) {
-		MiaoshaOrder order = orderService.getCachedMiaoshaOrderByUserIdGoodsId(userId, goodsId);
+		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(userId, goodsId);
 		if(order != null) {//秒杀成功
 			return order.getOrderId();
 		}else {
@@ -272,5 +273,13 @@ public class MiaoshaService {
 		String exp = ""+ num1 + op1 + num2 + op2 + num3;
 		return exp;
 	}
-	
+    @Transactional
+	public boolean cancelOrder(OrderInfo orderInfo) {
+		Goods goods=new Goods();
+		goods.setId(orderInfo.getGoodsId());
+		goods.setGoodsStock(orderInfo.getGoodsCount());
+		goodsComposeService.addStock(goods);
+		boolean deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
+        return deleteOrder;
+	}
 }

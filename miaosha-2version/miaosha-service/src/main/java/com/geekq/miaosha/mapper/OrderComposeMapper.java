@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author 邱润泽
  */
-public interface OrderMapper {
+public interface OrderComposeMapper {
 
     public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(@Param("userNickName") long userNickName, @Param("goodsId") long goodsId);
 

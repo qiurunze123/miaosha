@@ -1,9 +1,9 @@
 package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.service.GoodsService;
+import com.geekq.miaosha.service.GoodsComposeService;
 import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miaosha.service.OrderService;
+import com.geekq.miaosha.service.OrderComposeService;
 import com.geekq.miaosha.entity.MiaoshaUser;
 import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
@@ -31,10 +31,10 @@ public class OrderController {
     RedisService redisService;
 	
 	@Autowired
-	OrderService orderService;
+	OrderComposeService orderComposeService;
 	
 	@Autowired
-	GoodsService goodsService;
+	GoodsComposeService goodsComposeService;
 	
     @RequestMapping("/detail")
     @ResponseBody
@@ -45,13 +45,13 @@ public class OrderController {
 			result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
 			return result;
 		}
-    	OrderInfo order = orderService.getOrderById(orderId);
+    	OrderInfo order = orderComposeService.getOrderById(orderId);
     	if(order == null) {
 			result.withError(ORDER_NOT_EXIST.getCode(), ORDER_NOT_EXIST.getMessage());
 			return result;
     	}
     	long goodsId = order.getGoodsId();
-    	GoodsExtVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+    	GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
     	OrderDetailVo vo = new OrderDetailVo();
     	vo.setOrder(order);
     	vo.setGoods(goods);

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 //@ImportResource(value={"classpath:consumer.xml"})
 @SpringBootApplication(scanBasePackages = "com.geekq")
-@MapperScan("com.geekq.miaosha.mapper")
+@MapperScan("com.geekq.miaosha.mapper,com.geekq.miaosha.biz.mapper")
 public class GeekQMainApplication {
 
     public static void main(String[] args) throws Exception {
