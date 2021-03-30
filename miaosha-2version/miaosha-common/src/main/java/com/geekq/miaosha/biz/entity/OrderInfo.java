@@ -1,13 +1,18 @@
 package com.geekq.miaosha.biz.entity;
 
 import java.math.BigDecimal;
+
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.util.Date;
+
+import io.swagger.annotations.ApiModel;
+import lombok.*;
+import org.apache.ibatis.type.Alias;
 
 /**
  * <p>
@@ -18,6 +23,12 @@ import lombok.EqualsAndHashCode;
  * @since 2021-03-28
  */
 @Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Alias("OrderInfo")
+@ApiModel(value="商品订单信息对象")
 @EqualsAndHashCode(callSuper = false)
 public class OrderInfo extends Model<OrderInfo> {
 
@@ -54,7 +65,7 @@ public class OrderInfo extends Model<OrderInfo> {
     /**
      * 商品单价
      */
-    private BigDecimal goodsPrice;
+    private Double goodsPrice;
 
     /**
      * 1pc，2android，3ios
@@ -69,12 +80,17 @@ public class OrderInfo extends Model<OrderInfo> {
     /**
      * 订单的创建时间
      */
-    private LocalDateTime createDate;
+    private Date createDate;
+
+    /**
+     * 订单的创建时间
+     */
+    private Date expireDate;
 
     /**
      * 支付时间
      */
-    private LocalDateTime payDate;
+    private Date payDate;
 
 
     @Override
@@ -82,4 +98,6 @@ public class OrderInfo extends Model<OrderInfo> {
         return this.id;
     }
 
+    public void setExpireDate(DateTime offsetMinute) {
+    }
 }

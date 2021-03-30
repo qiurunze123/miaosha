@@ -1,15 +1,18 @@
-package com.geekq.miaosha.mapper;
+package com.geekq.miaosha.biz.mapper;
 
-import com.geekq.miaosha.entity.MiaoshaUser;
-import org.apache.ibatis.annotations.Mapper;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @author 邱润泽
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author zhangc
+ * @since 2021-03-29
  */
-@Mapper
-public interface MiaoShaUserMapper {
-
+public interface MiaoshaUserMapper extends BaseMapper<MiaoshaUser> {
     public MiaoshaUser getByNickname(@Param("nickname") String nickname) ;
 
     public MiaoshaUser getById(@Param("id") long id) ;

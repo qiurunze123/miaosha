@@ -1,13 +1,13 @@
 package com.geekq.miaosha.controller;
 
 
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.entity.GoodsVoOrder;
 import com.geekq.miaosha.interceptor.RequireLogin;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsComposeService;
-import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.service.MiaoShaUserComposeService;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import com.geekq.miaosha.vo.GoodsDetailVo;
 import com.geekq.miaosha.vo.GoodsExtVo;
@@ -35,7 +35,7 @@ public class GoodsController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(GoodsController.class);
 
     @Autowired
-    private MiaoShaUserService userService;
+    private MiaoShaUserComposeService userService;
 
     @Autowired
     private RedisService redisService;

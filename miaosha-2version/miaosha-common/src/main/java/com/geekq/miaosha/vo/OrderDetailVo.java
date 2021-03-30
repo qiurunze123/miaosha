@@ -1,6 +1,6 @@
 package com.geekq.miaosha.vo;
 
-import com.geekq.miaosha.entity.OrderInfo;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,11 +1,11 @@
 package com.geekq.miaosha.rabbitmq;
 
 
-import com.geekq.miaosha.entity.MiaoshaUser;
-import com.geekq.miaosha.entity.OrderInfo;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsComposeService;
-import com.geekq.miaosha.service.MiaoshaService;
+import com.geekq.miaosha.service.MiaoShaComposeService;
 import com.geekq.miaosha.service.OrderComposeService;
 
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class MQReceiver {
 		OrderComposeService orderComposeService;
 		
 		@Autowired
-        MiaoshaService miaoshaService;
+		MiaoShaComposeService miaoShaComposeService;
 
 		/*@Autowired
 		private com.geekq.api.service.GoodsService goodsServiceRpc;*/
@@ -47,7 +47,7 @@ public class MQReceiver {
 			MiaoshaUser user = mm.getUser();
 			long goodsId = mm.getGoodsId();
 	    	//减库存 下订单 写入秒杀订单
-	    	miaoshaService.miaosha(user, goodsId,true);
+	    	miaoShaComposeService.miaosha(user, goodsId,true);
 		}
 		/*
 		*
@@ -61,7 +61,7 @@ public class MQReceiver {
 			Long id=orderDetailVo.getId();
 			Integer status=orderDetailVo.getStatus();
 			if(status.equals(0) ){
-				miaoshaService.cancelOrder(orderDetailVo);
+				miaoShaComposeService.cancelOrder(orderDetailVo);
 			}
 		}
 

@@ -1,8 +1,11 @@
 package com.geekq.miaosha.service;
 
-import com.geekq.miaosha.entity.Goods;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.geekq.miaosha.biz.entity.Goods;
+import com.geekq.miaosha.biz.entity.MiaoshaGoods;
+import com.geekq.miaosha.biz.service.MiaoshaGoodsService;
 import com.geekq.miaosha.mapper.GoodsComposeMapper;
-import com.geekq.miaosha.entity.MiaoshaGoods;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,8 @@ public class GoodsComposeService {
 	
 	@Autowired
 	GoodsComposeMapper goodsComposeMapper;
+	@Autowired
+	private MiaoshaGoodsService miaoshaGoodsService;
 
 
 
@@ -28,14 +33,21 @@ public class GoodsComposeService {
 
 	public boolean reduceStock(GoodsExtVo goods) {
 		MiaoshaGoods g = new MiaoshaGoods();
-		g.setGoodsId(goods.getId());
-		int ret = goodsComposeMapper.reduceStock(g);
-		return ret > 0;
+		g.setStockCount(goods.getStockCount()-1);
+		UpdateWrapper<MiaoshaGoods> temp=new UpdateWrapper<>();
+		temp.lambda().eq(MiaoshaGoods::getGoodsId,goods.getId())
+				.gt(MiaoshaGoods::getStockCount,0);
+		return miaoshaGoodsService.update(g,temp);
 	}
 
 
-    public void addStock(Goods goods) {
+    public boolean addStock(GoodsExtVo goods) {
 
+		MiaoshaGoods temp=new MiaoshaGoods();
+		temp.setStockCount(goods.getStockCount()+1);
+		UpdateWrapper<MiaoshaGoods> updateWrapper=new UpdateWrapper<>();
+		updateWrapper.lambda().eq(MiaoshaGoods::getGoodsId,goods.getId());
+        return miaoshaGoodsService.update(temp,updateWrapper);
 
     }
 }

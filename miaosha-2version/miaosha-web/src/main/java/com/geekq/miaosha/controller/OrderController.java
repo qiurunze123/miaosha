@@ -1,14 +1,15 @@
 package com.geekq.miaosha.controller;
 
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsComposeService;
-import com.geekq.miaosha.service.MiaoShaUserService;
+import com.geekq.miaosha.service.MiaoShaUserComposeService;
 import com.geekq.miaosha.service.OrderComposeService;
-import com.geekq.miaosha.entity.MiaoshaUser;
-import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import com.geekq.miaosha.vo.OrderDetailVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ import static com.geekq.miaosha.enums.enums.ResultStatus.SESSION_ERROR;
 public class OrderController {
 
 	@Autowired
-	MiaoShaUserService userService;
+	MiaoShaUserComposeService userService;
 	
 	@Autowired
     RedisService redisService;
@@ -45,11 +46,12 @@ public class OrderController {
 			result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
 			return result;
 		}
-    	OrderInfo order = orderComposeService.getOrderById(orderId);
+		OrderInfo order = orderComposeService.getOrderById(orderId);
     	if(order == null) {
 			result.withError(ORDER_NOT_EXIST.getCode(), ORDER_NOT_EXIST.getMessage());
 			return result;
     	}
+
     	long goodsId = order.getGoodsId();
     	GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
     	OrderDetailVo vo = new OrderDetailVo();

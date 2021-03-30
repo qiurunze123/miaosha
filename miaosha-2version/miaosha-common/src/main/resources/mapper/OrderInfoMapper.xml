@@ -17,9 +17,46 @@
         <result column="pay_date" property="payDate" />
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, user_id, goods_id, delivery_addr_id, goods_name, goods_count, goods_price, order_channel, status, create_date, pay_date
+    <resultMap id="BaseResultMapMiaoShaOrder" type="com.geekq.miaosha.biz.entity.MiaoshaOrder" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="order_id" property="orderId" jdbcType="BIGINT" />
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="base_column">
+    id,user_id,goods_id,delivery_addr_id,goods_name,goods_count,goods_price,order_channel
+    ,status,create_date,pay_date
     </sql>
+
+    <sql id="base_column_miaosha_order">
+    id,user_id,goods_id,order_id
+    </sql>
+
+    <select id="getMiaoshaOrderByUserIdGoodsId" resultMap="BaseResultMapMiaoShaOrder" >
+        select <include refid="base_column_miaosha_order" />
+        from miaosha_order where user_id=#{userNickName} and goods_id=#{goodsId}
+    </select>
+
+    <select id="getOrderById" resultMap="BaseResultMap" >
+       select * from order_info where id = #{orderId}
+    </select>
+
+    <insert id="insert" parameterType="com.geekq.miaosha.biz.entity.MiaoshaOrder" useGeneratedKeys="true" keyProperty="id" >
+    insert into order_info(user_id, goods_id, goods_name, goods_count, goods_price, order_channel, status, create_date)values( #{userId}, #{goodsId}, #{goodsName}, #{goodsCount}, #{goodsPrice}, #{orderChannel},#{status},#{createDate} )
+    </insert>
+
+    <insert id="insertMiaoshaOrder" parameterType="com.geekq.miaosha.biz.entity.OrderInfo" useGeneratedKeys="true" keyProperty="id" >
+        insert into miaosha_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})
+    </insert>
+
+    <select id="selectOrderStatusByCreateTime" resultMap="BaseResultMap" >
+        select * from order_info where status=#{status} and create_Date $lt;=#{createDate}
+    </select>
+
+
+    <update id="closeOrderByOrderInfo" parameterType="int" >
+        update order_info set status=0 where id=#{id}
+  </update>
 
 </mapper>

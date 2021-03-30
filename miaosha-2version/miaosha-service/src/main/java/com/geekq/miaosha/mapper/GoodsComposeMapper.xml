@@ -31,8 +31,5 @@
         WHERE miaosha_goods.goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
 
-    <update id="reduceStock" >
-       update miaosha_goods set stock_count = stock_count - 1
-       where goods_id = #{goodsId} and stock_count > 0
-    </update>
+
 </mapper>

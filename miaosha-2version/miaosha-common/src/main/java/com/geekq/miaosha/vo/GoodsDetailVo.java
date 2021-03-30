@@ -1,8 +1,8 @@
 package com.geekq.miaosha.vo;
 
 
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.entity.GoodsVoOrder;
-import com.geekq.miaosha.entity.MiaoshaUser;
 
 public class GoodsDetailVo {
     private GoodsVoOrder goods;

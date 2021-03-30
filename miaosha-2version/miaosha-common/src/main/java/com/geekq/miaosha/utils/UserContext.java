@@ -1,7 +1,7 @@
 package com.geekq.miaosha.utils;
 
 
-import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
 
 public class UserContext {
 	

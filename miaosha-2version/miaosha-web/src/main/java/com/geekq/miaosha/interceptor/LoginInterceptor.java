@@ -1,9 +1,9 @@
 package com.geekq.miaosha.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miaosha.entity.MiaoshaUser;
+import com.geekq.miaosha.service.MiaoShaUserComposeService;
 import com.geekq.miaosha.enums.enums.ResultStatus;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import com.geekq.miaosha.utils.UserContext;
@@ -30,7 +30,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
 	@Autowired
-	MiaoShaUserService userService;
+	MiaoShaUserComposeService userService;
 
 	@Autowired
     RedisService redisService;
@@ -103,8 +103,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private MiaoshaUser getUser(HttpServletRequest request, HttpServletResponse response) {
-		String paramToken = request.getParameter(MiaoShaUserService.COOKIE_NAME_TOKEN);
-		String cookieToken = getCookieValue(request, MiaoShaUserService.COOKIE_NAME_TOKEN);
+		String paramToken = request.getParameter(MiaoShaUserComposeService.COOKIE_NAME_TOKEN);
+		String cookieToken = getCookieValue(request, MiaoShaUserComposeService.COOKIE_NAME_TOKEN);
 		if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
 			return null;
 		}

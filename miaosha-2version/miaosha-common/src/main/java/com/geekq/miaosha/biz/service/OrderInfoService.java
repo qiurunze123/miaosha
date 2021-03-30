@@ -1,7 +1,10 @@
 package com.geekq.miaosha.biz.service;
 
+import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface OrderInfoService extends IService<OrderInfo> {
 
+    int insertMiaoshaOrder(MiaoshaOrder miaoshaOrder);
+
+    List<OrderInfo> selectOrderStatusByCreateTime(Integer valueOf, String dateToStr);
 }

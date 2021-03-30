@@ -1,6 +1,5 @@
 package com.geekq.miaosha.rabbitmq;
 
-import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static com.geekq.miaosha.rabbitmq.MQConfig.DELAY_QUEUE_1;
 
 @Service
 public class MQSender {
@@ -57,7 +54,7 @@ public class MQSender {
     * 延时取消订单
     *
     * */
-    public void sendCancelOrderMessage(OrderInfo miaoShaMessageVo){
+    public void sendCancelOrderMessage(com.geekq.miaosha.biz.entity.OrderInfo miaoShaMessageVo){
     	String msg=RedisService.beanToString(miaoShaMessageVo);
     	rabbitTemplate.convertAndSend(MQConfig.DELAYED_EXCHANGE, MQConfig.DELAY_QUEUE_1, msg, new MessagePostProcessor() {
 			@Override

@@ -19,7 +19,7 @@ public class CodeGenerator {
     private static final String username="root";
     private static final String password="zc142500";
     private static final String packagename="com.geekq.miaosha.biz";
-    private static final String tablename="goods";
+    private static final String tablename="miaosha_goods";
 
     public static void main(String[] args) throws InterruptedException {
         AutoGenerator mpg = new AutoGenerator();

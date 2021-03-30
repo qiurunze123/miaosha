@@ -2,14 +2,14 @@ package com.geekq.miaosha.service;
 
 
 
-import com.geekq.miaosha.entity.Goods;
+import com.geekq.miaosha.biz.entity.MiaoshaOrder;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
+import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.entity.MiaoshaOrder;
-import com.geekq.miaosha.entity.MiaoshaUser;
-import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.GoodsExtVo;
@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 @Service
-public class MiaoshaService {
+public class MiaoShaComposeService {
 	
 	@Autowired
 	GoodsComposeService goodsComposeService;
@@ -35,29 +35,21 @@ public class MiaoshaService {
 	@Autowired
 	MQSender mqSender;
 
-	//private com.geekq.api.service.GoodsService goodsServiceRpc;
-
-	/*@Transactional
-	public OrderInfo doMiaosha(MiaoshaUser user, GoodsVoOrder goods) {
-		//减库存 下订单 写入秒杀订单
-	//	boolean success = goodsService.reduceStock(goods);
-			boolean success =goodsServiceRpc.reduceStock(goods);
-		if(success){
-			return orderService.createOrderInfoAndMIaoShaOrder(user,goods) ;
-		}else {
-			//如果库存不存在则内存标记为true
-			setGoodsOver(goods.getId());
-			return null;
-		}
-	}*/
-
-
-	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo){
+/*真正扣减库存，并生成订单
+*
+* */
+	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo,int expireTime){
 		OrderInfo orderInfo=new OrderInfo();
-		boolean success = goodsComposeService.reduceStock(goodsVo);
+		boolean success=false;
+		int miaoshaGoodsCount=1;
+		success = goodsComposeService.reduceStock(goodsVo);
 		if(success){
-			orderInfo= orderComposeService.createOrderInfoAndMIaoShaOrder(user,goodsVo);
+			orderInfo= orderComposeService.createOrderInfoAndMIaoShaOrder(user,goodsVo,expireTime);
 		}else{
+
+			/*要对失败原因进行具体分析，不一定是因为库存不足导致的失败*/
+
+			//redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goodsVo.getId());
 			setGoodsOver(goodsVo.getId());
 		}
 		return orderInfo;
@@ -70,8 +62,9 @@ public class MiaoshaService {
         * */
 	public OrderInfo miaosha(MiaoshaUser user, Long goodsId, boolean syncOrder){
 		OrderInfo orderInfo=new OrderInfo();
+		int expireTime=30;
 		if(syncOrder){//同步订单
-			orderInfo=this.syncMiaoSha(user,goodsId);
+			orderInfo=this.syncMiaoSha(user,goodsId,expireTime);
 		}else{//订单不同步,异步请求
             orderInfo=this.asyncMiaoSha(user,goodsId);
 		}
@@ -83,7 +76,7 @@ public class MiaoshaService {
 	* 订单量较小时，可查询数据库。
 	* 可根据订单量设置是否读写分离
 	* */
-	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId){
+	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId,int expireTime){
 		OrderInfo orderInfo=new OrderInfo();
 		GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
 		int stock = goods.getStockCount();
@@ -95,7 +88,7 @@ public class MiaoshaService {
 		if(order != null) {
 			return  null;
 		}
-		orderInfo=this.doMiaosha(user,goods);
+		orderInfo=this.doMiaosha(user,goods,expireTime);
 		return orderInfo;
 	}
 
@@ -273,12 +266,17 @@ public class MiaoshaService {
 		String exp = ""+ num1 + op1 + num2 + op2 + num3;
 		return exp;
 	}
+
+	/*取消订单时，要注意数据库和缓存的数据一致
+	*
+	* */
     @Transactional
 	public boolean cancelOrder(OrderInfo orderInfo) {
-		Goods goods=new Goods();
+		GoodsExtVo goods=new GoodsExtVo();
 		goods.setId(orderInfo.getGoodsId());
 		goods.setGoodsStock(orderInfo.getGoodsCount());
 		goodsComposeService.addStock(goods);
+		redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
 		boolean deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
         return deleteOrder;
 	}

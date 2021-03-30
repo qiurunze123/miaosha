@@ -5,17 +5,16 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.geekq.miaosha.biz.entity.MiaoshaOrder;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.biz.service.MiaoshaOrderService;
 import com.geekq.miaosha.biz.service.OrderInfoService;
 import com.geekq.miaosha.entity.GoodsVoOrder;
-import com.geekq.miaosha.mapper.OrderComposeMapper;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
 
-import com.geekq.miaosha.entity.MiaoshaOrder;
-import com.geekq.miaosha.entity.MiaoshaUser;
-import com.geekq.miaosha.entity.OrderInfo;
 import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.time.DateUtils;
@@ -34,9 +33,6 @@ import static com.geekq.miaosha.enums.Constanst.orderStaus.ORDER_NOT_PAY;
 
 @Service
 public class OrderComposeService {
-	
-	@Autowired
-	OrderComposeMapper orderComposeMapper;
 
 	@Autowired
 	private RedisService redisService ;
@@ -52,19 +48,20 @@ public class OrderComposeService {
 	}
 
 	public OrderInfo getOrderById(long orderId) {
-		return orderComposeMapper.getOrderById(orderId);
+		return orderInfoService.getById(orderId);
+
 	}
 
 
-	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsVoOrder goods) {
+	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsVoOrder goods,int expireTime) {
 		GoodsExtVo goodsExtVo=new GoodsExtVo();
 		BeanUtils.copyProperties(goods,goodsExtVo);
-		OrderInfo orderInfo=this.createOrderInfoAndMIaoShaOrder(user,goodsExtVo);
+		OrderInfo orderInfo=this.createOrderInfoAndMIaoShaOrder(user,goodsExtVo,expireTime);
 		return orderInfo;
 	}
     @Transactional
-	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsExtVo goods){
-		OrderInfo orderInfo=this.addOrderInfo(user,goods);
+	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsExtVo goods,int expireTime){
+		OrderInfo orderInfo=this.addOrderInfo(user,goods,expireTime);
 		MiaoshaOrder miaoshaOrder=this.saveMiaoShaOrderInfo(user,orderInfo.getGoodsId(),orderInfo.getId());
 		return orderInfo;
 	}
@@ -72,11 +69,11 @@ public class OrderComposeService {
 /*生成订单信息，并设置订单超时机制
 *
 * */
-	public OrderInfo addOrderInfo(MiaoshaUser user, GoodsExtVo goods){
+	public OrderInfo addOrderInfo(MiaoshaUser user, GoodsExtVo goods,int expiretime){
 		Date date=new Date();
 		OrderInfo orderInfo = new OrderInfo();
 		orderInfo.setCreateDate(date);
-		orderInfo.setExpireDate(DateUtil.offsetMinute(date,30));
+		orderInfo.setExpireDate(DateUtil.offsetMinute(date,expiretime));
 		//orderInfo.setPayDate();
 		orderInfo.setDeliveryAddrId(0L);
 		orderInfo.setGoodsCount(1);
@@ -87,9 +84,10 @@ public class OrderComposeService {
 		orderInfo.setStatus(0);
 		orderInfo.setUserId(Long.valueOf(user.getNickname()));
 
-		long success= orderComposeMapper.insert(orderInfo);
+		boolean success= orderInfoService.save(orderInfo);
 		//发送延时订单取消通知
-		if(success>0){
+		if(success){
+
 			mqSender.sendCancelOrderMessage(orderInfo);
 		}else{
 			orderInfo=null;
@@ -106,7 +104,7 @@ public class OrderComposeService {
 		miaoshaOrder.setGoodsId(goodsId);
 		miaoshaOrder.setOrderId(orderId);
 		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
-		int res= orderComposeMapper.insertMiaoshaOrder(miaoshaOrder);
+		int res= orderInfoService.insertMiaoshaOrder(miaoshaOrder);
 		redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goodsId,miaoshaOrder) ;
 		return miaoshaOrder;
 	}
@@ -116,7 +114,7 @@ public class OrderComposeService {
 
 	public void closeOrder(int hour){
 		Date closeDateTime = DateUtils.addHours(new Date(),-hour);
-		List<OrderInfo> orderInfoList = orderComposeMapper.selectOrderStatusByCreateTime(Integer.valueOf(ORDER_NOT_PAY.ordinal()), DateTimeUtils.dateToStr(closeDateTime));
+		List<OrderInfo> orderInfoList = orderInfoService.selectOrderStatusByCreateTime(Integer.valueOf(ORDER_NOT_PAY.ordinal()), DateTimeUtils.dateToStr(closeDateTime));
 		for (OrderInfo orderInfo:orderInfoList){
 			System.out.println("orderinfo  infomation "+orderInfo.getGoodsName());
 		}
@@ -129,9 +127,9 @@ public class OrderComposeService {
 		orderDeleted=orderInfoService.removeById(id);
 		Map<String,Object> paramsMap=new HashMap<>();
 		paramsMap.put("order_id",id);
-		QueryWrapper<com.geekq.miaosha.biz.entity.MiaoshaOrder> queryWrapper=new QueryWrapper<>();
-		queryWrapper.lambda().eq(com.geekq.miaosha.biz.entity.MiaoshaOrder::getOrderId,id);
-		List<com.geekq.miaosha.biz.entity.MiaoshaOrder> miaoshaOrderList=miaoshaOrderService.list(queryWrapper);
+		QueryWrapper<MiaoshaOrder> queryWrapper=new QueryWrapper<>();
+		queryWrapper.lambda().eq(MiaoshaOrder::getOrderId,id);
+		List<MiaoshaOrder> miaoshaOrderList=miaoshaOrderService.list(queryWrapper);
 		if(CollUtil.isNotEmpty(miaoshaOrderList)){
 		miaoshaOrderDeleted=miaoshaOrderService.removeByMap(paramsMap);
 

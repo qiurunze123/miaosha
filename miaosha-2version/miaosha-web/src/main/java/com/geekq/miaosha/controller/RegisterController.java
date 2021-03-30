@@ -1,7 +1,7 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.miaosha.service.MiaoShaUserService;
-import com.geekq.miaosha.service.MiaoshaService;
+import com.geekq.miaosha.service.MiaoShaUserComposeService;
+import com.geekq.miaosha.service.MiaoShaComposeService;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ public class RegisterController {
     private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     @Autowired
-    private MiaoShaUserService miaoShaUserService;
+    private MiaoShaUserComposeService miaoShaUserComposeService;
     @Autowired
-    private MiaoshaService miaoshaService ;
+    private MiaoShaComposeService miaoShaComposeService;
 
 
     /**
@@ -63,7 +63,7 @@ public class RegisterController {
     public ResultGeekQ<Boolean> checkUsername(String username){
 
         ResultGeekQ<Boolean> result =  ResultGeekQ.build();
-        boolean nickNameCount = miaoShaUserService.getNickNameCount(username);
+        boolean nickNameCount = miaoShaUserComposeService.getNickNameCount(username);
         result.setData(nickNameCount);
         return result;
     }
@@ -82,7 +82,7 @@ public class RegisterController {
                                         HttpServletRequest request){
 
         ResultGeekQ<Boolean> result = ResultGeekQ.build();
-        boolean registerInfo  = miaoShaUserService.register(userName,passWord,response ,request);
+        boolean registerInfo  = miaoShaUserComposeService.register(userName,passWord,response ,request);
         if(!registerInfo){
            result.withError(RESIGETER_FAIL.getCode(),RESIGETER_FAIL.getMessage());
             result.setData(false);

@@ -1,11 +1,11 @@
 package com.geekq.miaosha.service;
 
-import com.geekq.miaosha.mapper.MiaoShaUserMapper;
+import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.service.MiaoshaUserService;
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.redis.MiaoShaUserKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.entity.IpLog;
-import com.geekq.miaosha.entity.MiaoshaUser;
 import com.geekq.miaosha.exception.GlobleException;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
@@ -26,13 +26,13 @@ import static com.geekq.miaosha.enums.enums.ResultStatus.*;
 
 
 @Service
-public class MiaoShaUserService {
+public class MiaoShaUserComposeService {
 
     public static final String COOKIE_NAME_TOKEN = "token" ;
-    private static Logger logger = LoggerFactory.getLogger(MiaoShaUserService.class);
+    private static Logger logger = LoggerFactory.getLogger(MiaoShaUserComposeService.class);
 
     @Autowired
-    private MiaoShaUserMapper miaoShaUserMapper;
+    private MiaoshaUserService miaoshaUserService;
 
     @Autowired
     private RedisService redisService ;
@@ -43,7 +43,7 @@ public class MiaoShaUserService {
 
     public boolean getNickNameCount(String userName){
 
-      return   miaoShaUserMapper.getCountByUserName(userName,USERTYPE_NORMAL) <=0;
+      return miaoshaUserService.getCountByUserName(userName,USERTYPE_NORMAL) <=0;
 
     }
     public MiaoshaUser getByToken(HttpServletResponse response , String token) {
@@ -66,7 +66,7 @@ public class MiaoShaUserService {
             return user;
         }
         //取数据库
-        user = miaoShaUserMapper.getByNickname(nickName);
+        user = miaoshaUserService.getByNickname(nickName);
         if(user != null) {
             redisService.set(MiaoShaUserKey.getByNickName, ""+nickName, user);
         }
@@ -85,7 +85,7 @@ public class MiaoShaUserService {
         MiaoshaUser toBeUpdate = new MiaoshaUser();
         toBeUpdate.setNickname(nickName);
         toBeUpdate.setPassword(MD5Utils.formPassToDBPass(formPass, user.getSalt()));
-        miaoShaUserMapper.update(toBeUpdate);
+        miaoshaUserService.update(toBeUpdate);
         //处理缓存
         redisService.delete(MiaoShaUserKey.getByNickName, ""+nickName);
         user.setPassword(toBeUpdate.getPassword());
@@ -106,11 +106,11 @@ public class MiaoShaUserService {
         miaoShaUser.setSalt(salt);
         miaoShaUser.setNickname(userName);
         try {
-            miaoShaUserMapper.insertMiaoShaUser(miaoShaUser);
+            miaoshaUserService.insertMiaoShaUser(miaoShaUser);
             IpLog log = new IpLog(userName,new Date(),request.getRemoteAddr(),
                     USERTYPE_NORMAL,null);
 
-            MiaoshaUser user = miaoShaUserMapper.getByNickname(miaoShaUser.getNickname());
+            MiaoshaUser user = miaoshaUserService.getByNickname(miaoShaUser.getNickname());
             if(user == null){
                 return false;
             }

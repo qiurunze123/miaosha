@@ -2,7 +2,7 @@ package com.geekq.miaosha.controller;
 
 
 import com.geekq.miaosha.redis.redismanager.RedisLua;
-import com.geekq.miaosha.service.MiaoShaUserService;
+import com.geekq.miaosha.service.MiaoShaUserComposeService;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
 import com.geekq.miaosha.vo.LoginVo;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private MiaoShaUserService userService;
+    private MiaoShaUserComposeService userService;
 
 
 

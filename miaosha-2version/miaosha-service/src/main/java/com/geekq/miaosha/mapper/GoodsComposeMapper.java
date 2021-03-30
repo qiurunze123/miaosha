@@ -1,6 +1,5 @@
 package com.geekq.miaosha.mapper;
 
-import com.geekq.miaosha.entity.MiaoshaGoods;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +14,6 @@ public interface GoodsComposeMapper {
 
     public GoodsExtVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
 
-    public int reduceStock(MiaoshaGoods g);
+
 
 }

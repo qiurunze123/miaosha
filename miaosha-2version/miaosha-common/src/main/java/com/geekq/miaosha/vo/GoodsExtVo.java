@@ -1,6 +1,6 @@
 package com.geekq.miaosha.vo;
 
-import com.geekq.miaosha.entity.Goods;
+import com.geekq.miaosha.biz.entity.Goods;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
