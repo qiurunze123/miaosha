@@ -104,7 +104,7 @@ public class OrderComposeService {
 		miaoshaOrder.setGoodsId(goodsId);
 		miaoshaOrder.setOrderId(orderId);
 		miaoshaOrder.setUserId(Long.valueOf(user.getNickname()));
-		int res= orderInfoService.insertMiaoshaOrder(miaoshaOrder);
+		miaoshaOrderService.save(miaoshaOrder);
 		redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getNickname()+"_"+goodsId,miaoshaOrder) ;
 		return miaoshaOrder;
 	}

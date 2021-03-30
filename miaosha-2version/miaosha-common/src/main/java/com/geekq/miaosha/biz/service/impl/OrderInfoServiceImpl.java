@@ -1,5 +1,7 @@
 package com.geekq.miaosha.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.biz.mapper.OrderInfoMapper;
@@ -20,13 +22,23 @@ import java.util.List;
 @Service
 public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> implements OrderInfoService {
 
+
     @Override
-    public int insertMiaoshaOrder(MiaoshaOrder miaoshaOrder) {
-        return this.getBaseMapper().insertMiaoshaOrder(miaoshaOrder);
+    public boolean closeOrderByOrderInfo(int id) {
+        OrderInfo orderInfo=new OrderInfo();
+        orderInfo.setStatus(0);
+        UpdateWrapper<OrderInfo> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.lambda().eq(OrderInfo::getId,id);
+
+        return this.update(orderInfo,updateWrapper);
+
     }
 
     @Override
     public List<OrderInfo> selectOrderStatusByCreateTime(Integer valueOf, String dateToStr) {
-        return this.getBaseMapper().selectOrderStatusByCreateTime(valueOf, dateToStr);
+        QueryWrapper<OrderInfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(OrderInfo::getStatus,valueOf)
+                .eq(OrderInfo::getCreateDate,dateToStr);
+        return this.list(queryWrapper);
     }
 }

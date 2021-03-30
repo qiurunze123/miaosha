@@ -41,7 +41,6 @@ public class MiaoShaComposeService {
 	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo,int expireTime){
 		OrderInfo orderInfo=new OrderInfo();
 		boolean success=false;
-		int miaoshaGoodsCount=1;
 		success = goodsComposeService.reduceStock(goodsVo);
 		if(success){
 			orderInfo= orderComposeService.createOrderInfoAndMIaoShaOrder(user,goodsVo,expireTime);
@@ -53,6 +52,23 @@ public class MiaoShaComposeService {
 			setGoodsOver(goodsVo.getId());
 		}
 		return orderInfo;
+	}
+
+	/*取消订单时，要注意数据库和缓存的数据一致
+	 *
+	 * */
+	@Transactional
+	public boolean cancelOrder(OrderInfo orderInfo) {
+		GoodsExtVo goods=new GoodsExtVo();
+		goods.setId(orderInfo.getGoodsId());
+		goods.setGoodsStock(orderInfo.getGoodsCount());
+		synchronized (this){//最好使用分布式锁
+			goodsComposeService.addStock(goods);
+			redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
+
+		}
+		boolean deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
+		return deleteOrder;
 	}
 
 	    //生成秒杀订单信息
@@ -71,38 +87,6 @@ public class MiaoShaComposeService {
 		return orderInfo;
 	}
 
-	/*
-	* 同步秒杀订单。
-	* 订单量较小时，可查询数据库。
-	* 可根据订单量设置是否读写分离
-	* */
-	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId,int expireTime){
-		OrderInfo orderInfo=new OrderInfo();
-		GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
-		int stock = goods.getStockCount();
-		if(stock <= 0) {
-			return null;
-		}
-		//判断是否已经秒杀到了
-		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
-		if(order != null) {
-			return  null;
-		}
-		orderInfo=this.doMiaosha(user,goods,expireTime);
-		return orderInfo;
-	}
-
-	/*
-	* 异步处理秒杀订单，异步处理不建议查询数据库，会是db崩溃
-	* */
-	private OrderInfo asyncMiaoSha(MiaoshaUser user, Long goodsId){
-		OrderInfo orderInfo=new OrderInfo();
-		MiaoshaMessage mm = new MiaoshaMessage();
-		mm.setGoodsId(goodsId);
-		mm.setUser(user);
-		mqSender.sendMiaoshaMessage(mm);
-		return orderInfo;
-	}
 
 
 
@@ -267,17 +251,41 @@ public class MiaoShaComposeService {
 		return exp;
 	}
 
-	/*取消订单时，要注意数据库和缓存的数据一致
-	*
-	* */
-    @Transactional
-	public boolean cancelOrder(OrderInfo orderInfo) {
-		GoodsExtVo goods=new GoodsExtVo();
-		goods.setId(orderInfo.getGoodsId());
-		goods.setGoodsStock(orderInfo.getGoodsCount());
-		goodsComposeService.addStock(goods);
-		redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
-		boolean deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
-        return deleteOrder;
+
+
+
+
+	/*
+	 * 同步秒杀订单。
+	 * 订单量较小时，可查询数据库。
+	 * 可根据订单量设置是否读写分离
+	 * */
+	private OrderInfo syncMiaoSha(MiaoshaUser user, Long goodsId,int expireTime){
+		OrderInfo orderInfo=new OrderInfo();
+		GoodsExtVo goods = goodsComposeService.getGoodsVoByGoodsId(goodsId);
+		int stock = goods.getStockCount();
+		if(stock <= 0) {
+			return null;
+		}
+		//判断是否已经秒杀到了
+		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+		if(order != null) {
+			return  null;
+		}
+		orderInfo=this.doMiaosha(user,goods,expireTime);
+		return orderInfo;
 	}
+
+	/*
+	 * 异步处理秒杀订单，异步处理不建议查询数据库，会是db崩溃
+	 * */
+	private OrderInfo asyncMiaoSha(MiaoshaUser user, Long goodsId){
+		OrderInfo orderInfo=new OrderInfo();
+		MiaoshaMessage mm = new MiaoshaMessage();
+		mm.setGoodsId(goodsId);
+		mm.setUser(user);
+		mqSender.sendMiaoshaMessage(mm);
+		return orderInfo;
+	}
+
 }

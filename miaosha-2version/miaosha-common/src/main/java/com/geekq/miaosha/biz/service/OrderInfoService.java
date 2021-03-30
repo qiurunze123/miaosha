@@ -16,7 +16,6 @@ import java.util.List;
  */
 public interface OrderInfoService extends IService<OrderInfo> {
 
-    int insertMiaoshaOrder(MiaoshaOrder miaoshaOrder);
-
+    boolean closeOrderByOrderInfo(int id);
     List<OrderInfo> selectOrderStatusByCreateTime(Integer valueOf, String dateToStr);
 }
