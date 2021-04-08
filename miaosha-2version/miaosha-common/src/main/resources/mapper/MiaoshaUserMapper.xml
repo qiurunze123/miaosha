@@ -29,15 +29,7 @@
         from miaosha_user where id = #{id}
     </select>
 
-    <insert id="insertMiaoShaUser" parameterType="com.geekq.miaosha.biz.entity.MiaoshaUser" useGeneratedKeys="true" keyProperty="id" >
-   insert into miaosha_user (id , nickname ,password , salt ,head,register_date,last_login_date)
-   value (#{id},#{nickname},#{password},#{salt},#{head},
-   #{registerDate},#{lastLoginDate})
-    </insert>
 
-    <update id="update" parameterType="com.geekq.miaosha.biz.entity.MiaoshaUser" >
-   update miaosha_user set password = #{password} where id = #{id}
-  </update>
 
     <select id="getCountByUserName" resultType="int" >
         select count(*)

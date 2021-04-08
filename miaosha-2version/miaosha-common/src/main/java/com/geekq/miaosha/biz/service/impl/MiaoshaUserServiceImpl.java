@@ -1,5 +1,6 @@
 package com.geekq.miaosha.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.mapper.MiaoshaUserMapper;
 import com.geekq.miaosha.biz.service.MiaoshaUserService;
@@ -28,12 +29,13 @@ public class MiaoshaUserServiceImpl extends ServiceImpl<MiaoshaUserMapper, Miaos
     }
 
     @Override
-    public void update(MiaoshaUser toBeUpdate) {
-         this.getBaseMapper().update(toBeUpdate);
+    public boolean update(MiaoshaUser toBeUpdate) {
+        UpdateWrapper<MiaoshaUser> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.lambda().eq(MiaoshaUser::getId,toBeUpdate.getId());
+        MiaoshaUser miaoshaUser=new MiaoshaUser();
+        miaoshaUser.setPassword(toBeUpdate.getPassword());
+        return this.update(miaoshaUser,updateWrapper);
     }
 
-    @Override
-    public void insertMiaoShaUser(MiaoshaUser miaoShaUser) {
-       this.getBaseMapper().insertMiaoShaUser(miaoShaUser);
-    }
+
 }

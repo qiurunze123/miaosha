@@ -106,7 +106,7 @@ public class MiaoShaUserComposeService {
         miaoShaUser.setSalt(salt);
         miaoShaUser.setNickname(userName);
         try {
-            miaoshaUserService.insertMiaoShaUser(miaoShaUser);
+            miaoshaUserService.save(miaoShaUser);
             IpLog log = new IpLog(userName,new Date(),request.getRemoteAddr(),
                     USERTYPE_NORMAL,null);
 

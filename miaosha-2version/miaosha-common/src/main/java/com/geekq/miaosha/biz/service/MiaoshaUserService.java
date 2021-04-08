@@ -17,7 +17,7 @@ public interface MiaoshaUserService extends IService<MiaoshaUser> {
 
     MiaoshaUser getByNickname(String nickName);
 
-    void update(MiaoshaUser toBeUpdate);
+    boolean update(MiaoshaUser toBeUpdate);
 
-    void insertMiaoShaUser(MiaoshaUser miaoShaUser);
+
 }

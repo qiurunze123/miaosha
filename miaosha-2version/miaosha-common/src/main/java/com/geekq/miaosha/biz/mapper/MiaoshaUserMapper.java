@@ -19,7 +19,6 @@ public interface MiaoshaUserMapper extends BaseMapper<MiaoshaUser> {
 
     public void update(MiaoshaUser toBeUpdate);
 
-    public void insertMiaoShaUser(MiaoshaUser miaoshaUser);
 
     public int getCountByUserName(@Param("userName") String userName, @Param("userType") int userType);
 

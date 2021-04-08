@@ -15,7 +15,7 @@ import java.util.List;
 public class CodeGenerator {
 
     private static final String module="miaosha-common";
-    private static final String dburl="jdbc:mysql://192.168.31.124:3306/miaosha?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false";
+    private static final String dburl="jdbc:mysql://localhost:3306/miaosha?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false";
     private static final String username="root";
     private static final String password="zc142500";
     private static final String packagename="com.geekq.miaosha.biz";
