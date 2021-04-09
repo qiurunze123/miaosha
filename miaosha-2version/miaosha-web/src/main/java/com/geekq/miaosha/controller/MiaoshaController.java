@@ -3,7 +3,7 @@ package com.geekq.miaosha.controller;
 import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.interceptor.RequireLogin;
-import com.geekq.miaosha.rabbitmq.MQSender;
+import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;

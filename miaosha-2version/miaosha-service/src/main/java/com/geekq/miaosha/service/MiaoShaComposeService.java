@@ -5,8 +5,9 @@ package com.geekq.miaosha.service;
 import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.entity.OrderInfo;
-import com.geekq.miaosha.rabbitmq.MQSender;
-import com.geekq.miaosha.rabbitmq.MiaoshaMessage;
+import com.geekq.miaosha.mq.MQSender;
+import com.geekq.miaosha.mq.MQServiceFactory;
+import com.geekq.miaosha.mq.MiaoShaMessage;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.MiaoshaKey;
 import com.geekq.miaosha.redis.RedisService;
@@ -281,10 +282,12 @@ public class MiaoShaComposeService {
 	 * */
 	private OrderInfo asyncMiaoSha(MiaoshaUser user, Long goodsId){
 		OrderInfo orderInfo=new OrderInfo();
-		MiaoshaMessage mm = new MiaoshaMessage();
+		MiaoShaMessage mm = new MiaoShaMessage();
 		mm.setGoodsId(goodsId);
 		mm.setUser(user);
-		mqSender.sendMiaoshaMessage(mm);
+		String msg = RedisService.beanToString(mm);
+		MQServiceFactory.create("rabbit","miaoshamessage").send(msg);
+		//mqSender.sendMiaoshaMessage(mm);
 		return orderInfo;
 	}
 

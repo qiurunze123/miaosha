@@ -1,5 +1,6 @@
-package com.geekq.miaosha.rabbitmq;
+package com.geekq.miaosha.mq;
 
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class MQSender {
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
-	public void sendMiaoshaMessage(MiaoshaMessage mm) {
+	public void sendMiaoshaMessage(MiaoShaMessage mm) {
 		String msg = RedisService.beanToString(mm);
 		log.info("send message:"+msg);
 		amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE, msg);
@@ -33,7 +34,7 @@ public class MQSender {
 	 * 站内信
 	 * @param mm
 	 */
-	public void sendMessage(MiaoshaMessage mm) {
+	public void sendMessage(MiaoShaMessage mm) {
 //		String msg = RedisService.beanToString(mm);
 		log.info("send message:"+"11111");
 		rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", "111111111");
@@ -54,7 +55,7 @@ public class MQSender {
     * 延时取消订单
     *
     * */
-    public void sendCancelOrderMessage(com.geekq.miaosha.biz.entity.OrderInfo miaoShaMessageVo){
+    public void sendCancelOrderMessage(OrderInfo miaoShaMessageVo){
     	String msg=RedisService.beanToString(miaoShaMessageVo);
     	rabbitTemplate.convertAndSend(MQConfig.DELAYED_EXCHANGE, MQConfig.DELAY_QUEUE_1, msg, new MessagePostProcessor() {
 			@Override

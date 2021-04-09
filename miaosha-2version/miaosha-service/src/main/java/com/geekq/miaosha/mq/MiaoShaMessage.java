@@ -1,9 +1,9 @@
-package com.geekq.miaosha.rabbitmq;
+package com.geekq.miaosha.mq;
 
 
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 
-public class MiaoshaMessage {
+public class MiaoShaMessage {
 	private MiaoshaUser user;
 	private long goodsId;
 	public MiaoshaUser getUser() {

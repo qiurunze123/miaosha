@@ -1,4 +1,4 @@
-package com.geekq.miaosha.rabbitmq;
+package com.geekq.miaosha.mq;
 
 
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
@@ -40,10 +40,10 @@ public class MQReceiver {
 		/*@Autowired
 		private com.geekq.api.service.GoodsService goodsServiceRpc;*/
 
-	    @RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
+	//    @RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
 		public void receive(String message) {
 			log.info("receive message:"+message);
-			MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage.class);
+			MiaoShaMessage mm  = RedisService.stringToBean(message, MiaoShaMessage.class);
 			MiaoshaUser user = mm.getUser();
 			long goodsId = mm.getGoodsId();
 	    	//减库存 下订单 写入秒杀订单
@@ -54,7 +54,7 @@ public class MQReceiver {
 		* 延时取消订单
 		* 释放锁定库存，删除秒杀信息
 		* */
-		@RabbitListener(queues = MQConfig.DELAY_QUEUE_1)
+	//	@RabbitListener(queues = MQConfig.DELAY_QUEUE_1)
 		public void receiveCancelOrder(String message){
 			OrderInfo orderDetailVo=RedisService.stringToBean(message, OrderInfo.class);
             Date expireDate=orderDetailVo.getExpireDate();

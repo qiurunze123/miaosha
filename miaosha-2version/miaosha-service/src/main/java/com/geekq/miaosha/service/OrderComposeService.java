@@ -11,7 +11,8 @@ import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.biz.service.MiaoshaOrderService;
 import com.geekq.miaosha.biz.service.OrderInfoService;
 import com.geekq.miaosha.entity.GoodsVoOrder;
-import com.geekq.miaosha.rabbitmq.MQSender;
+import com.geekq.miaosha.mq.MQSender;
+import com.geekq.miaosha.mq.MQServiceFactory;
 import com.geekq.miaosha.redis.OrderKey;
 import com.geekq.miaosha.redis.RedisService;
 
@@ -87,8 +88,9 @@ public class OrderComposeService {
 		boolean success= orderInfoService.save(orderInfo);
 		//发送延时订单取消通知
 		if(success){
-
-			mqSender.sendCancelOrderMessage(orderInfo);
+			String msg=RedisService.beanToString(orderInfo);
+			MQServiceFactory.create("rabbitmq","cancelorder").send(msg);
+			//mqSender.sendCancelOrderMessage(orderInfo);
 		}else{
 			orderInfo=null;
 		}
