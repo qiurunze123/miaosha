@@ -10,16 +10,14 @@ import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.biz.service.MiaoshaOrderService;
 import com.geekq.miaosha.biz.service.OrderInfoService;
-import com.geekq.miaosha.entity.GoodsVoOrder;
-import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.mq.MQServiceFactory;
 import com.geekq.miaosha.redis.OrderKey;
-import com.geekq.miaosha.redis.RedisService;
 
+import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.util.StringBeanUtil;
 import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,16 +35,12 @@ public class OrderComposeService {
 
 	@Autowired
 	private RedisService redisService ;
-	@Autowired
-	private MQSender mqSender;
+
 	@Autowired
 	private OrderInfoService orderInfoService;
     @Autowired
 	private MiaoshaOrderService miaoshaOrderService;
-	
-	public MiaoshaOrder getCachedMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
-		return	redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+userId+"_"+goodsId,MiaoshaOrder.class) ;
-	}
+
 
 	public OrderInfo getOrderById(long orderId) {
 		return orderInfoService.getById(orderId);
@@ -54,12 +48,6 @@ public class OrderComposeService {
 	}
 
 
-	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsVoOrder goods,int expireTime) {
-		GoodsExtVo goodsExtVo=new GoodsExtVo();
-		BeanUtils.copyProperties(goods,goodsExtVo);
-		OrderInfo orderInfo=this.createOrderInfoAndMIaoShaOrder(user,goodsExtVo,expireTime);
-		return orderInfo;
-	}
     @Transactional
 	public OrderInfo createOrderInfoAndMIaoShaOrder(MiaoshaUser user, GoodsExtVo goods,int expireTime){
 		OrderInfo orderInfo=this.addOrderInfo(user,goods,expireTime);
@@ -88,9 +76,9 @@ public class OrderComposeService {
 		boolean success= orderInfoService.save(orderInfo);
 		//发送延时订单取消通知
 		if(success){
-			String msg=RedisService.beanToString(orderInfo);
+			String msg= StringBeanUtil.beanToString(orderInfo);
 			MQServiceFactory.create("rabbitmq","cancelorder").send(msg);
-			//mqSender.sendCancelOrderMessage(orderInfo);
+
 		}else{
 			orderInfo=null;
 		}

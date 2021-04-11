@@ -6,8 +6,8 @@ import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.mq.IMQService;
 import com.geekq.miaosha.mq.MQConfig;
 import com.geekq.miaosha.mq.MiaoShaMessage;
-import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.MiaoShaComposeService;
+import com.geekq.miaosha.util.StringBeanUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +37,11 @@ public class MiaoShaMessageRabbitMQService implements IMQService {
     @RabbitListener(queues=MQConfig.MIAOSHA_QUEUE)
     public String receive(String message) {
         log.info("receive message:"+message);
-        MiaoShaMessage mm  = RedisService.stringToBean(message, MiaoShaMessage.class);
+        MiaoShaMessage mm  = StringBeanUtil.stringToBean(message, MiaoShaMessage.class);
         MiaoshaUser user = mm.getUser();
         long goodsId = mm.getGoodsId();
         //减库存 下订单 写入秒杀订单
-        miaoShaComposeService.miaosha(user, goodsId,true);
+        miaoShaComposeService.doMiaoSha(user, goodsId,true);
         return null;
     }
 }

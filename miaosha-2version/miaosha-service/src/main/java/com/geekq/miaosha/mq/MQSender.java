@@ -1,7 +1,7 @@
 package com.geekq.miaosha.mq;
 
 import com.geekq.miaosha.biz.entity.OrderInfo;
-import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.util.StringBeanUtil;
 import com.geekq.miaosha.vo.MiaoShaMessageVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class MQSender {
 	private RabbitTemplate rabbitTemplate;
 
 	public void sendMiaoshaMessage(MiaoShaMessage mm) {
-		String msg = RedisService.beanToString(mm);
+		String msg = StringBeanUtil.beanToString(mm);
 		log.info("send message:"+msg);
 		amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE, msg);
 	}
@@ -35,7 +35,7 @@ public class MQSender {
 	 * @param mm
 	 */
 	public void sendMessage(MiaoShaMessage mm) {
-//		String msg = RedisService.beanToString(mm);
+//		String msg = StringBeanUtil.beanToString(mm);
 		log.info("send message:"+"11111");
 		rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", "111111111");
 	}
@@ -45,7 +45,7 @@ public class MQSender {
      * @param
      */
     public void sendRegisterMessage(MiaoShaMessageVo miaoShaMessageVo) {
-		String msg = RedisService.beanToString(miaoShaMessageVo);
+		String msg = StringBeanUtil.beanToString(miaoShaMessageVo);
         log.info("send message:{}" , msg);
 		rabbitTemplate.convertAndSend(MQConfig.MIAOSHATEST,msg);
 //        rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_TOPIC,"miaosha_*", msg);
@@ -56,7 +56,7 @@ public class MQSender {
     *
     * */
     public void sendCancelOrderMessage(OrderInfo miaoShaMessageVo){
-    	String msg=RedisService.beanToString(miaoShaMessageVo);
+    	String msg= StringBeanUtil.beanToString(miaoShaMessageVo);
     	rabbitTemplate.convertAndSend(MQConfig.DELAYED_EXCHANGE, MQConfig.DELAY_QUEUE_1, msg, new MessagePostProcessor() {
 			@Override
 			public Message postProcessMessage(Message message) throws AmqpException {

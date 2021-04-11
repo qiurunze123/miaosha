@@ -3,8 +3,8 @@ package com.geekq.miaosha.mq.imp;
 import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.mq.IMQService;
 import com.geekq.miaosha.mq.MQConfig;
-import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.MiaoShaComposeService;
+import com.geekq.miaosha.util.StringBeanUtil;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
@@ -42,7 +42,7 @@ public class CancelOrderRabbitMQService implements IMQService {
     @Override
     @RabbitListener(queues = MQConfig.DELAY_QUEUE_1)
     public String receive(String message) {
-        OrderInfo orderDetailVo=RedisService.stringToBean(message, OrderInfo.class);
+        OrderInfo orderDetailVo= StringBeanUtil.stringToBean(message, OrderInfo.class);
         Date expireDate=orderDetailVo.getExpireDate();
         Long id=orderDetailVo.getId();
         Integer status=orderDetailVo.getStatus();

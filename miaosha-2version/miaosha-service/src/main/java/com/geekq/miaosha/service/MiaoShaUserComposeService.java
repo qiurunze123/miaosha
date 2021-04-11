@@ -4,9 +4,9 @@ import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.service.MiaoshaUserService;
 import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.redis.MiaoShaUserKey;
-import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.entity.IpLog;
 import com.geekq.miaosha.exception.GlobleException;
+import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.LoginVo;
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,8 +36,6 @@ public class MiaoShaUserComposeService {
     @Autowired
     private RedisService redisService ;
 
-    @Autowired
-    private MQSender sender ;
 
 
     public boolean getNickNameCount(String userName){
@@ -74,7 +71,6 @@ public class MiaoShaUserComposeService {
     }
 
 
-    // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
     public boolean updatePassword(String token, String nickName, String formPass) {
         //取user
         MiaoshaUser user = getByNickName(nickName);

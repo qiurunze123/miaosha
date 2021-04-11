@@ -33,7 +33,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	MiaoShaUserComposeService userService;
 
 	@Autowired
-    RedisService redisService;
+	RedisService redisService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,

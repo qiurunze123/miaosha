@@ -1,12 +1,11 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
+import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.interceptor.RequireLogin;
 import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;
 import com.geekq.miaosha.service.GoodsComposeService;
 import com.geekq.miaosha.service.MiaoShaUserComposeService;
 import com.geekq.miaosha.service.MiaoShaComposeService;
@@ -27,10 +26,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.geekq.miaosha.enums.enums.ResultStatus.*;
@@ -61,7 +57,7 @@ public class MiaoshaController implements InitializingBean {
     @Autowired
     MQSender mqSender;
 
-    private HashMap<Long, Boolean> localOverMap = new HashMap<Long, Boolean>();
+
 
     /**
      * QPS:1306
@@ -76,46 +72,13 @@ public class MiaoshaController implements InitializingBean {
     public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
                                         @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Integer> result = ResultGeekQ.build();
-
-        if (user == null) {
-            result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
-            return result;
+        String checkResult=miaoShaComposeService.checkMiaoSha(user, path, goodsId);
+        if("success".equals(checkResult)){
+            OrderInfo orderInfo= miaoShaComposeService.doMiaoSha(user,goodsId,true);
+        }else{
+            result.withError(EXCEPTION.getCode(),checkResult);
         }
 
-        /**
-         * 分布式限流
-         */
-        try {
-            RedisLimitRateWithLUA.accquire();
-        } catch (IOException e) {
-            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
-            return result;
-        } catch (URISyntaxException e) {
-            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
-            return result;
-        }
-
-        //内存标记，减少redis访问
-        boolean over = localOverMap.get(goodsId);
-        if (over) {
-            result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
-            return result;
-        }
-
-        MiaoshaOrder miaoshaOrder= orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(user.getId(),goodsId);
-        if(null !=miaoshaOrder){
-            result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
-            return result;
-        }
-        //预减库存
-        Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
-        if (stock < 0) {
-            localOverMap.put(goodsId, true);
-            result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
-            return result;
-        }
-
-        com.geekq.miaosha.biz.entity.OrderInfo orderInfo= miaoShaComposeService.miaosha(user,goodsId,true);
         return result;
     }
 
@@ -220,7 +183,7 @@ public class MiaoshaController implements InitializingBean {
         }
         for (GoodsExtVo goods : goodsList) {
             redisService.set(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId(), goods.getStockCount());
-            localOverMap.put(goods.getId(), false);
+            //localOverMap.put(goods.getId(), false);
         }
     }
 }

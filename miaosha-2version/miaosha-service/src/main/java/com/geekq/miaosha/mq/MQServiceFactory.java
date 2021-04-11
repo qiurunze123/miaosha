@@ -6,7 +6,10 @@ import com.geekq.miaosha.mq.imp.RegisterMessageRabbitMQService;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/*
+* 简单工厂将对列的创建和使用分离
+*
+* */
 public class MQServiceFactory {
     private static Map<String, Map<String,IMQService>> map=new HashMap<>();
     static {

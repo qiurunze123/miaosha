@@ -1,16 +1,13 @@
 package com.geekq.miaosha.service;
 
-
-
 import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.entity.OrderInfo;
-import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.mq.MQServiceFactory;
 import com.geekq.miaosha.mq.MiaoShaMessage;
-import com.geekq.miaosha.redis.GoodsKey;
-import com.geekq.miaosha.redis.MiaoshaKey;
-import com.geekq.miaosha.redis.RedisService;
+import com.geekq.miaosha.redis.*;
+import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;
+import com.geekq.miaosha.util.StringBeanUtil;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.GoodsExtVo;
@@ -22,7 +19,12 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Random;
+
+import static com.geekq.miaosha.enums.enums.ResultStatus.*;
 
 @Service
 public class MiaoShaComposeService {
@@ -32,14 +34,14 @@ public class MiaoShaComposeService {
 	@Autowired
 	OrderComposeService orderComposeService;
 	@Autowired
-    RedisService redisService;
-	@Autowired
-	MQSender mqSender;
+	RedisService redisService;
+
+	private HashMap<Long, Boolean> localOverMap = new HashMap<Long, Boolean>();
 
 /*真正扣减库存，并生成订单
 *
 * */
-	public OrderInfo doMiaosha(MiaoshaUser user, GoodsExtVo goodsVo,int expireTime){
+	public OrderInfo miaoSha(MiaoshaUser user, GoodsExtVo goodsVo, int expireTime){
 		OrderInfo orderInfo=new OrderInfo();
 		boolean success=false;
 		success = goodsComposeService.reduceStock(goodsVo);
@@ -77,7 +79,7 @@ public class MiaoShaComposeService {
         如果秒杀商品库存量大是，就需要使用消息对列队请求进行削峰
         *
         * */
-	public OrderInfo miaosha(MiaoshaUser user, Long goodsId, boolean syncOrder){
+	public OrderInfo doMiaoSha(MiaoshaUser user, Long goodsId, boolean syncOrder){
 		OrderInfo orderInfo=new OrderInfo();
 		int expireTime=30;
 		if(syncOrder){//同步订单
@@ -89,10 +91,64 @@ public class MiaoShaComposeService {
 	}
 
 
+	public String checkMiaoSha(MiaoshaUser user,  String path, long goodsId){
+		String checkResult="success";
+
+		if (user == null) {
+			checkResult=SESSION_ERROR.getMessage();
+			return checkResult;
+		}
+
+		/**
+		 * 分布式限流
+		 * 可能会违背秒杀请求先到先得的特性
+		 */
+		try {
+			RedisLimitRateWithLUA.accquire();
+		} catch (IOException e) {
+			checkResult=REPEATE_MIAOSHA.getMessage();
+			return checkResult;
+		} catch (URISyntaxException e) {
+			checkResult= REPEATE_MIAOSHA.getMessage();
+			return checkResult;
+		}
+
+		/*
+		 * 校验秒杀url地址，防止刷流量
+		 * */
+		String pathValue=redisService.get(MiaoshaKey.getMiaoshaPath, ""+user.getNickname() + "_"+ goodsId,String.class);
+		if(! pathValue.equals(path)){
+			return checkResult;
+		}
+		/*判断是否重复秒杀
+		 *
+		 * */
+		MiaoshaOrder miaoshaOrder= redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+user.getId()+"_"+goodsId,MiaoshaOrder.class) ;;
+		if(null !=miaoshaOrder){
+			checkResult= REPEATE_MIAOSHA.getMessage();
+			return checkResult;
+		}
+
+		//内存标记，减少redis访问，没有将库存查询写入redis
+		boolean over = localOverMap.get(goodsId);
+		if (over) {
+			checkResult= MIAO_SHA_OVER.getMessage();
+			return checkResult;
+		}
+		//预减库存
+		Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
+		if (stock < 0) {
+			localOverMap.put(goodsId, true);
+			checkResult=MIAO_SHA_OVER.getMessage();
+			return checkResult;
+		}
+		return checkResult;
+	}
+
 
 
 	public long getMiaoshaResult(Long userId, long goodsId) {
-		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(userId, goodsId);
+		MiaoshaOrder order = redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+userId+"_"+goodsId,MiaoshaOrder.class) ;;
 		if(order != null) {//秒杀成功
 			return order.getOrderId();
 		}else {
@@ -269,11 +325,11 @@ public class MiaoShaComposeService {
 			return null;
 		}
 		//判断是否已经秒杀到了
-		MiaoshaOrder order = orderComposeService.getCachedMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
+		MiaoshaOrder order = redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+Long.valueOf(user.getNickname())+"_"+goodsId,MiaoshaOrder.class) ;;
 		if(order != null) {
 			return  null;
 		}
-		orderInfo=this.doMiaosha(user,goods,expireTime);
+		orderInfo=this.miaoSha(user,goods,expireTime);
 		return orderInfo;
 	}
 
@@ -285,9 +341,8 @@ public class MiaoShaComposeService {
 		MiaoShaMessage mm = new MiaoShaMessage();
 		mm.setGoodsId(goodsId);
 		mm.setUser(user);
-		String msg = RedisService.beanToString(mm);
+		String msg = StringBeanUtil.beanToString(mm);
 		MQServiceFactory.create("rabbit","miaoshamessage").send(msg);
-		//mqSender.sendMiaoshaMessage(mm);
 		return orderInfo;
 	}
 
