@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /*
  * 用户注册消息服务
  * */
-@Component
+@Component(value="registerMessageRabbitMQService")
 public class RegisterMessageRabbitMQService implements IMQService {
     private Log  log= LogFactory.get();
 

@@ -147,7 +147,9 @@ public class MiaoshaController implements InitializingBean {
         }
     }
 
-
+/*
+*获取秒杀页面校验码
+* */
     @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,

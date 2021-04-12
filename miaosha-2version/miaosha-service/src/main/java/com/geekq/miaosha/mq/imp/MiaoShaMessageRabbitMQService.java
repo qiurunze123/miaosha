@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 /*
 * 秒杀消息服务
 * */
-@Component
+@Component(value="miaoShaMessageRabbitMQService")
 public class MiaoShaMessageRabbitMQService implements IMQService {
     private Log log= LogFactory.get();
     @Autowired

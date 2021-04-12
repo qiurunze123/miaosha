@@ -41,10 +41,10 @@ public class GoodsComposeService {
 	}
 
 
-    public boolean addStock(GoodsExtVo goods) {
+    public boolean addStock(GoodsExtVo goods) throws RuntimeException{
 
 		MiaoshaGoods temp=new MiaoshaGoods();
-		temp.setStockCount(goods.getStockCount()+1);
+		temp.setStockCount(goods.getGoodsStock()+1);
 		UpdateWrapper<MiaoshaGoods> updateWrapper=new UpdateWrapper<>();
 		updateWrapper.lambda().eq(MiaoshaGoods::getGoodsId,goods.getId());
         return miaoshaGoodsService.update(temp,updateWrapper);

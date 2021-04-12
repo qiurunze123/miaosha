@@ -28,9 +28,9 @@
                 success:function(data){
                     // layer.closeAll();
                     if(data.code == 0){
-                        alert(111);
-                        // layer.msg("成功");
-                        // window.location.href="/goods/to_list";
+                        console.log(111);
+                       layer.msg("成功");
+                       window.location.href="/goods/to_list";
                     }else{
                         layer.msg(data.message);
                     }

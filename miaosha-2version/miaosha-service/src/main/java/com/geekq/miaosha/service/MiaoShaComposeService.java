@@ -57,20 +57,26 @@ public class MiaoShaComposeService {
 		return orderInfo;
 	}
 
-	/*取消订单时，要注意数据库和缓存的数据一致
+	/*取消订单时，要注意数据库和缓存的数据最终一致性
 	 *
 	 * */
 	@Transactional
 	public boolean cancelOrder(OrderInfo orderInfo) {
+		boolean deleteOrder=true;
 		GoodsExtVo goods=new GoodsExtVo();
 		goods.setId(orderInfo.getGoodsId());
 		goods.setGoodsStock(orderInfo.getGoodsCount());
-		synchronized (this){//最好使用分布式锁
-			goodsComposeService.addStock(goods);
-			redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
-
+		//最好使用分布式锁,对资源的竞争修改导致数据不正确
+		//这里应该保证原子性
+		synchronized (this){
+			boolean addSuccessOrNot=goodsComposeService.addStock(goods);
+			if(addSuccessOrNot){
+				redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
+				deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
+			}
 		}
-		boolean deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
+
+
 		return deleteOrder;
 	}
 
@@ -130,15 +136,17 @@ public class MiaoShaComposeService {
 		}
 
 		//内存标记，减少redis访问，没有将库存查询写入redis
-		boolean over = localOverMap.get(goodsId);
+		//写内存的方法不妥当，不适于分布式部署，故取消内存访问
+		/*boolean over = localOverMap.get(goodsId);
 		if (over) {
 			checkResult= MIAO_SHA_OVER.getMessage();
 			return checkResult;
-		}
+		}*/
 		//预减库存
+		//有人说先校验库存，再扣减库存，也可以直接使用decr操作，通过返回值判断是否售罄
 		Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
 		if (stock < 0) {
-			localOverMap.put(goodsId, true);
+			//localOverMap.put(goodsId, true);
 			checkResult=MIAO_SHA_OVER.getMessage();
 			return checkResult;
 		}

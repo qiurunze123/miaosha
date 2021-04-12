@@ -25,7 +25,7 @@ import org.apache.ibatis.type.Alias;
 @AllArgsConstructor
 @NoArgsConstructor
 @Alias("MiaoshaUser")
-public class MiaoshaUser extends Model<MiaoshaUser> {
+public class MiaoshaUser extends Model<MiaoshaUser> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

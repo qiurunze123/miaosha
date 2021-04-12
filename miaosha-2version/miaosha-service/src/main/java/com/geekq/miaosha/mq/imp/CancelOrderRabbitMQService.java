@@ -12,13 +12,14 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 /*
  * 订单延时服务
  * */
-@Component
+@Component(value = "cancelOrderRabbitMQService")
 public class CancelOrderRabbitMQService implements IMQService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -51,4 +52,6 @@ public class CancelOrderRabbitMQService implements IMQService {
         }
         return null;
     }
+
+
 }

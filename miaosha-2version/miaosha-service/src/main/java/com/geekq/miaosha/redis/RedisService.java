@@ -5,6 +5,7 @@ import com.geekq.miaosha.util.StringBeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 
@@ -16,16 +17,14 @@ import java.util.List;
 public class RedisService {
 
 	@Autowired
-	private RedisTemplate redisTemplate;
+	private StringRedisTemplate redisTemplate;
 
 
 	/**
 	 * 获取当个对象
 	 * */
 	public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
-
-		    T t=null;
-
+		      T t=null;
 			 //生成真正的key
 			 String realKey  = prefix.getPrefix() + key;
 			 Object tempStr=redisTemplate.opsForValue().get(realKey);
@@ -59,9 +58,6 @@ public class RedisService {
 	 * 设置对象
 	 * */
 	public <T> boolean set(KeyPrefix prefix, String key, T value) {
-
-		 try {
-
 			 String str = StringBeanUtil.beanToString(value);
 			 if(str == null || str.length() <= 0) {
 				 return false;
@@ -69,15 +65,16 @@ public class RedisService {
 			//生成真正的key
 			 String realKey  = prefix.getPrefix() + key;
 			 int seconds =  prefix.expireSeconds();
+
 			 if(seconds <= 0) {
+
 				 redisTemplate.opsForValue().set(realKey, str);
 			 }else {
-				 redisTemplate.opsForValue().set(realKey, str,seconds );
+				 redisTemplate.opsForValue().set(realKey, str );
 			 }
-			 return true;
-		 }finally {
 
-		 }
+			 return true;
+
 	}
 	
 	/**
@@ -138,7 +135,7 @@ public class RedisService {
 
 		try {
 
-			redisTemplate.delete(keys.toArray(new String[0]));
+			//redisTemplate.delete(keys.toArray(new String[0]));
 			return true;
 		} catch (final Exception e) {
 			e.printStackTrace();
