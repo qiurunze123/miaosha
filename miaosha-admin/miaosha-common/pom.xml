@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>miaosha-common</artifactId>
 	<properties>
-		<org.mybatis.version>3.2.3</org.mybatis.version>
+		<org.mybatis.version>3.5.6</org.mybatis.version>
 		<org.springframework.version>4.0.0.RELEASE</org.springframework.version>
 	</properties>
 	<!-- jar包的依赖 -->
