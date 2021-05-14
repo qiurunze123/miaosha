@@ -1,0 +1,102 @@
+AQS（abstractQueueSynchronizer）抽象的对列同步器
+1 成员
+voli1ate state：记录同步器是否被同步的标志。0标识没有线程获取同步状态
+，1标识有线程获取同步状态
+volilate Node head 、tail:这是一个双端等待对列，没有获取同步状态的线程节点按序加入到对列中，等待唤醒，重新竞争同步状态
+static Node：内部静态类，包装线程对象。其中有几个状态变量1（当前线程节点被中断）、-1（当前节点的后继节点处于阻塞状态）、0、-2.
+
+2 方法
+
+tryacquire：抽象模板方法，
+tryrelease：抽象模板方法，
+
+实现原理：
+当多线程获取同步状态时，同一时间只有一个线程能成功获取成功状态，该线程会将state的值设置为1，其它线程将加入到等待对列中
+阻塞等待被唤醒。当线程释放同步状态时，该线程会被标记为新的head节点，原来的head节点置null，state的值将会设置为0，同时head节点的next节点将会被唤醒去获取同步状态。
+具体方法：
+
+public final void acquire(int arg) {
+		//先看同步状态是否获取成功，如果成功则方法结束返回
+		//若失败则先调用addWaiter()方法再调用acquireQueued()方法
+        if (!tryAcquire(arg) &&
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+            selfInterrupt();
+}
+
+
+private Node addWaiter(Node mode) {
+		// 1. 将当前线程构建成Node类型
+        Node node = new Node(Thread.currentThread(), mode);
+        // Try the fast path of enq; backup to full enq on failure
+        // 2. 当前尾节点是否为null？
+		Node pred = tail;
+        if (pred != null) {
+			// 2.2 将当前节点尾插入的方式插入同步队列中
+            node.prev = pred;
+            if (compareAndSetTail(pred, node)) {
+                pred.next = node;
+                return node;
+            }
+        }
+        enq(node);//循环将当前节点加入到等待对列的对尾中，直到加入成功位置。（自旋不断尝试CAS尾插入节点直至成功为止）
+        return node;
+}
+
+//被唤醒阻塞后的线程节点自旋获取同步状态，一旦获取成功，就将自身设置为头结点
+final boolean acquireQueued(final Node node, int arg) {
+        boolean failed = true;
+        try {
+            boolean interrupted = false;
+            for (;;) {
+                final Node p = node.predecessor();
+                if (p == head && tryAcquire(arg)) {//处于头结点的next节点才会尝试获取同步状态
+					//队列头指针用指向当前节点
+                    setHead(node);
+					//释放前驱节点
+                    p.next = null; // help GC
+                    failed = false;
+                    return interrupted;
+                }
+				// 2.2 获取锁失败，将线程节点阻塞于parkAndCheckInterrupt方法，等待被唤醒，避免线程占用cpu资源。这一步骤设计很巧妙
+                if (shouldParkAfterFailedAcquire(p, node) &&
+                                                                parkAndCheckInterrupt())
+                    interrupted = true;
+            }
+        } finally {
+            if (failed)
+                cancelAcquire(node);
+        }
+}
+
+private final boolean parkAndCheckInterrupt() {
+        //阻塞当前线程，this是监控对象，这样可以知道当前线程是被那个对象阻塞
+        LockSupport.park(this);
+        //线程被唤醒时，判断在等待的过程中是否有中断请求
+        return Thread.interrupted();
+}
+
+
+如果线程在等待过程中被中断过，它是不响应的。只是获取资源后才再进行自我中断selfInterrupt()，将中断补上。
+在Java中，自旋锁是指尝试获取锁的线程不会立即阻塞，而是采用循环的方式去尝试获取锁，这样的好处是减少线程上下文切换的消耗，缺点是循环会消耗CPU。
+shouldParkAfterFailedAcquire：将前驱节点的waitstate设置为-1，同时会清除等待对列中已被中断的线程节点。
+
+
+
+
+
+//释放同步状态
+public final boolean release(int arg) {
+        if (tryRelease(arg)) {
+            Node h = head;
+            if (h != null && h.waitStatus != 0)
+                unparkSuccessor(h);//唤醒头结点的next节点
+            return true;
+        }
+        return false;
+}
+备注：在同步器中，当前拥有同步状态的一定是等待对列的head节点
+
+
+
+
+

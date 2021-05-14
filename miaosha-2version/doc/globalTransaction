@@ -1,0 +1,119 @@
+Transaction Coordinator(TC): Maintain status of global and branch transactions,
+ drive the global commit or rollback.
+Transaction Manager(TM): Define the scope of global transaction: begin a global transaction,
+commit or rollback a global transaction.
+
+Resource Manager(RM): Manage resources that branch transactions working on,
+talk to TC for registering branch transactions and reporting status of branch transactions,
+and drive the branch transaction commit or rollback.
+
+
+A typical lifecycle of Seata managed distributed transaction:
+
+TM asks TC to begin a new global transaction. TC generates an XID representing the global transaction.
+XID is propagated through microservices' invoke chain.
+RM registers local transaction as a branch of the corresponding global transaction of XID to TC.
+TM asks TC for committing or rollbacking the corresponding global transaction of XID.
+TC drives all branch transactions under the corresponding global transaction of XID to finish branch committing or rollbacking.
+
+
+
+    Object handleGlobalTransaction(final MethodInvocation methodInvocation, final GlobalTransactional globalTrxAnno) throws Throwable {
+        boolean succeed = true;
+
+        Object var4;
+        try {
+            var4 = this.transactionalTemplate.execute(new TransactionalExecutor() {
+                public Object execute() throws Throwable {
+                    return methodInvocation.proceed();
+                }
+
+                public String name() {
+                    String name = globalTrxAnno.name();
+                    return !StringUtils.isNullOrEmpty(name) ? name : GlobalTransactionalInterceptor.this.formatMethod(methodInvocation.getMethod());
+                }
+
+                public TransactionInfo getTransactionInfo() {
+                    int timeout = globalTrxAnno.timeoutMills();
+                    if (timeout <= 0 || timeout == 60000) {
+                        timeout = GlobalTransactionalInterceptor.defaultGlobalTransactionTimeout;
+                    }
+
+                    TransactionInfo transactionInfo = new TransactionInfo();
+                    transactionInfo.setTimeOut(timeout);
+                    transactionInfo.setName(this.name());
+                    transactionInfo.setPropagation(globalTrxAnno.propagation());
+                    transactionInfo.setLockRetryInternal(globalTrxAnno.lockRetryInternal());
+                    transactionInfo.setLockRetryTimes(globalTrxAnno.lockRetryTimes());
+                    Set<RollbackRule> rollbackRules = new LinkedHashSet();
+                    Class[] var4 = globalTrxAnno.rollbackFor();
+                    int var5 = var4.length;
+
+                    int var6;
+                    Class rbRule;
+                    for(var6 = 0; var6 < var5; ++var6) {
+                        rbRule = var4[var6];
+                        rollbackRules.add(new RollbackRule(rbRule));
+                    }
+
+                    String[] var8 = globalTrxAnno.rollbackForClassName();
+                    var5 = var8.length;
+
+                    String rbRulex;
+                    for(var6 = 0; var6 < var5; ++var6) {
+                        rbRulex = var8[var6];
+                        rollbackRules.add(new RollbackRule(rbRulex));
+                    }
+
+                    var4 = globalTrxAnno.noRollbackFor();
+                    var5 = var4.length;
+
+                    for(var6 = 0; var6 < var5; ++var6) {
+                        rbRule = var4[var6];
+                        rollbackRules.add(new NoRollbackRule(rbRule));
+                    }
+
+                    var8 = globalTrxAnno.noRollbackForClassName();
+                    var5 = var8.length;
+
+                    for(var6 = 0; var6 < var5; ++var6) {
+                        rbRulex = var8[var6];
+                        rollbackRules.add(new NoRollbackRule(rbRulex));
+                    }
+
+                    transactionInfo.setRollbackRules(rollbackRules);
+                    return transactionInfo;
+                }
+            });
+        } catch (ExecutionException var9) {
+            Code code = var9.getCode();
+            switch(code) {
+            case RollbackDone:
+                throw var9.getOriginalException();
+            case BeginFailure:
+                succeed = false;
+                this.failureHandler.onBeginFailure(var9.getTransaction(), var9.getCause());
+                throw var9.getCause();
+            case CommitFailure:
+                succeed = false;
+                this.failureHandler.onCommitFailure(var9.getTransaction(), var9.getCause());
+                throw var9.getCause();
+            case RollbackFailure:
+                this.failureHandler.onRollbackFailure(var9.getTransaction(), var9.getOriginalException());
+                throw var9.getOriginalException();
+            case RollbackRetrying:
+                this.failureHandler.onRollbackRetrying(var9.getTransaction(), var9.getOriginalException());
+                throw var9.getOriginalException();
+            default:
+                throw new ShouldNeverHappenException(String.format("Unknown TransactionalExecutor.Code: %s", code));
+            }
+        } finally {
+            if (degradeCheck) {
+                EVENT_BUS.post(new DegradeCheckEvent(succeed));
+            }
+
+        }
+
+        return var4;
+    }
+

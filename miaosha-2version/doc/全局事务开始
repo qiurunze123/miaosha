@@ -1,0 +1,77 @@
+全局事务开始
+io.seata.spring.annotation.GlobalTransactionalInterceptor#handleGlobalTransaction
+    -》io.seata.tm.api.TransactionalTemplate#execute
+      -》io.seata.tm.api.TransactionalTemplate#beginTransaction //开启全局事务
+         -》io.seata.tm.api.DefaultGlobalTransaction#begin(int, java.lang.String)
+              //此处的角色判断有关键的作用
+ 6         //表明当前是全局事务的发起者（Launcher）还是参与者（Participant）
+ 7         //如果在分布式事务的下游系统方法中也加上GlobalTransactional注解
+ 8         //那么它的角色就是Participant，即会忽略后面的begin就退出了
+ 9         //而判断是发起者（Launcher）还是参与者（Participant）是根据当前上下文是否已存在XID来判断
+10         //没有XID的就是Launcher，已经存在XID的就是Participant
+            if (role != GlobalTransactionRole.Launcher)
+
+            else
+            -》io.seata.tm.DefaultTransactionManager#begin
+               -》io.seata.tm.DefaultTransactionManager#syncCall
+               //向netty发送事务同步信息
+                  -》io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+            -》io.seata.core.context.RootContext#bind（this.xid）
+      -》business.execute() //执行业务方法，分布式系统
+
+
+
+io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#doExecute
+
+io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#executeAutoCommitTrue
+ ->io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#executeAutoCommitFalse
+    ->TableRecords beforeImage = this.beforeImage();
+      T result = this.statementCallback.execute(this.statementProxy.getTargetStatement(), args);
+      TableRecords afterImage = this.afterImage(beforeImage);
+      this.prepareUndoLog(beforeImage, afterImage);
+      return result;
+ ->io.seata.rm.datasource.ConnectionProxy#commit
+   ->io.seata.rm.datasource.ConnectionProxy#doCommit
+      ->io.seata.rm.datasource.ConnectionProxy#processGlobalTransactionCommit
+          ->io.seata.rm.datasource.ConnectionProxy#register
+             ->io.seata.rm.DefaultResourceManager#branchRegister
+               ->io.seata.core.model.ResourceManagerOutbound#branchRegister
+                  ->io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+          ->io.seata.rm.datasource.undo.UndoLogManagerFactory#getUndoLogManager
+          ->java.sql.Connection#commit
+          ->io.seata.rm.datasource.ConnectionProxy#report
+
+
+
+
+
+
+      -》io.seata.tm.api.TransactionalTemplate#commitTransaction //提交全局事务
+         -》io.seata.tm.DefaultTransactionManager#commit(String xid)
+             if (this.role == GlobalTransactionRole.Participant)
+             -》io.seata.tm.DefaultTransactionManager#syncCall
+                 -》io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+
+
+
+      -> io.seata.tm.api.TransactionalTemplate#completeTransactionAfterThrowing
+        ->io.seata.tm.api.TransactionalTemplate#rollbackTransaction
+           ->io.seata.tm.api.GlobalTransaction#rollback
+              ->io.seata.core.model.TransactionManager#rollback
+                 ->io.seata.tm.DefaultTransactionManager#syncCall
+                     //向tc发送回滚决议
+                     ->io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+
+                     //tc向rm发送回滚消息
+                     ->io.seata.core.rpc.processor.client.RmBranchRollbackProcessor#handleBranchRollback
+                           ->io.seata.rm.AbstractRMHandler#onRequest
+                                ->io.seata.core.protocol.transaction.AbstractTransactionRequest#handle
+                                   ->io.seata.rm.AbstractRMHandler#handle(io.seata.core.protocol.transaction.BranchRollbackRequest)
+                                      ->io.seata.rm.AbstractRMHandler#doBranchRollback
+                                         ->io.seata.core.model.ResourceManagerInbound#branchRollback
+                                           ->io.seata.rm.datasource.undo.UndoLogManager#undo
+
+                           //向tc发送回滚处理的结果
+                           ->io.seata.core.rpc.RemotingClient#sendAsyncResponse
+
+                

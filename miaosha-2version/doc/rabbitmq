@@ -1,0 +1,29 @@
+//对包含注解RabbitListener的类进行装饰处理
+org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor#postProcessAfterInitialization
+   ->org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor#processAmqpListener(rabbitListener, lm.method, bean, beanName)
+      ->org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor#processListener
+          ->org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar#registerEndpoint(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>)
+   ->org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor#processMultiMethodListeners
+
+启动
+org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer#doStart（启动监听）
+
+
+
+org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMessageProcessingConsumer#run（消费者启动）
+  ->org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMessageProcessingConsumer#initialize
+    ->org.springframework.amqp.rabbit.listener.BlockingQueueConsumer#start
+    ->java.util.concurrent.CountDownLatch#countDown
+    ->org.springframework.amqp.rabbit.connection.ConsumerChannelRegistry#registerConsumerChannel
+
+  ->org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMessageProcessingConsumer#mainLoop
+    ->org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer#receiveAndExecute
+       ->org.springframework.transaction.support.TransactionTemplate#execute
+         ->org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer#doReceiveAndExecute
+           ->org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#executeListener(channel, message)
+               ->org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#doExecuteListener
+                  ->org.springframework.amqp.core.MessagePostProcessor#postProcessMessage(org.springframework.amqp.core.Message)
+                  ->org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#invokeListener(channel, message)
+
+           ->org.springframework.amqp.rabbit.listener.BlockingQueueConsumer#commitIfNecessary
+    ->org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#updateLastReceive

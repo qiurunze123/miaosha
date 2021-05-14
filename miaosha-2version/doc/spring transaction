@@ -1,0 +1,136 @@
+spring事务源码解析
+
+1 spring通过注解@Transaction实现事务机制
+2 加入事务注解之后，会进入事务切面管理器TransactionAspectSupport，并调用invokeWithinTransaction方法
+3 在2中的方法里面会获取一个Transaction对象，该对象的获取是通过AbstractPlatformTransactionManager类里面的
+getTransaction方法获取的.AbstractPlatformTransactionManager类是spring封装的上层事务管理器的一个类，属于一个平台
+级别的事务管理对象。它控制事务的开启和提交，以及事务的连接信息。其它想要实现事务的机制的类就需要继承该类，
+比如jdbc中的DataSourceTransactionManager。
+4 getTransaction方法会调用自身的startTransaction方法，该方法会调用抽象方法doBegin和prepareSynchronization这两个方法
+，我们可以看到AbstractPlatformTransactionManager在这里运用到了模板方法的设计模式，startTransaction就是一个模板方法。
+5 在jdbc的实现类中实现抽象方法doBegin时，会通过线程变量将datasource和connection绑定在一起。这里的connnection是通过
+datasource对象获取到的。即TransactionSynchronizationManager.bindResource(this.obtainDataSource(), txObject.getConnectionHolder())
+方法实现。
+
+mybatis数据访问源码解析
+
+1 spring集成mybatis后，在web应用程序启动的时候会将SqlSessionTemplate对象注入进去，
+SqlSessionTemplate就是数据访问的api类。
+2 在访问数据库之前会调用SqlSessionTemp的内部类SqlSessionInterceptor，这是一个动态代理对象，会调用里面的
+invoke方法。
+3 在2中的方法会调用SqlSessionUtils.getSqlSession（）方法获取一个SqlSession对象。其中getSqlSession方法
+会首先调用TransactionSynchronizationManager.getResource（sqlSessionFactory）方法获取sqlSession对象，
+如果该方法返回为null，就会再次调用sessionFactory.openSession(executorType)生成一个sqlSession对象。
+
+4 在真正执行DML语句之前会生成一个Connection对象。该对象是通过3中生成的sqlSession对象获取的。如果获取的
+connection对象为null，就会调用openConnection方法生成一个。
+5 4中的openConnection方法最终会调用TransactionSynchronizationManager.getResource(dataSource)获取一个ConnnectionHolder，
+如果ConnectionHolder为null，则继续调用fetchConnection(dataSource)获取Connection，同时如果激活了事务，会调用
+TransactionSynchronizationManager.bindResource方法将dataSource对象和Connection对象绑定在一起；
+如果ConnectionHolder不为null，直接返回该对象。
+
+
+spring自带的事务对象在事务开始的时候会将事务管理器获取的datasource对象与connection对象绑定在一起
+
+org.springframework.transaction.interceptor.TransactionAspectSupport#invokeWithinTransaction
+
+### public abstract class AbstractPlatformTransactionManager implements PlatformTransactionManager, Serializable
+
+
+org.springframework.transaction.support.AbstractPlatformTransactionManager#getTransaction
+
+org.springframework.transaction.support.AbstractPlatformTransactionManager#startTransaction//模板设计模式
+private TransactionStatus startTransaction(TransactionDefinition definition, Object transaction, boolean debugEnabled, @Nullable AbstractPlatformTransactionManager.SuspendedResourcesHolder suspendedResources) {
+        boolean newSynchronization = this.getTransactionSynchronization() != 2;
+        DefaultTransactionStatus status = this.newTransactionStatus(definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
+        this.doBegin(transaction, definition);
+        this.prepareSynchronization(status, definition);
+        return status;
+    }
+
+
+#### public class DataSourceTransactionManager extends AbstractPlatformTransactionManager implements ResourceTransactionManager, InitializingBean {
+
+org.springframework.jdbc.datasource.DataSourceTransactionManager#doBegin
+     -》 if (txObject.isNewConnectionHolder()) {
+
+         ####org.springframework.transaction.support.TransactionSynchronizationManager
+                TransactionSynchronizationManager.bindResource(this.obtainDataSource(), txObject.getConnectionHolder());
+            }
+
+mybatis
+
+org.mybatis.spring.SqlSessionTemplate.SqlSessionInterceptor#invoke(){
+    //获取sqlSession对象，SqlSessionUtil是联合mybatis和Spring事务的中介者对象
+            SqlSession sqlSession = SqlSessionUtils.getSqlSession(SqlSessionTemplate.this.sqlSessionFactory, SqlSessionTemplate.this.executorType, SqlSessionTemplate.this.exceptionTranslator);
+
+            Object unwrapped;
+                //执行之前会获取connnection连接
+                Object result = method.invoke(sqlSession, args);
+                if (!SqlSessionUtils.isSqlSessionTransactional(sqlSession, SqlSessionTemplate.this.sqlSessionFactory)) {
+                    sqlSession.commit(true);
+                }
+
+                unwrapped = result;
+}
+
+org.apache.ibatis.executor.BaseExecutor#getConnection
+     -》this.transaction.getConnection(){ //org.mybatis.spring.transaction.SpringManagedTransaction#getConnection
+        if (this.connection == null) {
+            this.openConnection();
+        }
+
+        return this.connection;
+    }
+
+     private void openConnection() throws SQLException {
+        this.connection = DataSourceUtils.getConnection(this.dataSource);
+        this.autoCommit = this.connection.getAutoCommit();
+        this.isConnectionTransactional = DataSourceUtils.isConnectionTransactional(this.connection, this.dataSource);
+        LOGGER.debug(() -> {
+            return "JDBC Connection [" + this.connection + "] will" + (this.isConnectionTransactional ? " " : " not ") + "be managed by Spring";
+        });
+    }
+
+    org.springframework.jdbc.datasource.DataSourceUtils#getConnection（DataSource dataSource）{
+        doGetConnection(dataSource);
+    }
+    public static Connection doGetConnection(DataSource dataSource) throws SQLException {
+        Assert.notNull(dataSource, "No DataSource specified");
+        ConnectionHolder conHolder = (ConnectionHolder)TransactionSynchronizationManager.getResource(dataSource);
+        if (conHolder == null || !conHolder.hasConnection() && !conHolder.isSynchronizedWithTransaction()) {
+            logger.debug("Fetching JDBC Connection from DataSource");
+            Connection con = fetchConnection(dataSource);
+            if (TransactionSynchronizationManager.isSynchronizationActive()) {
+                try {
+                    ConnectionHolder holderToUse = conHolder;
+                    if (conHolder == null) {
+                        holderToUse = new ConnectionHolder(con);
+                    } else {
+                        conHolder.setConnection(con);
+                    }
+
+                    holderToUse.requested();
+                    TransactionSynchronizationManager.registerSynchronization(new DataSourceUtils.ConnectionSynchronization(holderToUse, dataSource));
+                    holderToUse.setSynchronizedWithTransaction(true);
+                    if (holderToUse != conHolder) {
+                        TransactionSynchronizationManager.bindResource(dataSource, holderToUse);
+                    }
+                } catch (RuntimeException var4) {
+                    releaseConnection(con, dataSource);
+                    throw var4;
+                }
+            }
+
+            return con;
+        } else {
+            conHolder.requested();
+            if (!conHolder.hasConnection()) {
+                logger.debug("Fetching resumed JDBC Connection from DataSource");
+                conHolder.setConnection(fetchConnection(dataSource));
+            }
+
+            return conHolder.getConnection();
+        }
+    }
+

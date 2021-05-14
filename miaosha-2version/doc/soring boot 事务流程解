@@ -1,0 +1,26 @@
+soring boot 事务流程解析
+service方法执行的时候，进入切面
+TransactionAspectSupport  method：invokewithTransaction（method ,targetclass,invocation）
+1） invocation.proccessWithInvocation 这是一个链式调用，执行数据库查询)
+  在这个方法中注入的datasource是如何和事务中的datasource保持一致的呢
+  整个bean容器中只有一个datasource实例，所以事务和连接的实例是同一个
+2）commitTransactionAfterReturn（txinfo）  （提交事务）
+  获取事务管理器，并且提交事务
+  2.1 txinfo.getTransactionManager().commit(txinfo.getTransactionStatus());
+      抽象类
+       AbstractPlatformTransactionManager.commit()->this.processCommit()->this.doCommit()
+       实现类
+       HibernateTransactionManager.doCommit()->txObject.getSessionHolder.getTransaction().commit()  提交事务
+       真正与数据库相关的提交
+       JDBCTransaction hibernate.commit()->this.commitAndResetAutoCommit()->this.jdbcContext.Connection().commit()  提交事务
+                                                                                -> PoolingDataSource dpcp.commit()
+                        这里的值是false，非自动提交。说白了就是禁用了jdbcConnection提交，由spring和hibernate上层来提交事务
+                                                                         ->this.toggleAutoCommit();
+
+
+
+                                                                      ->this.cleanupAfterCompletion() 释放事务资源
+                                                                      事务锁释放资源
+                                                                             ->TransactionSynchronizedtionManager.clear()
+                                                                             比如归还连接到连接池 (抽象方法)
+                                                                             ->doCleanupAfterCompletion()               

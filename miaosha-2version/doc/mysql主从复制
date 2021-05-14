@@ -1,0 +1,51 @@
+#####设置sync_binlog=1,表示mysql每次在提交事务的时候将生成的二进制文件同步刷新到磁盘
+sync_binlog =1
+
+#全量备份
+mysqldump --single-transaction=1 --master-data=2 -A -R -S /var/run/mysqld/mysqld3307.sock -uroot -p
+#增量备份
+mysqlbinlog  --start-position=718 --stop-position=1500 /mysql/3307/data/mysql_bin.000001 -S /var/run/mysqld/mysqld3307.sock -uroot -p > 3307_2.sql
+
+#从服务器授权设置
+change master to master_host='192.168.31.124', master_port=3307, master_user='repl',
+ master_password='zc142500', master_log_file='mysql_bin.000001', master_log_pos=1500
+
+#mysql修改用户密码生成方式
+ALTER USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+FLUSH PRIVILEGES;
+
+#查看每张表的容量
+SELECT * FROM information_schema.tables   WHERE TABLE_SCHEMA = '数据库名称' ORDER BY table_rows DESC;
+
+#删除主键
+
+
+Alter table qa_user change id id int(10);//删除自增长
+Alter table qa_user drop primary key;//删除主建
+
+#查看建表语句
+
+
+#查看某个库下的所有表信息
+
+
+
+#终端重启命令
+ssh root@192.168.8.128 'reboot'
+
+#mysql主从复制---添加日志服务器
+
+
+1
+
+
+#mysql主从复制---主动被动模式下的主主复制
+1 保持双主机数据一致
+2 双主机开启二进制日志服务，设置主从复制信息
+3 设置备用主机slave_log_updates=1，这是故障转移和故障恢复的关键
+4  设置备用主机read——only=1，防止可能与主库上的更新产生冲突
+5 将每个主库设置为对方的备库
+
+
+

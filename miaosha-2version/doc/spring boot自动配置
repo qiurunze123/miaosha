@@ -1,0 +1,87 @@
+spring boot启动原理
+
+启动类入口：
+(new SpringApplication(primarySources)).run(args);
+启动流程关系
+org.springframework.boot.SpringApplication.run(java.lang.String...)
+1 org.springframework.boot.SpringApplicationRunListeners.starting
+//准备上下文环境
+2 org.springframework.boot.SpringApplication.prepareContext.prepareContext(context, environment, listeners, applicationArguments, printedBanner);
+    prepareContext:主要工作将启动类加载到容器context中
+    this.annotatedReader.register(new Class[]{source});//source为启动类
+
+//刷新环境
+3 org.springframework.boot.SpringApplication.prepareContext.refreshContext(context);
+     refreshContext(context)：
+                AbstractApplicationContext.postProcessBeanFactory(beanFactory);
+                StartupStep beanPostProcess = AbstractApplicationContext.applicationStartup.start("spring.context.beans.post-process");
+                AbstractApplicationContext.invokeBeanFactoryPostProcessors(beanFactory);
+                //往beanfactory中添加BeanPostProcessor
+                AbstractApplicationContext.registerBeanPostProcessors(beanFactory);
+                beanPostProcess.end();
+                AbstractApplicationContext.initMessageSource();
+                AbstractApplicationContext.initApplicationEventMulticaster();
+                AbstractApplicationContext.onRefresh();
+                AbstractApplicationContext.registerListeners();
+                AbstractApplicationContext.finishBeanFactoryInitialization(beanFactory);
+                AbstractApplicationContext.finishRefresh();
+         完成的工作有：
+         将系统目录下的spring.factory文件中的autoconfigure字段所对应的类名加载到context容器中，以便下一步按照类名进行实例化。
+         具体的做法是：
+            1 spring容器会找到项目的启动类，调用方法org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass，逐个解析类上面的注解信息，包括@Component注解、@ComponentScan注解、@import注解、@property注解等。
+            2 当解析到@Important注解时（org.springframework.context.annotation.ConfigurationClassParser.processImports），会加载两个类AutoConfigurationImportSelector.class和Registrar.class
+            3 调用AutoConfigurationImportSelector的getAutoConfrefreshigurationEntry方法获取bean名字
+            4 对配置的bean进行实例化
+
+//后续处理，空方法
+4 org.springframework.boot.SpringApplication.prepareContext.afterRefresh(context, applicationArguments);
+
+//运行监听类程序
+5 org.springframework.boot.SpringApplicationRunListeners.started
+6 org.springframework.boot.SpringApplication.callRunners
+7 org.springframework.boot.SpringApplicationRunListeners.running
+
+备注：
+重要方法调用关系链
+1 invokeBeanFactoryPostProcessors方法调用关系链
+ -》org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors
+  -》org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(org.springframework.beans.factory.config.ConfigurableListableBeanFactory, java.util.List<org.springframework.beans.factory.config.BeanFactoryPostProcessor>)
+    -》org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors
+      -》org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry
+          -》org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(BeanDefinitionRegistry registry)
+              -》org.springframework.context.annotation.ConfigurationClassParser.parse(java.util.Set<org.springframework.beans.factory.config.BeanDefinitionHolder>)
+               -》org.springframework.context.annotation.ConfigurationClassParser.parse(org.springframework.core.type.AnnotationMetadata, java.lang.String)
+               -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorHandler.process
+                 -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGroupingHandler.processGroupImports
+                       -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGrouping.getImports
+                          -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.AutoConfigurationGroup.process
+                             -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getAutoConfigurationEntry
+                             //获取spring.factory中key为EnableAutoConfiguration的所有bean名字
+                               -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getCandidateConfigurations
+
+
+2 finishBeanFactoryInitialization方法调用关系链
+org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization
+  -》org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons
+     -》org.springframework.beans.factory.support.AbstractBeanFactory.getBean(java.lang.String)
+      -》org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean
+        -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(java.lang.String, org.springframework.beans.factory.support.RootBeanDefinition, java.lang.Object[])
+           -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeforeInstantiation
+           -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean
+              //实例化bean
+              -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance
+                  //获取bean构造函数
+                 -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors
+                 -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean
+              //填充bean属性
+              -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean
+              //初始化bean
+              -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(java.lang.String, java.lang.Object, org.springframework.beans.factory.support.RootBeanDefinition)
+                     //前置增强
+                   -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization
+                   //init method
+                   -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods
+                   //后置增强
+                   -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization
+              -》org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance
+
