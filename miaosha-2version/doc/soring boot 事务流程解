@@ -4,6 +4,7 @@ TransactionAspectSupport  method：invokewithTransaction（method ,targetclass,i
 1） invocation.proccessWithInvocation 这是一个链式调用，执行数据库查询)
   在这个方法中注入的datasource是如何和事务中的datasource保持一致的呢
   整个bean容器中只有一个datasource实例，所以事务和连接的实例是同一个
+
 2）commitTransactionAfterReturn（txinfo）  （提交事务）
   获取事务管理器，并且提交事务
   2.1 txinfo.getTransactionManager().commit(txinfo.getTransactionStatus());
