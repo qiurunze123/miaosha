@@ -1,0 +1,59 @@
+configuration
+mybatis中的所有配置文件的配置信息
+
+mappedStatement
+对mapper.xml和annotation文件中的select、update、delete和insert的statement的映射信息
+
+executor：
+mybatis封装的直接操作数据库的底层接口。根据参数传入的sqlId的值获取mappedStatement中对应的
+sql语句，并执行之
+
+
+mybatis执行流程
+sqlSessionFactory->sqlSession->executor->commit->close
+
+plugin
+
+1 mybatis提供对executor、parmerterHandler、resultHnadler、statementHandler的插件支持
+
+2 在使用new*方法对上述对象创建的过程中会调用intecepterchain.pluginall方法生成代理类
+
+org.apache.ibatis.session.Configuration.newExecutor(org.apache.ibatis.transaction.Transaction, org.apache.ibatis.session.ExecutorType)
+ -》org.apache.ibatis.plugin.InterceptorChain.pluginAll
+   -》org.apache.ibatis.plugin.Interceptor.plugin
+     -》org.apache.ibatis.plugin.Plugin.wrap(target,Interceptor)
+       ->interfaces.length > 0 ?Proxy.newProxyInstance(type.getClassLoader(), interfaces, new Plugin(target, interceptor, signatureMap)) : target;
+           ->org.apache.ibatis.plugin.Interceptor.intercept
+
+mapperproxy：
+spring对象对于dao层的map接口生成的动态代理对象，在refresh容器时会通过扫描MapperScan组件创建代理对象
+代理对象调用目标方法时会调用MapperProxy<T>的invoke方法，因为MapperProxy<T>实现了InvocationHandler接口
+org.apache.ibatis.binding.MapperProxy.invoke(Object proxy, Method method, Object[] args)
+ 生成MapperMethod对象 new MapperMethod(this.mapperInterface, method, this.sqlSession.getConfiguration())
+ 通过MapperMethod构造生成PlainMethodInvoker对象(MapperProxy内部类)
+ -》org.apache.ibatis.binding.MapperProxy.PlainMethodInvoker.invoke(proxy, method, args, this.sqlSession)
+
+  -》org.apache.ibatis.binding.MapperMethod.execute(sqlSession,args)
+    ->  param = this.method.convertArgsToSqlCommandParam(args);
+    ->  result = this.rowCountResult(sqlSession.insert(sqlid, param));
+         调用insert方法
+          ->org.apache.ibatis.session.defaults.DefaultSqlSession.insert(sqlid, param)
+            调用update方法
+            -》org.apache.ibatis.session.defaults.DefaultSqlSession.update(sqlid, param)
+                 获取MappedStatement对象
+                 ->org.apache.ibatis.session.Configuration.getMappedStatement(sqlid)
+                 调用执行器update方法
+                 ->org.apache.ibatis.executor.Executor.update(MappedStatement, this.wrapCollection(param))
+                     ->org.apache.ibatis.executor.SimpleExecutor.doUpdate(MappedStatement ms, Object param)
+                         包装并获取Statement对象
+                         ->org.apache.ibatis.executor.SimpleExecutor.prepareStatement(StatementHandler handler, Log statementLog)
+                             -> Connection connection = this.getConnection(statementLog);
+                             -> Statement stmt = handler.prepare(connection, this.transaction.getTimeout());
+                             -> handler.parameterize(stmt);
+                         生成StatementHandler对象
+                         ->StatementHandler handler = configuration.newStatementHandler(this, ms, parameter, RowBounds.DEFAULT, (ResultHandler)null, (BoundSql)null);
+                         传入Statement对象，调用handler对象的update方法
+                         ->org.apache.ibatis.executor.statement.SimpleStatementHandler.update(Statement)
+                             ->String sql = this.boundSql.getSql();
+                             真正执行sql语句
+                             ->statement.execute(sql);

@@ -2,6 +2,14 @@ spring boot启动原理
 
 启动类入口：
 (new SpringApplication(primarySources)).run(args);
+构造SpringApplication(){
+this.primarySources = new LinkedHashSet(Arrays.asList(primarySources));
+this.webApplicationType = WebApplicationType.deduceFromClasspath();
+this.bootstrapRegistryInitializers = this.getBootstrapRegistryInitializersFromSpringFactories();
+this.setInitializers(this.getSpringFactoriesInstances(ApplicationContextInitializer.class));
+this.setListeners(this.getSpringFactoriesInstances(ApplicationListener.class));
+this.mainApplicationClass = this.deduceMainApplicationClass();
+}
 启动流程关系
 org.springframework.boot.SpringApplication.run(java.lang.String...)
 1 org.springframework.boot.SpringApplicationRunListeners.starting
@@ -47,18 +55,28 @@ org.springframework.boot.SpringApplication.run(java.lang.String...)
  -》org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors
   -》org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(org.springframework.beans.factory.config.ConfigurableListableBeanFactory, java.util.List<org.springframework.beans.factory.config.BeanFactoryPostProcessor>)
     -》org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors
+      将ConfigurationClassPostProcessor加入到processors
+      循环遍历prosessor
       -》org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry
           -》org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(BeanDefinitionRegistry registry)
               -》org.springframework.context.annotation.ConfigurationClassParser.parse(java.util.Set<org.springframework.beans.factory.config.BeanDefinitionHolder>)
                -》org.springframework.context.annotation.ConfigurationClassParser.parse(org.springframework.core.type.AnnotationMetadata, java.lang.String)
-               -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorHandler.process
-                 -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGroupingHandler.processGroupImports
-                       -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGrouping.getImports
-                          -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.AutoConfigurationGroup.process
-                             -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getAutoConfigurationEntry
-                             //获取spring.factory中key为EnableAutoConfiguration的所有bean名字
-                               -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getCandidateConfigurations
+                 //真正处理配置信息（处理启动类上的注解信息@SpringBootApplication）
+                 -》org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass
+                   1 处理@ComponentScan
+                   2 处理import
+                     -》org.springframework.context.annotation.ConfigurationClassParser.processImports(configClass, sourceClass,
+                     this.getImports(sourceClass)---递归获取import标签, filter, true)
+                         循环遍历@Import注解标记key集合
+                         -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorHandler.process
+                           -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGroupingHandler.processGroupImports
+                                 -》org.springframework.context.annotation.ConfigurationClassParser.DeferredImportSelectorGrouping.getImports
+                                    -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.AutoConfigurationGroup.process
+                                       -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getAutoConfigurationEntry
+                                       //获取spring.factory中key为EnableAutoConfiguration的所有bean名字
+                                         -》org.springframework.boot.autoconfigure.AutoConfigurationImportSelector.getCandidateConfigurations
 
+                   3 处理interface
 
 2 finishBeanFactoryInitialization方法调用关系链
 org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization
@@ -84,4 +102,286 @@ org.springframework.context.support.AbstractApplicationContext.finishBeanFactory
                    //后置增强
                    -》org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization
               -》org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance
+          应用启动函数
+           public ConfigurableApplicationContext run(String... args) {
+                  StopWatch stopWatch = new StopWatch();
+                  stopWatch.start();
+                  DefaultBootstrapContext bootstrapContext = this.createBootstrapContext();
+                  ConfigurableApplicationContext context = null;
+                  this.configureHeadlessProperty();
+                  SpringApplicationRunListeners listeners = this.getRunListeners(args);
+                  listeners.starting(bootstrapContext, this.mainApplicationClass);
+
+                  try {
+                      ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+                      ConfigurableEnvironment environment = this.prepareEnvironment(listeners, bootstrapContext, applicationArguments);
+                      this.configureIgnoreBeanInfo(environment);
+                      Banner printedBanner = this.printBanner(environment);
+                      context = this.createApplicationContext();
+                      context.setApplicationStartup(this.applicationStartup);
+                      this.prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
+                      this.refreshContext(context);
+                      this.afterRefresh(context, applicationArguments);
+                      stopWatch.stop();
+                      if (this.logStartupInfo) {
+                          (new StartupInfoLogger(this.mainApplicationClass)).logStarted(this.getApplicationLog(), stopWatch);
+                      }
+
+                      listeners.started(context);
+                      this.callRunners(context, applicationArguments);
+                  } catch (Throwable var10) {
+                      this.handleRunFailure(context, var10, listeners);
+                      throw new IllegalStateException(var10);
+                  }
+
+                  try {
+                      listeners.running(context);
+                      return context;
+                  } catch (Throwable var9) {
+                      this.handleRunFailure(context, var9, (SpringApplicationRunListeners)null);
+                      throw new IllegalStateException(var9);
+                  }
+              }
+
+
+ public ConfigurableApplicationContext run(String... args) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        DefaultBootstrapContext bootstrapContext = this.createBootstrapContext();
+        ConfigurableApplicationContext context = null;
+        this.configureHeadlessProperty();
+        SpringApplicationRunListeners listeners = this.getRunListeners(args);
+        listeners.starting(bootstrapContext, this.mainApplicationClass);
+
+        try {
+            ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+            ConfigurableEnvironment environment = this.prepareEnvironment(listeners, bootstrapContext, applicationArguments);
+            this.configureIgnoreBeanInfo(environment);
+            Banner printedBanner = this.printBanner(environment);
+            context = this.createApplicationContext();
+            context.setApplicationStartup(this.applicationStartup);
+            this.prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);
+            this.refreshContext(context);
+            this.afterRefresh(context, applicationArguments);
+            stopWatch.stop();
+            if (this.logStartupInfo) {
+                (new StartupInfoLogger(this.mainApplicationClass)).logStarted(this.getApplicationLog(), stopWatch);
+            }
+
+            listeners.started(context);
+            this.callRunners(context, applicationArguments);
+        } catch (Throwable var10) {
+            this.handleRunFailure(context, var10, listeners);
+            throw new IllegalStateException(var10);
+        }
+
+        try {
+            listeners.running(context);
+            return context;
+        } catch (Throwable var9) {
+            this.handleRunFailure(context, var9, (SpringApplicationRunListeners)null);
+            throw new IllegalStateException(var9);
+        }
+    }
+
+ private void prepareContext(DefaultBootstrapContext bootstrapContext, ConfigurableApplicationContext context, ConfigurableEnvironment environment, SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
+        context.setEnvironment(environment);
+        this.postProcessApplicationContext(context);
+        this.applyInitializers(context);
+        listeners.contextPrepared(context);
+        bootstrapContext.close(context);
+        if (this.logStartupInfo) {
+            this.logStartupInfo(context.getParent() == null);
+            this.logStartupProfileInfo(context);
+        }
+
+        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+        beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
+        if (printedBanner != null) {
+            beanFactory.registerSingleton("springBootBanner", printedBanner);
+        }
+
+        if (beanFactory instanceof DefaultListableBeanFactory) {
+            ((DefaultListableBeanFactory)beanFactory).setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
+        }
+
+        if (this.lazyInitialization) {
+            context.addBeanFactoryPostProcessor(new LazyInitializationBeanFactoryPostProcessor());
+        }
+
+        Set<Object> sources = this.getAllSources();
+        Assert.notEmpty(sources, "Sources must not be empty");
+        this.load(context, sources.toArray(new Object[0]));
+        listeners.contextLoaded(context);
+    }
+
+
+private SpringApplicationRunListeners getRunListeners(String[] args) {
+        Class<?>[] types = new Class[]{SpringApplication.class, String[].class};
+        return new SpringApplicationRunListeners(logger, this.getSpringFactoriesInstances(SpringApplicationRunListener.class, types, this, args), this.applicationStartup);
+    }
+
+
+
+protected <T> T doGetBean(String name, @Nullable Class<T> requiredType, @Nullable Object[] args, boolean typeCheckOnly) throws BeansException {
+    String beanName = this.transformedBeanName(name);
+    Object sharedInstance = this.getSingleton(beanName);
+    Object beanInstance;
+    if (sharedInstance != null && args == null) {
+        if (this.logger.isTraceEnabled()) {
+            if (this.isSingletonCurrentlyInCreation(beanName)) {
+                this.logger.trace("Returning eagerly cached instance of singleton bean '" + beanName + "' that is not fully initialized yet - a consequence of a circular reference");
+            } else {
+                this.logger.trace("Returning cached instance of singleton bean '" + beanName + "'");
+            }
+        }
+
+        beanInstance = this.getObjectForBeanInstance(sharedInstance, name, beanName, (RootBeanDefinition)null);
+    } else {
+        if (this.isPrototypeCurrentlyInCreation(beanName)) {
+            throw new BeanCurrentlyInCreationException(beanName);
+        }
+
+        BeanFactory parentBeanFactory = this.getParentBeanFactory();
+        if (parentBeanFactory != null && !this.containsBeanDefinition(beanName)) {
+            String nameToLookup = this.originalBeanName(name);
+            if (parentBeanFactory instanceof AbstractBeanFactory) {
+                return ((AbstractBeanFactory)parentBeanFactory).doGetBean(nameToLookup, requiredType, args, typeCheckOnly);
+            }
+
+            if (args != null) {
+                return parentBeanFactory.getBean(nameToLookup, args);
+            }
+
+            if (requiredType != null) {
+                return parentBeanFactory.getBean(nameToLookup, requiredType);
+            }
+
+            return parentBeanFactory.getBean(nameToLookup);
+        }
+
+        if (!typeCheckOnly) {
+            this.markBeanAsCreated(beanName);
+        }
+
+        StartupStep beanCreation = this.applicationStartup.start("spring.beans.instantiate").tag("beanName", name);
+
+        try {
+            if (requiredType != null) {
+                beanCreation.tag("beanType", requiredType::toString);
+            }
+
+            RootBeanDefinition mbd = this.getMergedLocalBeanDefinition(beanName);
+            this.checkMergedBeanDefinition(mbd, beanName, args);
+            String[] dependsOn = mbd.getDependsOn();
+            String[] var12;
+            if (dependsOn != null) {
+                var12 = dependsOn;
+                int var13 = dependsOn.length;
+
+                for(int var14 = 0; var14 < var13; ++var14) {
+                    String dep = var12[var14];
+                    if (this.isDependent(beanName, dep)) {
+                        throw new BeanCreationException(mbd.getResourceDescription(), beanName, "Circular depends-on relationship between '" + beanName + "' and '" + dep + "'");
+                    }
+
+                    this.registerDependentBean(dep, beanName);
+
+                    try {
+                        this.getBean(dep);
+                    } catch (NoSuchBeanDefinitionException var31) {
+                        throw new BeanCreationException(mbd.getResourceDescription(), beanName, "'" + beanName + "' depends on missing bean '" + dep + "'", var31);
+                    }
+                }
+            }
+
+            if (mbd.isSingleton()) {
+                sharedInstance = this.getSingleton(beanName, () -> {
+                    try {
+                        return this.createBean(beanName, mbd, args);
+                    } catch (BeansException var5) {
+                        this.destroySingleton(beanName);
+                        throw var5;
+                    }
+                });
+                beanInstance = this.getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
+            } else if (mbd.isPrototype()) {
+                var12 = null;
+
+                Object prototypeInstance;
+                try {
+                    this.beforePrototypeCreation(beanName);
+                    prototypeInstance = this.createBean(beanName, mbd, args);
+                } finally {
+                    this.afterPrototypeCreation(beanName);
+                }
+
+                beanInstance = this.getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);
+            } else {
+                String scopeName = mbd.getScope();
+                if (!StringUtils.hasLength(scopeName)) {
+                    throw new IllegalStateException("No scope name defined for bean ��" + beanName + "'");
+                }
+
+                Scope scope = (Scope)this.scopes.get(scopeName);
+                if (scope == null) {
+                    throw new IllegalStateException("No Scope registered for scope name '" + scopeName + "'");
+                }
+
+                try {
+                    Object scopedInstance = scope.get(beanName, () -> {
+                        this.beforePrototypeCreation(beanName);
+
+                        Object var4;
+                        try {
+                            var4 = this.createBean(beanName, mbd, args);
+                        } finally {
+                            this.afterPrototypeCreation(beanName);
+                        }
+
+                        return var4;
+                    });
+                    beanInstance = this.getObjectForBeanInstance(scopedInstance, name, beanName, mbd);
+                } catch (IllegalStateException var30) {
+                    throw new ScopeNotActiveException(beanName, scopeName, var30);
+                }
+            }
+        } catch (BeansException var32) {
+            beanCreation.tag("exception", var32.getClass().toString());
+            beanCreation.tag("message", String.valueOf(var32.getMessage()));
+            this.cleanupAfterBeanCreationFailure(beanName);
+            throw var32;
+        } finally {
+            beanCreation.end();
+        }
+    }
+
+    return this.adaptBeanInstance(name, beanInstance, requiredType);
+}
+
+ @Nullable
+protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    Object singletonObject = this.singletonObjects.get(beanName);
+    if (singletonObject == null && this.isSingletonCurrentlyInCreation(beanName)) {
+        singletonObject = this.earlySingletonObjects.get(beanName);
+        if (singletonObject == null && allowEarlyReference) {
+            synchronized(this.singletonObjects) {
+                singletonObject = this.singletonObjects.get(beanName);   //一级缓存
+                if (singletonObject == null) {
+                    singletonObject = this.earlySingletonObjects.get(beanName);   //二级缓存
+                    if (singletonObject == null) {
+                        ObjectFactory<?> singletonFactory = (ObjectFactory)this.singletonFactories.get(beanName); //三级缓存
+                        if (singletonFactory != null) {
+                            singletonObject = singletonFactory.getObject();
+                            this.earlySingletonObjects.put(beanName, singletonObject);
+                            this.singletonFactories.remove(beanName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return singletonObject;
+}
 

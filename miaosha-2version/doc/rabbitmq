@@ -27,3 +27,36 @@ org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMes
 
            ->org.springframework.amqp.rabbit.listener.BlockingQueueConsumer#commitIfNecessary
     ->org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#updateLastReceive
+
+
+
+
+mq对列数据积压问题、mq对列满了问题
+使用消息队列的时候，大部分的性能问题都出现在消费端，如果消费的速度跟不上发送端生产消息的速度，就会造成消息积压。
+1 优化消费端业务逻辑
+  消费端批量消费数据，同时优化数据库操作。看能否批量入库，尽量减少如数据库的交互次数
+  消费端使用多线程并发处理消息
+
+
+
+2 水平扩容consumer和mq对列数，保证consumer数量和对列数量一致，提高消费并行度
+  新建多余原先10倍的Queue
+  建好之后，写一个临时consumer程序，该程序读取原来对列的数据，不做任何处理，只将其均匀地
+  写到新建的10个对列中。
+  临时写10个consumer程序，一个consumer对应一个queue，消费对列的数据。
+  待对列正常后恢复期原先的架构模式
+
+
+
+
+
+3 应用降级
+如果短时间内没有足够的服务器资源进行扩容，没办法的办法是，将系统降级，通过关闭一些不重要的业务，
+减少发送方发送的数据量，最低限度让系统还能正常运转，服务一些重要业务。
+
+4 丢掉非重要的消息
+如果消费的速度始终比不上消费的速度，应用对数据的要求不高的情况下可以考虑丢掉部分数据
+
+mq消息过期丢死问题
+
+只能将丢失的数据查询出来，重新导入对列进行消费。

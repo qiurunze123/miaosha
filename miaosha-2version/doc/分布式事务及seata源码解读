@@ -1,0 +1,184 @@
+cap理论
+c（强一致性）：
+a（可用性）：任何事务的请求都要能得到响应，不能出现响应超时或者响应失败的情况
+p（分区容错性）：
+
+base理论
+base理论是对基本可用、软状态、最终一致性的缩写，它是对cap理论中ap一种扩展形式，通过牺牲强一致性来保证可用性，
+它允许出现故障时部分功能不可用，但核心功能可用，数据在某一时间段不一致，但最终要保持一致性。而满足base理论的
+事务我们称之为柔性事务。
+基本可用：当分布式系统出现故障时，允许损失部分可用功能，但核心功能必须可用，比如在购物系统中，当支付系统不可用时，
+要保证用户仍然能正常浏览商品详情。
+软状态：由于不要求强一致性，所以允许存在中间状态。这个状态不影响系统的使用。比如说“订单支付中”、“正在下单”、“数据同步中”，
+待数据最终一致后，将状态改为“成功”。
+
+最终一致性：经过一段时间后，所有节点的数据达到一致。比如由“支付中”变为“支付成功”或“支付失败”，订单状态与实际交易结果
+状态一致，但需要一定时间。
+
+2PC（强一致性）
+整个实现有RM、TM、AP三个角色。其中Ap是指应用程序。RM是资源管理器，控制分支事务，一般就是指数据库。TM是事务管理器，控制全局事务。
+    在准备阶段，RM执行本地业务操作，锁定资源，但不提交事务。
+    在提交阶段，TM发出提交或者回滚命令，RM真正执行提交或者回滚。提交结束，释放本地资源。
+典型的实现是mysql的XA事务。
+性能问题 整个事务执行期间需要锁定事务资源，会降低性能。
+可靠性问题 如果协调者出现单点故障问题，参与者将一直处于阻塞状态。
+严重依赖数据库事务。
+
+3PC
+
+
+
+相比2PC，3PC降低了阻塞的范围，在等待超时的时候协调者会中断事务，而参与者则会提交事务。
+
+
+
+TCC(try-confirm-cancel)
+tcc可以看成是服务化的2PC模型，目前成熟的框架有ByteTCC、tcc-transaction、himly。
+
+try:
+  此阶段是做检查和业务资源预留，此操作只是一个个初步操作，要与后面的confirm共同完成分布式事务。比如对于商品订单服务，
+  在此阶段将订单的状态设置为支付中，而不是支付完成；库存服务不要直接将库存的数量扣减2，分拆为可销售库存和已冻结库存。
+  可销售库存扣减2，已冻结库存增加2；对于积分服务，可以保持原有的积分不变，增加预增加字段，预增加字段可以设置为100。也就是
+  说整个try阶段都是在预留资源。
+
+
+
+confirm:
+  此阶段是做确认提交，只要try阶段执行成功，那么TCC就认为confirm阶段一定要成功。如果confirm阶段失败，则需要不断重试或者进行人工干预
+
+cancel:
+  此阶段是在业务执行失败的状态下分支事务需要进行回滚，释放数据资源。通常情况下，TCC认为cancel阶段也是一定要执行成功的，如果cancel执行失败，
+  则需要不断重试
+
+TCC三种常见异常
+1 空回滚
+  由于网络等原因导致分支事务try方法调用出现问题（try方法未被真正执行），这个时候分支事务的调用被标记为失败状态，但是try方法并没有执行。
+  当故障恢复的时候，分支事务执行cancel方法，从而形成空回滚。
+解决方法：在执行try阶段时插入一条日志记录，表示try阶段被执行了，cancel的时候查询这条日志记录是否存在，如果不存在，则说明时空回滚。
+
+2 悬挂
+  对于分布式事务来说，cancel阶段比try阶段先执行。造成这个的原因是：RPC在调用分支事务Try时，先注册分支事务，在执行真正的try调用，而这时由于网络
+  阻塞的原因，导致rpc的远程调用超时，此时TM就会通知分支事务回滚。可能回滚完成后，RPC的调用才到达，然后执行Try方法，预留资源。
+  而该分布式事务的资源，只有它自己才能使用。这样就会造成资源悬挂。
+解决方案，在执行try阶段时先判断在全局事务下，是否已经有第二阶段的执行记录了，如果有，则不执行try阶段。
+
+3 幂等
+TCC的confirm/cancel阶段执行失败的时候会进行不断重试的操作，这个时候需要保证confirm、ccancel接口的幂等
+
+
+可靠消息最终一致性
+事务发起方执行完本地事务之后，将执行消息通过MQ传给事务参与方，事务参与方一定能接到消息，并且保证事务参与方成功执行本地事务，最终事务
+保持最终一致性。
+1 本地事务与消息发起的原子性问题。
+本地事务执行和消息发送这个过程要保持原子性，要么都成功，要么都失败
+2 消息接收方必须能收到消息，消息可靠性传输
+3 消息重复消费，解决接口幂等性
+对应解决方案
+1 本地消息表
+这个方案最初由ebay提出，核心思路是将分布式事务拆分为本地事务进行处理。
+方案通过在事务发起方额外创建事务消息表，事务发起方处理业务和记录事务消息在本地事务中完成，然后通过定时任务轮训消息表中还未发送的消息，将其
+找出来发送给MQ，事务被动方接收到消息后执行本地事务，并将处理结果通过MQ反馈给事务发起方。
+为了数据的最终一致性，当处理错误时需要重试：
+   1 当事务发起方处理本地业务失败时，事务回滚，相当于什么都没发生。
+   2 当事务被动方执行本地业务失败时，需要发消息通知事务发起方事务回滚。
+   3 当MQ由于宕机或者其它原因导致事务被动方没有接收消息时，MQ要重新发送消息
+   4 事务发起方和事务接收方都要保证接口幂等性。
+在本地消息表中，保证事务主动方写业务数据和写消息表的数据一致性是基于数据库事务
+
+2 RocketMQ消息事务一致性
+基于MQ的分布式事务方案其实是对本地消息表的封装，将本地消息表基于MQ内部，其它方面与本地消息表保持一致
+事务发起方向MQServer发送half消息（扣减库存信息）
+MQServer接收到消息后向事务发起方发送success，注意此时half消息未被事务被动方消费。
+事务发起方接收到消息后，执行本地事务。
+执行成功/失败后，事务发起方会向MQServer发送commit/rollback消息。
+MQServer收到commit消息，将最初half消息修改为可投递状态，供事务被动方消费；MQServer收到rollback消息
+，则将原先的half消息删除。事务被动方的消费成功机制有MQ保证，一般MQ都具有重试机制
+
+
+
+尽最大努力通知（未使用）
+
+saga（未使用）
+
+
+阿里巴巴开源的分布式事务框架seata
+
+
+
+seata事务源码
+全局事务开始
+io.seata.spring.annotation.GlobalTransactionalInterceptor#handleGlobalTransaction
+    -》io.seata.tm.api.TransactionalTemplate#execute
+      -》io.seata.tm.api.TransactionalTemplate#beginTransaction //开启全局事务
+         -》io.seata.tm.api.DefaultGlobalTransaction#begin(int, java.lang.String)
+              //此处的角色判断有关键的作用
+ 6         //表明当前是全局事务的发起者（Launcher）还是参与者（Participant）
+ 7         //如果在分布式事务的下游系统方法中也加上GlobalTransactional注解
+ 8         //那么它的角色就是Participant，即会忽略后面的begin就退出了
+ 9         //而判断是发起者（Launcher）还是参与者（Participant）是根据当前上下文是否已存在XID来判断
+10         //没有XID的就是Launcher，已经存在XID的就是Participant
+            if (role != GlobalTransactionRole.Launcher)
+
+            else
+            -》io.seata.tm.DefaultTransactionManager#begin
+               -》io.seata.tm.DefaultTransactionManager#syncCall
+               //向netty发送事务同步信息
+                  -》io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+            -》io.seata.core.context.RootContext#bind（this.xid）
+      -》business.execute() //执行业务方法，分布式系统
+
+
+
+io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#doExecute
+
+io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#executeAutoCommitTrue
+ ->io.seata.rm.datasource.exec.AbstractDMLBaseExecutor#executeAutoCommitFalse
+    ->TableRecords beforeImage = this.beforeImage();
+      T result = this.statementCallback.execute(this.statementProxy.getTargetStatement(), args);
+      TableRecords afterImage = this.afterImage(beforeImage);
+      this.prepareUndoLog(beforeImage, afterImage);
+      return result;
+ ->io.seata.rm.datasource.ConnectionProxy#commit
+   ->io.seata.rm.datasource.ConnectionProxy#doCommit
+      ->io.seata.rm.datasource.ConnectionProxy#processGlobalTransactionCommit
+          ->io.seata.rm.datasource.ConnectionProxy#register
+             ->io.seata.rm.DefaultResourceManager#branchRegister
+               ->io.seata.core.model.ResourceManagerOutbound#branchRegister
+                  ->io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+          ->io.seata.rm.datasource.undo.UndoLogManagerFactory#getUndoLogManager
+          ->java.sql.Connection#commit
+          ->io.seata.rm.datasource.ConnectionProxy#report
+
+
+
+
+
+
+      -》io.seata.tm.api.TransactionalTemplate#commitTransaction //提交全局事务
+         -》io.seata.tm.DefaultTransactionManager#commit(String xid)
+             if (this.role == GlobalTransactionRole.Participant)
+             -》io.seata.tm.DefaultTransactionManager#syncCall
+                 -》io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+
+
+
+      -> io.seata.tm.api.TransactionalTemplate#completeTransactionAfterThrowing
+        ->io.seata.tm.api.TransactionalTemplate#rollbackTransaction
+           ->io.seata.tm.api.GlobalTransaction#rollback
+              ->io.seata.core.model.TransactionManager#rollback
+                 ->io.seata.tm.DefaultTransactionManager#syncCall
+                     //向tc发送回滚决议
+                     ->io.seata.core.rpc.netty.AbstractNettyRemotingClient#sendSyncRequest(java.lang.Object)
+
+                     //tc向rm发送回滚消息
+                     ->io.seata.core.rpc.processor.client.RmBranchRollbackProcessor#handleBranchRollback
+                           ->io.seata.rm.AbstractRMHandler#onRequest
+                                ->io.seata.core.protocol.transaction.AbstractTransactionRequest#handle
+                                   ->io.seata.rm.AbstractRMHandler#handle(io.seata.core.protocol.transaction.BranchRollbackRequest)
+                                      ->io.seata.rm.AbstractRMHandler#doBranchRollback
+                                         ->io.seata.core.model.ResourceManagerInbound#branchRollback
+                                           ->io.seata.rm.datasource.undo.UndoLogManager#undo
+
+                           //向tc发送回滚处理的结果
+                           ->io.seata.core.rpc.RemotingClient#sendAsyncResponse
+
