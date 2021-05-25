@@ -14,7 +14,7 @@ import com.geekq.miaosha.mq.MQServiceFactory;
 import com.geekq.miaosha.redis.OrderKey;
 
 import com.geekq.miaosha.redis.RedisService;
-import com.geekq.miaosha.util.StringBeanUtil;
+import com.geekq.miaosha.utils.StringBeanUtil;
 import com.geekq.miaosha.utils.DateTimeUtils;
 import com.geekq.miaosha.vo.GoodsExtVo;
 import org.apache.commons.lang3.time.DateUtils;

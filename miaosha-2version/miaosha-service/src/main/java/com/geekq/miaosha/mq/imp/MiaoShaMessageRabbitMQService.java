@@ -7,7 +7,7 @@ import com.geekq.miaosha.mq.IMQService;
 import com.geekq.miaosha.mq.MQConfig;
 import com.geekq.miaosha.mq.MiaoShaMessage;
 import com.geekq.miaosha.service.MiaoShaComposeService;
-import com.geekq.miaosha.util.StringBeanUtil;
+import com.geekq.miaosha.utils.StringBeanUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

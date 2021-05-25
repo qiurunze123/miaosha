@@ -4,7 +4,7 @@ import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.mq.IMQService;
 import com.geekq.miaosha.mq.MQConfig;
 import com.geekq.miaosha.service.MiaoShaComposeService;
-import com.geekq.miaosha.util.StringBeanUtil;
+import com.geekq.miaosha.utils.StringBeanUtil;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
@@ -12,7 +12,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 

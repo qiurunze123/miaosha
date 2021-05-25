@@ -1,13 +1,15 @@
 package com.geekq.miaosha.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.geekq.miaosha.biz.entity.MiaoshaOrder;
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
 import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.mq.MQServiceFactory;
 import com.geekq.miaosha.mq.MiaoShaMessage;
 import com.geekq.miaosha.redis.*;
+import com.geekq.miaosha.redis.distributelock.RedisDistributeLock;
 import com.geekq.miaosha.redis.redismanager.RedisLimitRateWithLUA;
-import com.geekq.miaosha.util.StringBeanUtil;
+import com.geekq.miaosha.utils.StringBeanUtil;
 import com.geekq.miaosha.utils.MD5Utils;
 import com.geekq.miaosha.utils.UUIDUtil;
 import com.geekq.miaosha.vo.GoodsExtVo;
@@ -61,6 +63,7 @@ public class MiaoShaComposeService {
 	 *
 	 * */
 	@Transactional
+    @RedisDistributeLock(lockKey = "cancelorder",expireTime = 1000)
 	public boolean cancelOrder(OrderInfo orderInfo) {
 		boolean deleteOrder=true;
 		GoodsExtVo goods=new GoodsExtVo();
@@ -68,15 +71,19 @@ public class MiaoShaComposeService {
 		goods.setGoodsStock(orderInfo.getGoodsCount());
 		//最好使用分布式锁,对资源的竞争修改导致数据不正确
 		//这里应该保证原子性
-		synchronized (this){
+		/*synchronized (this){
 			boolean addSuccessOrNot=goodsComposeService.addStock(goods);
 			if(addSuccessOrNot){
 				redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
 				deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
 			}
-		}
+		}*/
 
-
+        boolean addSuccessOrNot=goodsComposeService.addStock(goods);
+        if(addSuccessOrNot){
+            redisService.incr(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId());
+            deleteOrder= orderComposeService.deleteOrder(orderInfo.getId());
+        }
 		return deleteOrder;
 	}
 
@@ -118,40 +125,50 @@ public class MiaoShaComposeService {
 			checkResult= REPEATE_MIAOSHA.getMessage();
 			return checkResult;
 		}
+        JSONObject paramsJson=new JSONObject();
+		paramsJson.put("user",user);
+		paramsJson.put("path",path);
+		paramsJson.put("goodsId",goodsId);
+        checkResult=MQServiceFactory.create("rabbitmq","checkmiaosha").send(paramsJson.toString());
+		return checkResult;
+	}
 
-		/*
-		 * 校验秒杀url地址，防止刷流量
-		 * */
-		String pathValue=redisService.get(MiaoshaKey.getMiaoshaPath, ""+user.getNickname() + "_"+ goodsId,String.class);
-		if(! pathValue.equals(path)){
-			return checkResult;
-		}
-		/*判断是否重复秒杀
-		 *
-		 * */
-		MiaoshaOrder miaoshaOrder= redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+user.getId()+"_"+goodsId,MiaoshaOrder.class) ;;
-		if(null !=miaoshaOrder){
-			checkResult= REPEATE_MIAOSHA.getMessage();
-			return checkResult;
-		}
 
-		//内存标记，减少redis访问，没有将库存查询写入redis
-		//写内存的方法不妥当，不适于分布式部署，故取消内存访问
+	public String doCheckMiaoSha(MiaoshaUser user,  String path, long goodsId){
+        String checkResult="success";
+	    /*
+         * 校验秒杀url地址，防止刷流量
+         * */
+        String pathValue=redisService.get(MiaoshaKey.getMiaoshaPath, ""+user.getNickname() + "_"+ goodsId,String.class);
+        if(! pathValue.equals(path)){
+            return checkResult;
+        }
+        /*判断是否重复秒杀
+         *
+         * */
+        MiaoshaOrder miaoshaOrder= redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+user.getId()+"_"+goodsId,MiaoshaOrder.class) ;;
+        if(null !=miaoshaOrder){
+            checkResult= REPEATE_MIAOSHA.getMessage();
+            return checkResult;
+        }
+
+        //内存标记，减少redis访问，没有将库存查询写入redis
+        //写内存的方法不妥当，不适于分布式部署，故取消内存访问
 		/*boolean over = localOverMap.get(goodsId);
 		if (over) {
 			checkResult= MIAO_SHA_OVER.getMessage();
 			return checkResult;
 		}*/
-		//预减库存
-		//有人说先校验库存，再扣减库存，也可以直接使用decr操作，通过返回值判断是否售罄
-		Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
-		if (stock < 0) {
-			//localOverMap.put(goodsId, true);
-			checkResult=MIAO_SHA_OVER.getMessage();
-			return checkResult;
-		}
-		return checkResult;
-	}
+        //预减库存
+        //有人说先校验库存，再扣减库存，也可以直接使用decr操作，通过返回值判断是否售罄
+        Long stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, "" + goodsId);
+        if (stock < 0) {
+            //localOverMap.put(goodsId, true);
+            checkResult=MIAO_SHA_OVER.getMessage();
+            return checkResult;
+        }
+        return checkResult;
+    }
 
 
 

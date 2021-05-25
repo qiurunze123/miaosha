@@ -15,6 +15,7 @@ public class MQConfig {
 	 * mq页面
 	 */
 	public static final String MIAOSHA_QUEUE = "miaosha.queue";
+	public static final String CHECK_MIAOSHA_QUEUE = "checkmiaosha.queue";
 
 	public static final String EXCHANGE_TOPIC = "exchange_topic";
 	public static final String MIAOSHA_MESSAGE = "miaosha_mess";
@@ -30,6 +31,7 @@ public class MQConfig {
 	public static final String FANOUT_EXCHANGE = "fanoutExchage";//广播交换机
 	public static final String HEADERS_EXCHANGE = "headersExchage";
 	public static final String DELAYED_EXCHANGE = "delayed_exchange";
+	public static final String CHECK_MIAOSHA_EXCHANGE = "CHECK_MIAOSHA_EXCHANGE";
 
 
 
@@ -45,6 +47,11 @@ public class MQConfig {
 	@Bean
 	public Queue delayQueue(){
 		Queue queue=new Queue(DELAY_QUEUE_1,true);
+		return queue;
+	}
+    @Bean
+	public Queue checkMiaoShaQueue(){
+		Queue queue=new Queue(CHECK_MIAOSHA_QUEUE,true);
 		return queue;
 	}
 	
@@ -69,6 +76,14 @@ public class MQConfig {
 		Map<String,Object> map=new HashMap<>();
 		map.put("x-delayed-type","direct");
 		return new CustomExchange(DELAYED_EXCHANGE,"x-delayed-message",true,false,map);
+	}
+    @Bean
+	public TopicExchange CHECK_MIAOSHA_EXCHANGE(){
+		return new TopicExchange(CHECK_MIAOSHA_EXCHANGE);
+	}
+	@Bean
+	public Binding topicBinding3(){
+		return BindingBuilder.bind(checkMiaoShaQueue()).to(CHECK_MIAOSHA_EXCHANGE()).with("checkmiaosha");
 	}
 
 	@Bean
