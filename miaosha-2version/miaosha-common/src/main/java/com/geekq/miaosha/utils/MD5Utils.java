@@ -2,6 +2,7 @@ package com.geekq.miaosha.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+
 import java.security.SecureRandom;
 
 /**

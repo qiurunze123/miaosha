@@ -1,6 +1,5 @@
 package com.geekq.miaosha.controller;
 
-import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.service.MiaoShaMessageService;
 import com.geekq.miaosha.enums.enums.ResultStatus;
 import com.geekq.miaosha.enums.resultbean.ResultGeekQ;
@@ -18,8 +17,7 @@ public class MiaoShaMessageController {
 
     @Autowired
     private MiaoShaMessageService messageService;
-    @Autowired
-    private MQSender sendMessage;
+
 
     @RequestMapping(value = "/list", produces = "text/html")
     public String list(@RequestParam(value = "userid",required= true) String userId, Model model) {

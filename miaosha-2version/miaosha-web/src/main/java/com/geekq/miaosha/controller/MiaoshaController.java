@@ -1,9 +1,7 @@
 package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.biz.entity.MiaoshaUser;
-import com.geekq.miaosha.biz.entity.OrderInfo;
 import com.geekq.miaosha.interceptor.RequireLogin;
-import com.geekq.miaosha.mq.MQSender;
 import com.geekq.miaosha.redis.GoodsKey;
 import com.geekq.miaosha.redis.RedisService;
 import com.geekq.miaosha.service.GoodsComposeService;
@@ -54,8 +52,7 @@ public class MiaoshaController implements InitializingBean {
     @Autowired
     MiaoShaComposeService miaoShaComposeService;
 
-    @Autowired
-    MQSender mqSender;
+
 
 
 
@@ -73,11 +70,7 @@ public class MiaoshaController implements InitializingBean {
                                         @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<Integer> result = ResultGeekQ.build();
         String checkResult=miaoShaComposeService.checkMiaoSha(user, path, goodsId);
-        if("success".equals(checkResult)){
-            OrderInfo orderInfo= miaoShaComposeService.doMiaoSha(user,goodsId,true);
-        }else{
-            result.withError(EXCEPTION.getCode(),checkResult);
-        }
+
 
         return result;
     }

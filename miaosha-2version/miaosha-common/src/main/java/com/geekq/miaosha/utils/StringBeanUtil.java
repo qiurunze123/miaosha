@@ -1,4 +1,4 @@
-package com.geekq.miaosha.util;
+package com.geekq.miaosha.utils;
 
 import com.alibaba.fastjson.JSON;
 
