@@ -3,6 +3,8 @@
 > 邮箱 : [QiuRunZe_key@163.com](QiuRunZe_key@163.com)
 
 > Github : [https://github.com/qiurunze123](https://github.com/qiurunze123)
+> 微信(阿里推荐-可帮忙推荐 与 修改简历 )：微信名称：qiurunzeaixiaoju 群人数较多 备注 年限-姓名 加我后我来拉你进群
+> 为大家举办这个活动 团队的人都有经验可以帮着大家修改简历 日期持续到6-18号 过后可能需要再约时间 大家看到后可加我 免费的哈！也是一个和专家沟通的机会
 
 > QQ : [3341386488](3341386488)
 
