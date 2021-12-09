@@ -4,13 +4,13 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="imooc-dubbo-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-common/imooc-dubbo-common">
+        <dependent-module archiveName="imooc-dubbo-common-${revision}.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-common/imooc-dubbo-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="imooc-dubbo-item-api-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-item-api/imooc-dubbo-item-api">
+        <dependent-module archiveName="imooc-dubbo-item-api-${revision}.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-item-api/imooc-dubbo-item-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="imooc-dubbo-order-api-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-order-api/imooc-dubbo-order-api">
+        <dependent-module archiveName="imooc-dubbo-order-api-${revision}.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-order-api/imooc-dubbo-order-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="imooc-dubbo-web"/>

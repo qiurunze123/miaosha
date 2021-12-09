@@ -2,20 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>com.geekq.dubbo</groupId>
+        <artifactId>miaosha-order</artifactId>
+        <version>${revision}</version>
+    </parent>
     <groupId>com.geekq.provider</groupId>
     <artifactId>miaosha-order-provider</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <name>miaosha-order-provider</name>
     <description>Dubbo provider for Spring Boot</description>
-
-    <parent>
-        <groupId>com.geekq.dubbo</groupId>
-        <artifactId>miaosha-order</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +25,7 @@
         <dependency>
             <groupId>com.geekq.api</groupId>
             <artifactId>miaosha-order-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

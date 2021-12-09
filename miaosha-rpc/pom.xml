@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.geekq</groupId>
+    <artifactId>miaosha-rpc</artifactId>
+    <version>${revision}</version>
+    <modules>
+        <module>dubbo-api</module>
+        <module>dubbo-consumer</module>
+        <module>dubbo-provider</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>SpringBoot与Dubbo集成测试单元</description>
+
+    <parent>
+        <groupId>com.geekq</groupId>
+        <artifactId>miaosha-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.geekq</groupId>
+                <artifactId>dubbo-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
