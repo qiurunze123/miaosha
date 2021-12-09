@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.geekq</groupId>
 		<artifactId>miaosha-admin</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 	<artifactId>miaosha-admin-api</artifactId>
 
@@ -30,8 +30,8 @@
 		<!--</dependency>-->
 		<dependency>
 			<groupId>com.geekq</groupId>
-			<artifactId>miaosha-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>miaosha-admin-common</artifactId>
+			<version>${revision}</version>
 		</dependency>
 
 

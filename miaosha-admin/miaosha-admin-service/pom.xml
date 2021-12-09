@@ -4,14 +4,13 @@
 	<parent>
 		<groupId>com.geekq</groupId>
 		<artifactId>miaosha-admin</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 	<artifactId>miaosha-admin-service</artifactId>
 	
 	<packaging>war</packaging>
 	
 	<dependencies>
-
 
 		<!-- jedis依赖 -->
 		<dependency>
@@ -20,15 +19,9 @@
 			<version>1.8.4.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.geekq</groupId>
 			<artifactId>miaosha-admin-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}</version>
 		</dependency>
 
 		<dependency>

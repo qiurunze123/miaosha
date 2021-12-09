@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="imooc-dubbo-order-api-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-order-api/imooc-dubbo-order-api">
+        <dependent-module archiveName="imooc-dubbo-order-api-${revision}.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/imooc-dubbo-order-api/imooc-dubbo-order-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="imooc-dubbo-order-service"/>
