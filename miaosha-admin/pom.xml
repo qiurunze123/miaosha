@@ -13,7 +13,6 @@
 	</parent>
 	<!-- 集中定义依赖版本号 -->
 	<properties>
-		<spring.version>4.3.13.RELEASE</spring.version>
 		<spring-data-redis.version>1.8.7.RELEASE</spring-data-redis.version>
 		<apache-commons-pool2>2.4.2</apache-commons-pool2>
 		<mybatis.version>3.2.8</mybatis.version>
@@ -44,6 +43,21 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>com.geekq</groupId>
+				<artifactId>miaosha-admin-common</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.geekq</groupId>
+				<artifactId>miaosha-admin-api</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.geekq</groupId>
+				<artifactId>miaosha-admin-service</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
 				<groupId>commons-net</groupId>
 				<artifactId>commons-net</artifactId>
 				<version>${commons-net.version}</version>
@@ -70,18 +84,6 @@
 				<artifactId>httpclient</artifactId>
 				<version>${httpclient.version}</version>
 			</dependency>
-
-			<!-- Mybatis -->
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-				<version>${mybatis.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-				<version>${mybatis.spring.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>com.github.miemiedev</groupId>
 				<artifactId>mybatis-paginator</artifactId>
@@ -92,67 +94,6 @@
 				<artifactId>pagehelper</artifactId>
 				<version>${pagehelper.version}</version>
 			</dependency>
-			<!-- MySql -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.version}</version>
-			</dependency>
-
-			<!-- 连接池 阿里巴巴数据源 全世界最牛逼的data source 没有之一 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${druid.version}</version>
-			</dependency>
-			<!-- Spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context-support</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aspects</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<!--<dependency>-->
-			    <!--<groupId>org.springframework.data</groupId>-->
-			    <!--<artifactId>spring-data-redis</artifactId>-->
-			    <!--<version>${spring-data-redis.version}</version>-->
-			<!--</dependency>-->
-			<!-- 用于jedis-spring-data redisTemplate -->
-			<dependency>
-	            <groupId>org.apache.commons</groupId>
-	            <artifactId>commons-pool2</artifactId>
-	            <version>${apache-commons-pool2}</version>
-	        </dependency>
-			<!-- JSP相关 -->
 			<dependency>
 				<groupId>jstl</groupId>
 				<artifactId>jstl</artifactId>
@@ -170,71 +111,8 @@
 				<version>${jsp-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<!-- Redis客户端 -->
-			<dependency>
-				<groupId>redis.clients</groupId>
-				<artifactId>jedis</artifactId>
-				<version>${jedis.version}</version>
-			</dependency>
-
-			<!-- httpclient -->
-			<dependency>
-				<groupId>commons-httpclient</groupId>
-				<artifactId>commons-httpclient</artifactId>
-				<version>${commons.httpclient.version}</version>
-			</dependency>
-
-			<!-- 日志处理 -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-
-			<!-- 引入dubbo -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>dubbo</artifactId>
-				<version>${dubbo.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.zookeeper</groupId>
-				<artifactId>zookeeper</artifactId>
-				<version>${zookeeper.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.sgroschupf</groupId>
-				<artifactId>zkclient</artifactId>
-				<version>${zkclient.version}</version>
-			</dependency>
-			
-			<!-- zk 客户端依赖 -->
-			<dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-framework</artifactId>
-				<version>${apache.curator.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.curator</groupId>
-				<artifactId>curator-recipes</artifactId>
-				<version>${apache.curator.version}</version>
-			</dependency>
-			
 		</dependencies>
-
 	</dependencyManagement>
-
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>

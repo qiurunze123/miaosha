@@ -12,31 +12,12 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.geekq</groupId>
-			<artifactId>miaosha-admin-common</artifactId>
-			<version>${revision}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.geekq</groupId>
-			<artifactId>miaosha-admin-api</artifactId>
-			<version>${revision}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.geekq</groupId>
-			<artifactId>miaosha-admin-service</artifactId>
-			<version>${revision}</version>
-		</dependency>
-		<!-- freemarker -->
-		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.23</version>
 		</dependency>
-		<!-- 引入dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -83,7 +64,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>3.2.4.RELEASE</version>
 		</dependency>
 
 		<!-- JSP相关 -->
@@ -101,7 +81,18 @@
 			<artifactId>jsp-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-admin-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-admin-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-admin-service</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>

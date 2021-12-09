@@ -11,29 +11,22 @@
 	<packaging>war</packaging>
 	
 	<dependencies>
-
-		<!-- jedis依赖 -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>1.8.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.geekq</groupId>
 			<artifactId>miaosha-admin-api</artifactId>
-			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.geekq</groupId>
+			<artifactId>miaosha-admin-common</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-			<version>2.6.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -43,7 +36,6 @@
 			<groupId>com.github.sgroschupf</groupId>
 			<artifactId>zkclient</artifactId>
 		</dependency>
-
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -68,16 +60,6 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-		<!-- Mybatis -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.miemiedev</groupId>
@@ -100,9 +82,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
 		</dependency>
-
 	</dependencies>
 	
 	<build>
