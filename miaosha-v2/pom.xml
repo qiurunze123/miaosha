@@ -27,7 +27,7 @@
         <com.dubbo>1.0.0</com.dubbo>
         <com.zk.version>3.4.6</com.zk.version>
         <com.zk.client>0.1</com.zk.client>
-        <curator-framework.version>4.0.1</curator-framework.version>
+        <curator-framework.version>5.1.0</curator-framework.version>
         <dubbo.starter.version>0.2.0</dubbo.starter.version>
     </properties>
     <dependencyManagement>
@@ -70,7 +70,6 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${org.mybatis.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -79,35 +78,27 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${com.alibaba.druid}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -119,69 +110,26 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.3</version>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.38</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>${dubbo.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
-            <version>${curator-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
-            <version>${com.zk.client}</version>
         </dependency>
         <dependency>
             <groupId>com.geekq.api</groupId>
             <artifactId>miaosha-order-api</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <!--<includes>-->
-                <!--<include>**/*.properties</include>-->
-                <!--<include>**/*.xml</include>-->
-                <!--<include>**/*.ini</include>-->
-                <!--</includes>-->
-                <filtering>false</filtering>
-            </resource>
-            <resource> <!--配置文件路径 -->
-                <directory>src/main/resources</directory> <!--这里对应项目存放配置文件的目录--> <!--开启filtering功能 -->
-                <filtering>true</filtering>
-                <includes>
-                    <!--<include>application-${activatedProperties}.properties</include>-->
-                    <include>application.properties</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
 </project>

@@ -9,36 +9,22 @@
 	<artifactId>miaosha-admin-api</artifactId>
 
 	<dependencies>
-		<!--lombook引用-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.2</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- servlet-api -->
-		<!--<dependency>-->
-			<!--<groupId>javax.servlet</groupId>-->
-			<!--<artifactId>servlet-api</artifactId>-->
-			<!--<version>2.5</version>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework</groupId>-->
-			<!--<artifactId>spring-web</artifactId>-->
-			<!--<version>4.0.0.RELEASE</version>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>com.geekq</groupId>
 			<artifactId>miaosha-admin-common</artifactId>
-			<version>${revision}</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
 		</dependency>
 	</dependencies>
 

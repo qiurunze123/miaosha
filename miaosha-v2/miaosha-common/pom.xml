@@ -10,14 +10,4 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>miaosha-common</artifactId>
     <version>${revision}</version>
-    <dependencies>
-        <!--lombook引用-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
 </project>
