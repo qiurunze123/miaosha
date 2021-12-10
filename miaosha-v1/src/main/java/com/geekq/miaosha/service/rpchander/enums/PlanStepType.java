@@ -20,6 +20,11 @@ public enum PlanStepType {
     private int priority;
     private String handler;
 
+    PlanStepType(int priority, String handler) {
+        this.priority = priority;
+        this.handler = handler;
+    }
+
     public String getHandler() {
         return handler;
     }
@@ -34,10 +39,5 @@ public enum PlanStepType {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    PlanStepType(int priority, String handler) {
-        this.priority = priority;
-        this.handler = handler;
     }
 }

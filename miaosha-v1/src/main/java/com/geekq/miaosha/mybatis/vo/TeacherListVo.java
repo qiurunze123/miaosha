@@ -11,11 +11,11 @@ import java.io.Serializable;
 public class TeacherListVo implements Serializable {
 
 
-    private String tId ;
+    private String tId;
 
-    private Integer uId ;
+    private Integer uId;
 
-    private String tName ;
+    private String tName;
 
     private User userList;
 

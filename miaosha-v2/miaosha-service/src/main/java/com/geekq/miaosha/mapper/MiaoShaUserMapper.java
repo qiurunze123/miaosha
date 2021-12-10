@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface MiaoShaUserMapper {
 
-    public MiaoshaUser getByNickname(@Param("nickname") String nickname) ;
+    public MiaoshaUser getByNickname(@Param("nickname") String nickname);
 
-    public MiaoshaUser getById(@Param("id") long id) ;
+    public MiaoshaUser getById(@Param("id") long id);
 
     public void update(MiaoshaUser toBeUpdate);
 

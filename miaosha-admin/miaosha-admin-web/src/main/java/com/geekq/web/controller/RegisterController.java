@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author 邱润泽
  */
 @Controller
-public class RegisterController extends  BaseController{
+public class RegisterController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     @Autowired
-    private ILogininfoService logininfoService ;
+    private ILogininfoService logininfoService;
 
     @RequestMapping("/register")
     @ResponseBody
@@ -31,7 +31,7 @@ public class RegisterController extends  BaseController{
             this.logininfoService.register(username, password);
             json.setSuccess(true);
         } catch (RuntimeException e) {
-            logger.error("注册失败",e);
+            logger.error("注册失败", e);
             json.setMsg("注册失败,请联系相关人员!");
         }
         return json;
@@ -44,7 +44,7 @@ public class RegisterController extends  BaseController{
         try {
             result.setData(this.logininfoService.checkUsername(username, Constants.USERTYPE_NORMAL));
         } catch (RuntimeException e) {
-            logger.error("检查是否存在该用户名!",e);
+            logger.error("检查是否存在该用户名!", e);
             result.withError(ResultStatus.SYSTEM_ERROR);
         }
         return result;

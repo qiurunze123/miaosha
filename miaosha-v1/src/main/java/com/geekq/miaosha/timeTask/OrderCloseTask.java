@@ -6,7 +6,6 @@ import com.geekq.miaosha.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import static com.geekq.miaosha.common.Constanst.CLOSE_ORDER_INFO_TASK_LOCK;
@@ -16,7 +15,7 @@ import static com.geekq.miaosha.common.Constanst.CLOSE_ORDER_INFO_TASK_LOCK;
 public class OrderCloseTask {
 
     @Autowired
-    private OrderDao orderDao ;
+    private OrderDao orderDao;
     @Autowired
     private RedisService redisService;
 
@@ -26,8 +25,8 @@ public class OrderCloseTask {
 //    private RedissonService redissonService;
 
 
-//    @Scheduled(cron = "0/1 * * * * ?")
-    private void closeOrderTaskv1(){
+    //    @Scheduled(cron = "0/1 * * * * ?")
+    private void closeOrderTaskv1() {
         int hour = 2;
         orderService.closeOrder(hour);
         log.info("关闭订单定时任务结束");
@@ -46,28 +45,28 @@ public class OrderCloseTask {
 //        log.info("关闭订单定时任务结束");
 //    }
 
-//    @Scheduled(cron = "0/1 * * * * ?")
-    public void closeOrderTaskV3(){
+    //    @Scheduled(cron = "0/1 * * * * ?")
+    public void closeOrderTaskV3() {
         log.info("关闭订单定时任务启动");
         long lockTime = 5000;
-        Long setnxResult = redisService.setnx(CLOSE_ORDER_INFO_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTime));
+        Long setnxResult = redisService.setnx(CLOSE_ORDER_INFO_TASK_LOCK, String.valueOf(System.currentTimeMillis() + lockTime));
         //代表获取了锁
-        if(setnxResult !=null && setnxResult ==1){
+        if (setnxResult != null && setnxResult == 1) {
             closeOrder(CLOSE_ORDER_INFO_TASK_LOCK);
-        }else {
-            log.info("没有获得分布式锁:{}",CLOSE_ORDER_INFO_TASK_LOCK);
+        } else {
+            log.info("没有获得分布式锁:{}", CLOSE_ORDER_INFO_TASK_LOCK);
             String lockValueStr = redisService.get(CLOSE_ORDER_INFO_TASK_LOCK);
-            if(lockValueStr!=null&&System.currentTimeMillis() > Long.parseLong(lockValueStr)){
-            //把之前的释放在新加入锁
-            String getSetResult = redisService.getset(CLOSE_ORDER_INFO_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTime));
+            if (lockValueStr != null && System.currentTimeMillis() > Long.parseLong(lockValueStr)) {
+                //把之前的释放在新加入锁
+                String getSetResult = redisService.getset(CLOSE_ORDER_INFO_TASK_LOCK, String.valueOf(System.currentTimeMillis() + lockTime));
 
-            if(getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr,getSetResult))){
-                closeOrder(CLOSE_ORDER_INFO_TASK_LOCK);
-            }else {
-                log.info("没有获取到分布式锁:{}",CLOSE_ORDER_INFO_TASK_LOCK);
-            }
-            }else {
-                log.info("没有获取到分布式锁:{}",CLOSE_ORDER_INFO_TASK_LOCK);
+                if (getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr, getSetResult))) {
+                    closeOrder(CLOSE_ORDER_INFO_TASK_LOCK);
+                } else {
+                    log.info("没有获取到分布式锁:{}", CLOSE_ORDER_INFO_TASK_LOCK);
+                }
+            } else {
+                log.info("没有获取到分布式锁:{}", CLOSE_ORDER_INFO_TASK_LOCK);
             }
         }
         log.info("关闭订单定时任务结束");
@@ -96,10 +95,9 @@ public class OrderCloseTask {
 //    }
 
 
-
-    private void closeOrder(String lockName){
-        redisService.expire(lockName,5);
-        log.info("获取{},当前线程名称！" ,lockName,Thread.currentThread().getName());
+    private void closeOrder(String lockName) {
+        redisService.expire(lockName, 5);
+        log.info("获取{},当前线程名称！", lockName, Thread.currentThread().getName());
         int hour = 2;
         orderService.closeOrder(hour);
         redisService.del(CLOSE_ORDER_INFO_TASK_LOCK);

@@ -8,24 +8,24 @@ import java.util.Map;
 
 public interface LogininfoMapper {
 
-	int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long id);
 
-	int insert(Logininfo record);
+    int insert(Logininfo record);
 
-	Logininfo selectByPrimaryKey(Long id);
+    Logininfo selectByPrimaryKey(Long id);
 
-	List<Logininfo> selectAll();
+    List<Logininfo> selectAll();
 
-	int updateByPrimaryKey(Logininfo record);
+    int updateByPrimaryKey(Logininfo record);
 
-	int getCountByNickname(@Param("nickname") String nickname,
+    int getCountByNickname(@Param("nickname") String nickname,
                            @Param("userType") int userType);
 
-	Logininfo getLoginInfoByNickname(@Param("nickname") String nickname,
-						   @Param("userType") int userType);
+    Logininfo getLoginInfoByNickname(@Param("nickname") String nickname,
+                                     @Param("userType") int userType);
 
-	Logininfo login(@Param("name") String name,
+    Logininfo login(@Param("name") String name,
                     @Param("password") String password, @Param("userType") int userType);
 
-	List<Map<String, Object>> autoComplate(@Param("word") String word, @Param("userType") int userType);
+    List<Map<String, Object>> autoComplate(@Param("word") String word, @Param("userType") int userType);
 }

@@ -12,11 +12,13 @@ public class ResultGeekQ<T> extends AbstractResult implements Serializable {
     protected ResultGeekQ(ResultStatus status, String message) {
         super(status, message);
     }
+
     protected ResultGeekQ(ResultStatus status) {
         super(status);
     }
+
     public static <T> ResultGeekQ<T> build() {
-        return new ResultGeekQ(ResultStatus.SUCCESS, (String)null);
+        return new ResultGeekQ(ResultStatus.SUCCESS, (String) null);
     }
 
     public static <T> ResultGeekQ<T> build(String message) {

@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.*;
 public interface MiaoShaUserDao {
 
     @Select("select * from miaosha_user where nickname = #{nickname}")
-    public MiaoshaUser getByNickname(@Param("nickname") String nickname ) ;
+    public MiaoshaUser getByNickname(@Param("nickname") String nickname);
 
     @Select("select * from miaosha_user where id = #{id}")
-    public MiaoshaUser getById(@Param("id") long id ) ;
+    public MiaoshaUser getById(@Param("id") long id);
 
 
     @Update("update miaosha_user set password = #{password} where id = #{id}")

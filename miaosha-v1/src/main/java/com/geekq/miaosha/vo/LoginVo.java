@@ -16,10 +16,10 @@ import javax.validation.constraints.NotNull;
 public class LoginVo {
     @NotNull
     @MobileCheck
-    private String mobile ;
+    private String mobile;
 
     @NotNull
-    @Length(min=32)
+    @Length(min = 32)
     private String password;
 
     @Override

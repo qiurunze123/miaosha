@@ -14,19 +14,13 @@ import javax.servlet.http.HttpSession;
 
 public class UserContext {
 
-    @Autowired
-    private HttpSession session;
-
-    @Autowired
-    private HttpServletRequest request;
-
     public static final String LOGIN_IN_SESSION = "logininfo";
     public static final String VERIFYCODE_IN_SESSION = "VERIFYCODE_IN_SESSION";
-
-    @Bean
-    public RequestContextListener requestContextListener(){
-        return new RequestContextListener();
-    }
+    private static ThreadLocal<Logininfo> userHolder = new ThreadLocal<Logininfo>();
+    @Autowired
+    private HttpSession session;
+    @Autowired
+    private HttpServletRequest request;
 /*    @Autowired
     private RedisService redisService;*/
 
@@ -35,7 +29,10 @@ public class UserContext {
                 .getRequestAttributes()).getRequest();
     }
 
-    private static ThreadLocal<Logininfo> userHolder = new ThreadLocal<Logininfo>();
+    public static void removeUser() {
+
+        userHolder.remove();
+    }
 
   /*  public static void putLogininfo(Logininfo user) {
 
@@ -46,21 +43,22 @@ public class UserContext {
         return userHolder.get();
     }*/
 
-    public static void removeUser() {
-
-        userHolder.remove();
-    }
-	public static void putLogininfo(Logininfo logininfo) {
-        HttpServletRequest a =  ((ServletRequestAttributes) RequestContextHolder
+    public static void putLogininfo(Logininfo logininfo) {
+        HttpServletRequest a = ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes()).getRequest();
         HttpSession b = a.getSession();
-                b.setAttribute(LOGIN_IN_SESSION, logininfo);
-	}
+        b.setAttribute(LOGIN_IN_SESSION, logininfo);
+    }
 
-	public static Logininfo getCurrent() {
-		return (Logininfo) getRequest().getSession().getAttribute(
-				LOGIN_IN_SESSION);
-	}
+    public static Logininfo getCurrent() {
+        return (Logininfo) getRequest().getSession().getAttribute(
+                LOGIN_IN_SESSION);
+    }
+
+    @Bean
+    public RequestContextListener requestContextListener() {
+        return new RequestContextListener();
+    }
 
 //	public static void putVerifyCode(VerifyCode code) {
 //		getRequest().getSession().setAttribute(VERIFYCODE_IN_SESSION, code);

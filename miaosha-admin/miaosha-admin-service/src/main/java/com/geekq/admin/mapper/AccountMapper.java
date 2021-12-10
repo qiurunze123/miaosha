@@ -6,13 +6,13 @@ import com.geekq.admin.entity.Account;
 import java.util.List;
 
 public interface AccountMapper {
-	int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long id);
 
-	int insert(Account record);
+    int insert(Account record);
 
-	Account selectByPrimaryKey(Long id);
+    Account selectByPrimaryKey(Long id);
 
-	List<Account> selectAll();
+    List<Account> selectAll();
 
-	int updateByPrimaryKey(Account record);
+    int updateByPrimaryKey(Account record);
 }

@@ -25,15 +25,16 @@ public class RegisterController {
     @Autowired
     private MiaoShaUserService miaoShaUserService;
     @Autowired
-    private MiaoshaService miaoshaService ;
+    private MiaoshaService miaoshaService;
 
     @RequestMapping("/do_register")
-    public String registerIndex(){
+    public String registerIndex() {
         return "register";
     }
 
     /**
      * 注册网站
+     *
      * @param userName
      * @param passWord
      * @param salt
@@ -41,25 +42,25 @@ public class RegisterController {
      */
     @RequestMapping("/register")
     @ResponseBody
-    public ResultGeekQ<String> register(@RequestParam("username") String userName ,
+    public ResultGeekQ<String> register(@RequestParam("username") String userName,
                                         @RequestParam("password") String passWord,
                                         @RequestParam("verifyCode") String verifyCode,
-                                        @RequestParam("salt") String salt,HttpServletResponse response ){
+                                        @RequestParam("salt") String salt, HttpServletResponse response) {
 
         ResultGeekQ<String> result = ResultGeekQ.build();
         /**
          * 校验验证码
          */
         boolean check = miaoshaService.checkVerifyCodeRegister(Integer.valueOf(verifyCode));
-        if(!check){
-            result.withError(CODE_FAIL.getCode(),CODE_FAIL.getMessage());
+        if (!check) {
+            result.withError(CODE_FAIL.getCode(), CODE_FAIL.getMessage());
             return result;
 
         }
-        boolean registerInfo  = miaoShaUserService.register(response , userName,passWord,salt);
-        if(!registerInfo){
-           result.withError(RESIGETER_FAIL.getCode(),RESIGETER_FAIL.getMessage());
-           return result;
+        boolean registerInfo = miaoShaUserService.register(response, userName, passWord, salt);
+        if (!registerInfo) {
+            result.withError(RESIGETER_FAIL.getCode(), RESIGETER_FAIL.getMessage());
+            return result;
         }
         return result;
     }

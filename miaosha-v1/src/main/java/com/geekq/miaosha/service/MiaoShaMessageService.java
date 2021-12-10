@@ -17,14 +17,14 @@ public class MiaoShaMessageService {
     @Autowired
     private MiaoShaMessageDao messageDao;
 
-    public List<MiaoShaMessageInfo> getmessageUserList( Long userId , Integer status ){
-        return messageDao.listMiaoShaMessageByUserId(userId,status);
+    public List<MiaoShaMessageInfo> getmessageUserList(Long userId, Integer status) {
+        return messageDao.listMiaoShaMessageByUserId(userId, status);
     }
 
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertMs(MiaoShaMessageVo miaoShaMessageVo){
-        MiaoShaMessageUser mu = new MiaoShaMessageUser() ;
+    public void insertMs(MiaoShaMessageVo miaoShaMessageVo) {
+        MiaoShaMessageUser mu = new MiaoShaMessageUser();
         mu.setUserId(miaoShaMessageVo.getUserId());
         mu.setMessageId(miaoShaMessageVo.getMessageId());
         messageDao.insertMiaoShaMessageUser(mu);

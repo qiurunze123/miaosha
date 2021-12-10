@@ -12,9 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MiaoshaGoods {
-	private Long id;
-	private Long goodsId;
-	private Integer stockCount;
-	private Date startDate;
-	private Date endDate;
+    private Long id;
+    private Long goodsId;
+    private Integer stockCount;
+    private Date startDate;
+    private Date endDate;
 }

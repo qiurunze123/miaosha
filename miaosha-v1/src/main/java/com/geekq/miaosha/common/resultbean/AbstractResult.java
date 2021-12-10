@@ -44,6 +44,7 @@ public class AbstractResult {
         this.status = ResultStatus.SUCCESS;
         return this;
     }
+
     public ResultStatus getStatus() {
         return this.status;
     }

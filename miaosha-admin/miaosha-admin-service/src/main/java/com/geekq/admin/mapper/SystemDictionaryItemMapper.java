@@ -8,24 +8,25 @@ import java.util.List;
 
 public interface SystemDictionaryItemMapper {
 
-	int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long id);
 
-	int insert(SystemDictionaryItem record);
+    int insert(SystemDictionaryItem record);
 
-	SystemDictionaryItem selectByPrimaryKey(Long id);
+    SystemDictionaryItem selectByPrimaryKey(Long id);
 
-	List<SystemDictionaryItem> selectAll();
+    List<SystemDictionaryItem> selectAll();
 
-	int updateByPrimaryKey(SystemDictionaryItem record);
+    int updateByPrimaryKey(SystemDictionaryItem record);
 
-	int queryForCount(SystemDictionaryQueryObject qo);
+    int queryForCount(SystemDictionaryQueryObject qo);
 
-	List<SystemDictionaryItem> query(SystemDictionaryQueryObject qo);
+    List<SystemDictionaryItem> query(SystemDictionaryQueryObject qo);
 
-	/**
-	 * 按照数据字典的目录sn查所有明细
-	 * @param sn
-	 * @return
-	 */
-	List<SystemDictionaryItem> queryBySn(@Param("sn") String sn);
+    /**
+     * 按照数据字典的目录sn查所有明细
+     *
+     * @param sn
+     * @return
+     */
+    List<SystemDictionaryItem> queryBySn(@Param("sn") String sn);
 }

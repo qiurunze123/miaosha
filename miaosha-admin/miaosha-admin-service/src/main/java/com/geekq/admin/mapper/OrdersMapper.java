@@ -1,11 +1,10 @@
 package com.geekq.admin.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.geekq.admin.pojo.Orders;
 import com.geekq.admin.pojo.OrdersExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrdersMapper {
     int countByExample(OrdersExample example);

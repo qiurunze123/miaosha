@@ -8,7 +8,9 @@ public class AbstractResult {
     private int code;
     private String message;
 
-    AbstractResult() {}
+    AbstractResult() {
+    }
+
     protected AbstractResult(ResultStatus status, String message) {
         this.code = status.getCode();
         this.status = status;
@@ -47,6 +49,7 @@ public class AbstractResult {
         this.status = ResultStatus.SUCCESS;
         return this;
     }
+
     public ResultStatus getStatus() {
         return this.status;
     }

@@ -10,5 +10,5 @@ public interface DistributedLocker {
 
     void lock(String lockKey, int timeout);
 
-    void lock(String lockKey, TimeUnit unit , int timeout);
+    void lock(String lockKey, TimeUnit unit, int timeout);
 }

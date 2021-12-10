@@ -9,7 +9,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface RequireLogin {
-	int seconds();
-	int maxCount();
-	boolean needLogin() default true;
+    int seconds();
+
+    int maxCount();
+
+    boolean needLogin() default true;
 }

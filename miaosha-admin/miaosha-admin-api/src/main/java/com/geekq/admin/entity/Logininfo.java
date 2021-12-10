@@ -15,13 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class Logininfo implements Serializable {
 
-	private Long id;
-	private String nickname;
-	private String password;
-	private String salt;
-	private Date registerDate;
-	private Date lastLoginDate;
-	private int state = Constants.STATE_NORMAL;
-	private int userType;//用户类型
-	private boolean admin = false;
+    private Long id;
+    private String nickname;
+    private String password;
+    private String salt;
+    private Date registerDate;
+    private Date lastLoginDate;
+    private int state = Constants.STATE_NORMAL;
+    private int userType;//用户类型
+    private boolean admin = false;
 }

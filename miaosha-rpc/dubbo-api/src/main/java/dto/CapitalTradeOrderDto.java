@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- *  dto 不包含业务逻辑    pojo  对应表数据 vo  把指定页面的所有数据封装起来
+ * dto 不包含业务逻辑    pojo  对应表数据 vo  把指定页面的所有数据封装起来
  */
 public class CapitalTradeOrderDto implements Serializable {
 
     private static final long serialVersionUID = 6627401903410124642L;
-    
+
     private long selfUserId;
 
     private long oppositeUserId;

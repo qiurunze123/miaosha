@@ -2,8 +2,6 @@ package com.geekq.admin.service;
 
 import com.geekq.admin.entity.Logininfo;
 
-import java.util.Map;
-
 public interface RedisCacheStorageService<K, V> {
 
     /**
@@ -14,7 +12,6 @@ public interface RedisCacheStorageService<K, V> {
      * @return
      */
     boolean set(String key, V value);
-
 
 
     Logininfo get(String key);

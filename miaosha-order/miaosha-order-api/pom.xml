@@ -6,22 +6,8 @@
     <groupId>com.geekq.api</groupId>
     <artifactId>miaosha-order-api</artifactId>
     <version>${revision}</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>7</source>
-                    <target>7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <name>miaosha-order-api</name>
     <description>Dubbo api for Spring Boot</description>
-
     <parent>
         <groupId>com.geekq.dubbo</groupId>
         <artifactId>miaosha-order</artifactId>

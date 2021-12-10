@@ -7,7 +7,7 @@ public class GlobleException extends RuntimeException {
 
     private ResultStatus status;
 
-    public GlobleException(ResultStatus status){
+    public GlobleException(ResultStatus status) {
         super();
         this.status = status;
     }

@@ -13,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GoodsDetailVo {
-	private int miaoshaStatus = 0;
-	private int remainSeconds = 0;
-	private GoodsVoOrder goods ;
-	private MiaoshaUser user;
+    private int miaoshaStatus = 0;
+    private int remainSeconds = 0;
+    private GoodsVoOrder goods;
+    private MiaoshaUser user;
 
 }
