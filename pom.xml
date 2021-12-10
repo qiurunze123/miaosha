@@ -55,6 +55,11 @@
                 <version>${mybatis.paginator.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.32</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
                 <version>${pagehelper.version}</version>
@@ -127,7 +132,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
-                <version>2.6.0</version>
+                <version>2.6.6</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -152,12 +157,12 @@
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
-                <version>3.4.6</version>
+                <version>3.5.6</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
-                <version>1.2.3</version>
+                <version>2.0.6</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.spring.boot</groupId>
@@ -181,6 +186,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.27</version>
                     </dependency>
                 </dependencies>
             </plugin>

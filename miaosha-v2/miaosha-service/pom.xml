@@ -15,5 +15,9 @@
             <groupId>com.geekq.v2</groupId>
             <artifactId>miaosha-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
     </dependencies>
 </project>
