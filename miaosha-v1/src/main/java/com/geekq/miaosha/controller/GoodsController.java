@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +59,6 @@ public class GoodsController extends BaseController {
     public String detail2(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
                           @PathVariable("goodsId") long goodsId) {
         model.addAttribute("user", user);
-
         //取缓存
         String html = redisService.get(GoodsKey.getGoodsDetail, "" + goodsId, String.class);
         if (!StringUtils.isEmpty(html)) {
@@ -75,26 +75,16 @@ public class GoodsController extends BaseController {
         int miaoshaStatus = 0;
         int remainSeconds = 0;
         if (now < startAt) {//秒杀还没开始，倒计时
-            miaoshaStatus = 0;
             remainSeconds = (int) ((startAt - now) / 1000);
         } else if (now > endAt) {//秒杀已经结束
             miaoshaStatus = 2;
             remainSeconds = -1;
         } else {//秒杀进行中
             miaoshaStatus = 1;
-            remainSeconds = 0;
         }
         model.addAttribute("miaoshaStatus", miaoshaStatus);
         model.addAttribute("remainSeconds", remainSeconds);
-//        return "goods_detail";
-//TODO support spring5
-//        SpringWebContext ctx = new SpringWebContext(request,response,
-//                request.getServletContext(),request.getLocale(), model.asMap(), applicationContext );
-//        html = viewResolver.getTemplateEngine().process("goods_detail", ctx);
-//        if(!StringUtils.isEmpty(html)) {
-//            redisService.set(GoodsKey.getGoodsDetail, ""+goodsId, html);
-//        }
-        return html;
+        return "goods_detail";
     }
 
     /**
@@ -117,14 +107,12 @@ public class GoodsController extends BaseController {
         int miaoshaStatus = 0;
         int remainSeconds = 0;
         if (now < startAt) {//秒杀还没开始，倒计时
-            miaoshaStatus = 0;
             remainSeconds = (int) ((startAt - now) / 1000);
         } else if (now > endAt) {//秒杀已经结束
             miaoshaStatus = 2;
             remainSeconds = -1;
         } else {//秒杀进行中
             miaoshaStatus = 1;
-            remainSeconds = 0;
         }
         GoodsDetailVo vo = new GoodsDetailVo();
         vo.setGoods(goods);

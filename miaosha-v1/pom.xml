@@ -13,10 +13,7 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>

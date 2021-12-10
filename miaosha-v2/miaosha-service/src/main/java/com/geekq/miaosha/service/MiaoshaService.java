@@ -29,6 +29,7 @@ public class MiaoshaService {
     OrderService orderService;
     @Autowired
     RedisService redisService;
+
     @Reference(version = "${demo.service.version}", retries = 3, timeout = 6000)
     private com.geekq.api.service.GoodsService goodsServiceRpc;
 
