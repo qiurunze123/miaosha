@@ -1,7 +1,6 @@
 package com.geekq.api.service;
 
 import com.geekq.api.entity.GoodsVoOrder;
-import com.geekq.api.service.GoodsService;
 import com.geekq.api.utils.ResultGeekQOrder;
 import org.springframework.stereotype.Service;
 

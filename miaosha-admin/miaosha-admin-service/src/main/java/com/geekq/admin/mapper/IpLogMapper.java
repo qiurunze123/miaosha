@@ -16,7 +16,7 @@ public interface IpLogMapper {
 
     int updateByPrimaryKey(IpLog record);
 
-	int queryForCount(IpLogQueryObject qo);
+    int queryForCount(IpLogQueryObject qo);
 
-	List<IpLog> query(IpLogQueryObject qo);
+    List<IpLog> query(IpLogQueryObject qo);
 }

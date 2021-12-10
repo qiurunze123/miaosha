@@ -15,8 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Alias("goodsVo")
 public class GoodsVo extends Goods {
-	private Double miaoshaPrice;
-	private Integer stockCount;
-	private Date startDate;
-	private Date endDate;
+    private Double miaoshaPrice;
+    private Integer stockCount;
+    private Date startDate;
+    private Date endDate;
 }

@@ -17,22 +17,23 @@ import static com.geekq.miaosha.common.enums.ResultStatus.SYSTEM_ERROR;
 
 /**
  * 拦截异常
- * @author  qiurunze
+ *
+ * @author qiurunze
  */
 @ControllerAdvice
 @ResponseBody
 public class GlobleExceptionHandler {
 
-    private static Logger logger =  LoggerFactory.getLogger(GlobleExceptionHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(GlobleExceptionHandler.class);
 
-    @ExceptionHandler(value=Exception.class)
-    public ResultGeekQ<String> exceptionHandler(HttpServletRequest request , Exception e){
+    @ExceptionHandler(value = Exception.class)
+    public ResultGeekQ<String> exceptionHandler(HttpServletRequest request, Exception e) {
         e.printStackTrace();
-        if(e instanceof GlobleException){
-            GlobleException ex= (GlobleException)e;
+        if (e instanceof GlobleException) {
+            GlobleException ex = (GlobleException) e;
             return ResultGeekQ.error(ex.getStatus());
-        }else if( e instanceof BindException){
-            BindException ex = (BindException) e  ;
+        } else if (e instanceof BindException) {
+            BindException ex = (BindException) e;
             List<ObjectError> errors = ex.getAllErrors();
             ObjectError error = errors.get(0);
             String msg = error.getDefaultMessage();
@@ -41,7 +42,7 @@ public class GlobleExceptionHandler {
              */
             logger.error(String.format(msg, msg));
             return ResultGeekQ.error(SESSION_ERROR);
-        }else {
+        } else {
             return ResultGeekQ.error(SYSTEM_ERROR);
         }
     }

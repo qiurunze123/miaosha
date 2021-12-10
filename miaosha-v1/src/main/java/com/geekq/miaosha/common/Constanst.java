@@ -6,14 +6,14 @@ public class Constanst {
     public static String COUNTLOGIN = "count:login";
 
 
-    public enum orderStaus{
+    public enum orderStaus {
         ORDER_NOT_PAY("新建未支付");
 
-        orderStaus(String name){
-            this.name=name;
-        }
+        private String name;
 
-        private  String name;
+        orderStaus(String name) {
+            this.name = name;
+        }
 
         public String getName() {
             return name;

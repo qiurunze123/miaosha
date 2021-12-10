@@ -1,6 +1,5 @@
 package com.geekq.miaosha.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.geekq.miaosha.redis.redismanager.RedisLua;
 import com.geekq.miaosha.service.MiaoShaUserService;
 import com.geekq.miasha.enums.resultbean.ResultGeekQ;
@@ -33,16 +32,15 @@ public class LoginController {
     }
 
 
-
     @RequestMapping("/to_login")
-    public String tologin(LoginVo loginVo, Model model)  {
+    public String tologin(LoginVo loginVo, Model model) {
         logger.info(loginVo.toString());
 
         //未完成
-          RedisLua.vistorCount(COUNTLOGIN);
+        RedisLua.vistorCount(COUNTLOGIN);
         String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
-        logger.info("访问网站的次数为:{}",count);
-        model.addAttribute("count",count);
+        logger.info("访问网站的次数为:{}", count);
+        model.addAttribute("count", count);
         return "login";
     }
 

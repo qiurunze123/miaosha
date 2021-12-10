@@ -16,10 +16,11 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
     private MiaoShaUserService userService;
+
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-      Class<?> clazz =    methodParameter.getParameterType() ;
-      return clazz == MiaoshaUser.class ;
+        Class<?> clazz = methodParameter.getParameterType();
+        return clazz == MiaoshaUser.class;
     }
 
     @Override

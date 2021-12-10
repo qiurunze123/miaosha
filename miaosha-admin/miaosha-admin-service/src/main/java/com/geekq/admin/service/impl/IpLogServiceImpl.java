@@ -16,24 +16,24 @@ import java.util.List;
  */
 @Service
 public class IpLogServiceImpl implements IIpLogService {
-	
-	@Autowired
-	private IpLogMapper ipLogMapper;
 
-	@Override
-	public PageResult query(IpLogQueryObject qo) {
-		DBContextUtil.setDB(DBContextUtil.DBREAD);
-		int count=this.ipLogMapper.queryForCount(qo);
-		if(count>0){
-			List<IpLog> list=this.ipLogMapper.query(qo);
-			return new PageResult(count, qo.getPageSize(),qo.getCurrentPage(),list);
-		}
-		return PageResult.empty(qo.getPageSize());
-	}
+    @Autowired
+    private IpLogMapper ipLogMapper;
 
-	@Override
-	public void insert(IpLog ipLog) {
-		this.ipLogMapper.insert(ipLog);
-	}
+    @Override
+    public PageResult query(IpLogQueryObject qo) {
+        DBContextUtil.setDB(DBContextUtil.DBREAD);
+        int count = this.ipLogMapper.queryForCount(qo);
+        if (count > 0) {
+            List<IpLog> list = this.ipLogMapper.query(qo);
+            return new PageResult(count, qo.getPageSize(), qo.getCurrentPage(), list);
+        }
+        return PageResult.empty(qo.getPageSize());
+    }
+
+    @Override
+    public void insert(IpLog ipLog) {
+        this.ipLogMapper.insert(ipLog);
+    }
 
 }

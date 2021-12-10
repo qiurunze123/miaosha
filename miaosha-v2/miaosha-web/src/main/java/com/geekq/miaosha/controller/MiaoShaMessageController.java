@@ -2,8 +2,6 @@ package com.geekq.miaosha.controller;
 
 import com.geekq.miaosha.rabbitmq.MQSender;
 import com.geekq.miaosha.service.MiaoShaMessageService;
-import com.geekq.miasha.entity.MiaoShaMessageInfo;
-import com.geekq.miasha.enums.MessageStatus;
 import com.geekq.miasha.enums.enums.ResultStatus;
 import com.geekq.miasha.enums.resultbean.ResultGeekQ;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +22,7 @@ public class MiaoShaMessageController {
     private MQSender sendMessage;
 
     @RequestMapping(value = "/list", produces = "text/html")
-    public String list(@RequestParam(value = "userid",required= true) String userId, Model model) {
+    public String list(@RequestParam(value = "userid", required = true) String userId, Model model) {
         ResultGeekQ resultGeekQ = ResultGeekQ.build();
         if (StringUtils.isBlank(userId)) {
             resultGeekQ.withError(ResultStatus.USER_NOT_EXIST);
@@ -39,7 +37,7 @@ public class MiaoShaMessageController {
 
     @RequestMapping(value = "/getNewMessage", produces = "text/html")
     @ResponseBody
-    public String getNewMessage(@RequestParam(value = "userid",required= true) String userId, Model model) {
+    public String getNewMessage(@RequestParam(value = "userid", required = true) String userId, Model model) {
 
 //        if (StringUtils.isBlank(userId)) {
 //            return "0";
@@ -51,5 +49,7 @@ public class MiaoShaMessageController {
 //            return "1";
 //        }
         return "";
-    };
+    }
+
+    ;
 }

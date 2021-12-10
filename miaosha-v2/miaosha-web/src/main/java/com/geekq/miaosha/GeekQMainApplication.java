@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
-@ImportResource(value={"classpath:consumer.xml"})
+@ImportResource(value = {"classpath:consumer.xml"})
 @SpringBootApplication
 @MapperScan("com.geekq.miaosha.mapper")
 public class GeekQMainApplication {
@@ -16,46 +16,6 @@ public class GeekQMainApplication {
 //        registry.register(URL.valueOf("override://0.0.0.0/com.geekq.api.service.GoodsService?category=configurators&dynamic=false&application=dubbo-consumer2.0&mock=fail:return+444"));
         SpringApplication.run(GeekQMainApplication.class, args);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

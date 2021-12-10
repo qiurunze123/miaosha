@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public class RpcCompensateService {
 
 
-    public ResultGeekQ<String> recharge(){
-        ResultGeekQ<String> result =  ResultGeekQ.build();
+    public ResultGeekQ<String> recharge() {
+        ResultGeekQ<String> result = ResultGeekQ.build();
         /**
          * 各种校验check
          */
@@ -33,7 +33,7 @@ public class RpcCompensateService {
         /**
          * 获取订单
          */
-        long orderId = SnowflakeIdWorker.getOrderId(1,1);
+        long orderId = SnowflakeIdWorker.getOrderId(1, 1);
 
         /**
          * 创建订单步骤 可定义一个VO

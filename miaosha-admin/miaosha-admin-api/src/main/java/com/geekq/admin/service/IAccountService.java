@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IAccountService {
 
-	void update(Account account);
+    void update(Account account);
 
-	Account get(Long id);
-	
-	void recreateAbstractInfo();
-	
-	List<Account> listAll();
+    Account get(Long id);
+
+    void recreateAbstractInfo();
+
+    List<Account> listAll();
 }

@@ -12,8 +12,8 @@ import org.apache.ibatis.type.Alias;
 @NoArgsConstructor
 @Alias("miaoshaorder")
 public class MiaoshaOrder {
-	private Long id;
-	private Long userId;
-	private Long  orderId;
-	private Long goodsId;
+    private Long id;
+    private Long userId;
+    private Long orderId;
+    private Long goodsId;
 }

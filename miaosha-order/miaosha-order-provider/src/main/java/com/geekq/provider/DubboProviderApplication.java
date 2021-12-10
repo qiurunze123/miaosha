@@ -8,10 +8,11 @@ import org.springframework.context.annotation.ImportResource;
 /**
  * DubboProviderApplication
  * 服务提供启动类
+ *
  * @author geekq
  * @date 2018/6/7
  */
-@ImportResource(value={"classpath:provider.xml"})
+@ImportResource(value = {"classpath:provider.xml"})
 @SpringBootApplication
 @MapperScan("com.geekq.provider.mapper")
 public class DubboProviderApplication {

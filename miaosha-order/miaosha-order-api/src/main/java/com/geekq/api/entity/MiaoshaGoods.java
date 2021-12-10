@@ -15,9 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Alias("MiaoshaGoods")
 public class MiaoshaGoods implements Serializable {
-	private Long id;
-	private Long goodsId;
-	private Integer stockCount;
-	private Date startDate;
-	private Date endDate;
+    private Long id;
+    private Long goodsId;
+    private Integer stockCount;
+    private Date startDate;
+    private Date endDate;
 }

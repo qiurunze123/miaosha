@@ -9,16 +9,16 @@ import java.util.List;
 
 public interface ISystemDictionaryService {
 
-	PageResult queryDic(SystemDictionaryQueryObject qo);
+    PageResult queryDic(SystemDictionaryQueryObject qo);
 
-	void saveOrUpdate(SystemDictionary sd);
+    void saveOrUpdate(SystemDictionary sd);
 
-	PageResult queryDicItem(SystemDictionaryQueryObject qo);
+    PageResult queryDicItem(SystemDictionaryQueryObject qo);
 
-	void saveOrUpdateItem(SystemDictionaryItem item);
+    void saveOrUpdateItem(SystemDictionaryItem item);
 
-	List<SystemDictionary> listDics();
-	
-	List<SystemDictionaryItem> queryBySn(String sn);
+    List<SystemDictionary> listDics();
+
+    List<SystemDictionaryItem> queryBySn(String sn);
 
 }

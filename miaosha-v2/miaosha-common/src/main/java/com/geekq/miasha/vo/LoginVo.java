@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class LoginVo {
     @NotNull
-    private String nickname ;
+    private String nickname;
 
     @NotNull
     private String password;

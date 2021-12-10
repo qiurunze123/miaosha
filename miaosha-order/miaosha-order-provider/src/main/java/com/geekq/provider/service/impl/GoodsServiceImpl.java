@@ -32,10 +32,10 @@ public class GoodsServiceImpl implements GoodsService {
         try {
             resultGeekQ.setData(goodsMapper.listGoodsVo());
         } catch (Exception e) {
-            logger.error("获取订单数据失败！",e);
+            logger.error("获取订单数据失败！", e);
             resultGeekQ.withError(ResultStatusOrder.ORDER_GET_FAIL);
         }
-        return  resultGeekQ;
+        return resultGeekQ;
     }
 
     @Override
@@ -43,10 +43,10 @@ public class GoodsServiceImpl implements GoodsService {
         ResultGeekQOrder<GoodsVoOrder> resultGeekQ = ResultGeekQOrder.build();
 
         try {
-            GoodsVoOrder goodsVoOrder =  goodsMapper.getGoodsVoByGoodsId(goodsId);
+            GoodsVoOrder goodsVoOrder = goodsMapper.getGoodsVoByGoodsId(goodsId);
             resultGeekQ.setData(goodsVoOrder);
         } catch (Exception e) {
-            logger.error("获取单个订单失败！",e);
+            logger.error("获取单个订单失败！", e);
             resultGeekQ.withError(ResultStatusOrder.ORDER_GET_FAIL);
         }
         return resultGeekQ;

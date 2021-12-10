@@ -19,17 +19,6 @@
         <module>miaosha-web</module>
     </modules>
     <description>Demo project for Spring Boot</description>
-    <properties>
-        <java.version>1.8</java.version>
-        <org.mybatis.version>1.3.2</org.mybatis.version>
-        <com.alibaba.druid>1.1.10</com.alibaba.druid>
-        <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
-        <com.dubbo>1.0.0</com.dubbo>
-        <com.zk.version>3.4.6</com.zk.version>
-        <com.zk.client>0.1</com.zk.client>
-        <curator-framework.version>5.1.0</curator-framework.version>
-        <dubbo.starter.version>0.2.0</dubbo.starter.version>
-    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>

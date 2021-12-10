@@ -10,14 +10,17 @@ public class ResultGeekQOrder<T> extends AbstractResultOrder implements Serializ
 
     protected ResultGeekQOrder() {
     }
+
     protected ResultGeekQOrder(ResultStatusOrder status, String message) {
         super(status, message);
     }
+
     protected ResultGeekQOrder(ResultStatusOrder status) {
         super(status);
     }
+
     public static <T> ResultGeekQOrder<T> build() {
-        return new ResultGeekQOrder(ResultStatusOrder.SUCCESS, (String)null);
+        return new ResultGeekQOrder(ResultStatusOrder.SUCCESS, (String) null);
     }
 
     public static <T> ResultGeekQOrder<T> build(String message) {

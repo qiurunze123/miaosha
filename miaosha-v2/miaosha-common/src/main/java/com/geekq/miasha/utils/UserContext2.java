@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 邱润泽
- *
- *  thread local 底层实现方法 和 UserContext 类似 本质上都是 每个线程工作都在自己的实例线程上拷贝
+ * <p>
+ * thread local 底层实现方法 和 UserContext 类似 本质上都是 每个线程工作都在自己的实例线程上拷贝
  */
 public class UserContext2 {
 

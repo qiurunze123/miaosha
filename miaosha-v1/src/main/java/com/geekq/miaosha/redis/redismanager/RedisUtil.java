@@ -18,12 +18,6 @@ public class RedisUtil {
 
     private static RedisUtil ru = new RedisUtil();
 
-    public static void main(String[] args) {
-        RedisUtil redisUtil = RedisUtil.getInstance();
-        redisUtil.set("test", "test");
-        LOGGER.info(redisUtil.get("test"));
-    }
-
     private RedisUtil() {
         if (pool == null) {
             String ip = "10.75.202.11";
@@ -38,13 +32,31 @@ public class RedisUtil {
 
     }
 
-    public Jedis getJedis() {
-        Jedis jedis = pool.getResource();
-        return jedis;
+    public static void main(String[] args) {
+        RedisUtil redisUtil = RedisUtil.getInstance();
+        redisUtil.set("test", "test");
+        LOGGER.info(redisUtil.get("test"));
     }
 
     public static RedisUtil getInstance() {
         return ru;
+    }
+
+    public static void returnResource(JedisPool pool, Jedis jedis) {
+        if (jedis != null) {
+            pool.returnResource(jedis);
+        }
+    }
+
+    public static void returnResource(Jedis jedis) {
+        if (jedis != null) {
+            pool.returnResource(jedis);
+        }
+    }
+
+    public Jedis getJedis() {
+        Jedis jedis = pool.getResource();
+        return jedis;
     }
 
     public String get(String key) {
@@ -74,7 +86,6 @@ public class RedisUtil {
             returnResource(pool, jedis);
         }
     }
-
 
     public Long del(String... keys) {
         Jedis jedis = null;
@@ -106,7 +117,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Boolean exists(String key) {
         Jedis jedis = null;
         try {
@@ -121,7 +131,6 @@ public class RedisUtil {
         }
     }
 
-
     public Long setnx(String key, String value) {
         Jedis jedis = null;
         try {
@@ -135,7 +144,6 @@ public class RedisUtil {
             returnResource(pool, jedis);
         }
     }
-
 
     public String setex(String key, String value, int seconds) {
         Jedis jedis = null;
@@ -196,7 +204,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long msetnx(String... keysvalues) {
         Jedis jedis = null;
         Long res = 0L;
@@ -211,7 +218,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public String getset(String key, String value) {
         Jedis jedis = null;
@@ -228,7 +234,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String getrange(String key, int startOffset, int endOffset) {
         Jedis jedis = null;
         String res = null;
@@ -243,7 +248,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long incr(String key) {
         Jedis jedis = null;
@@ -260,7 +264,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long incrBy(String key, Long integer) {
         Jedis jedis = null;
         Long res = null;
@@ -275,7 +278,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long decr(String key) {
         Jedis jedis = null;
@@ -292,7 +294,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long decrBy(String key, Long integer) {
         Jedis jedis = null;
         Long res = null;
@@ -307,7 +308,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long serlen(String key) {
         Jedis jedis = null;
@@ -324,7 +324,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long hset(String key, String field, String value) {
         Jedis jedis = null;
         Long res = null;
@@ -339,7 +338,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long hsetnx(String key, String field, String value) {
         Jedis jedis = null;
@@ -356,7 +354,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String hmset(String key, Map<String, String> hash) {
         Jedis jedis = null;
         String res = null;
@@ -371,7 +368,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public String hget(String key, String field) {
         Jedis jedis = null;
@@ -388,7 +384,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public List<String> hmget(String key, String... fields) {
         Jedis jedis = null;
         List<String> res = null;
@@ -403,7 +398,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long hincrby(String key, String field, Long value) {
         Jedis jedis = null;
@@ -420,7 +414,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Boolean hexists(String key, String field) {
         Jedis jedis = null;
         Boolean res = false;
@@ -435,7 +428,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long hlen(String key) {
         Jedis jedis = null;
@@ -453,7 +445,6 @@ public class RedisUtil {
 
     }
 
-
     public Long hdel(String key, String... fields) {
         Jedis jedis = null;
         Long res = null;
@@ -468,7 +459,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> hkeys(String key) {
         Jedis jedis = null;
@@ -485,7 +475,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public List<String> hvals(String key) {
         Jedis jedis = null;
         List<String> res = null;
@@ -501,7 +490,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Map<String, String> hgetall(String key) {
         Jedis jedis = null;
         Map<String, String> res = null;
@@ -515,7 +503,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long lpush(String key, String... strs) {
         Jedis jedis = null;
@@ -532,7 +519,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long rpush(String key, String... strs) {
         Jedis jedis = null;
         Long res = null;
@@ -547,7 +533,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public String lset(String key, Long index, String value) {
         Jedis jedis = null;
@@ -564,7 +549,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long lrem(String key, long count, String value) {
         Jedis jedis = null;
         Long res = null;
@@ -579,7 +563,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public String ltrim(String key, long start, long end) {
         Jedis jedis = null;
@@ -596,7 +579,6 @@ public class RedisUtil {
         return res;
     }
 
-
     synchronized public String lpop(String key) {
         Jedis jedis = null;
         String res = null;
@@ -611,7 +593,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     synchronized public String rpop(String key) {
         Jedis jedis = null;
@@ -628,7 +609,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String rpoplpush(String srckey, String dstkey) {
         Jedis jedis = null;
         String res = null;
@@ -643,7 +623,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public String lindex(String key, long index) {
         Jedis jedis = null;
@@ -660,7 +639,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long llen(String key) {
         Jedis jedis = null;
         Long res = null;
@@ -675,7 +653,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public List<String> lrange(String key, long start, long end) {
         Jedis jedis = null;
@@ -692,7 +669,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long sadd(String key, String... members) {
         Jedis jedis = null;
         Long res = null;
@@ -707,7 +683,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long srem(String key, String... members) {
         Jedis jedis = null;
@@ -724,7 +699,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String spop(String key) {
         Jedis jedis = null;
         String res = null;
@@ -739,7 +713,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> sdiff(String... keys) {
         Jedis jedis = null;
@@ -756,7 +729,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long sdiffstore(String dstkey, String... keys) {
         Jedis jedis = null;
         Long res = null;
@@ -771,7 +743,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> sinter(String... keys) {
         Jedis jedis = null;
@@ -788,7 +759,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long sinterstore(String dstkey, String... keys) {
         Jedis jedis = null;
         Long res = null;
@@ -803,7 +773,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> sunion(String... keys) {
         Jedis jedis = null;
@@ -820,7 +789,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long sunionstore(String dstkey, String... keys) {
         Jedis jedis = null;
         Long res = null;
@@ -835,7 +803,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long smove(String srckey, String dstkey, String member) {
         Jedis jedis = null;
@@ -852,7 +819,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long scard(String key) {
         Jedis jedis = null;
         Long res = null;
@@ -867,7 +833,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Boolean sismember(String key, String member) {
         Jedis jedis = null;
@@ -884,7 +849,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String srandmember(String key) {
         Jedis jedis = null;
         String res = null;
@@ -899,7 +863,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> smembers(String key) {
         Jedis jedis = null;
@@ -916,7 +879,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long zadd(String key, double score, String member) {
         Jedis jedis = null;
         Long res = null;
@@ -931,7 +893,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long zrem(String key, String... members) {
         Jedis jedis = null;
@@ -948,7 +909,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Double zincrby(String key, double score, String member) {
         Jedis jedis = null;
         Double res = null;
@@ -963,7 +923,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long zrank(String key, String member) {
         Jedis jedis = null;
@@ -980,7 +939,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long zrevrank(String key, String member) {
         Jedis jedis = null;
         Long res = null;
@@ -995,7 +953,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> zrevrange(String key, long start, long end) {
         Jedis jedis = null;
@@ -1012,7 +969,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Set<String> zrangebyscore(String key, String max, String min) {
         Jedis jedis = null;
         Set<String> res = null;
@@ -1027,7 +983,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> zrangeByScore(String key, double max, double min) {
         Jedis jedis = null;
@@ -1044,7 +999,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long zcount(String key, String min, String max) {
         Jedis jedis = null;
         Long res = null;
@@ -1059,7 +1013,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long zcard(String key) {
         Jedis jedis = null;
@@ -1076,7 +1029,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Double zscore(String key, String member) {
         Jedis jedis = null;
         Double res = null;
@@ -1091,7 +1043,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Long zremrangeByRank(String key, long start, long end) {
         Jedis jedis = null;
@@ -1108,7 +1059,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public Long zremrangeByScore(String key, double start, double end) {
         Jedis jedis = null;
         Long res = null;
@@ -1123,7 +1073,6 @@ public class RedisUtil {
         }
         return res;
     }
-
 
     public Set<String> keys(String pattern) {
         Jedis jedis = null;
@@ -1140,7 +1089,6 @@ public class RedisUtil {
         return res;
     }
 
-
     public String type(String key) {
         Jedis jedis = null;
         String res = null;
@@ -1154,19 +1102,5 @@ public class RedisUtil {
             returnResource(pool, jedis);
         }
         return res;
-    }
-
-
-    public static void returnResource(JedisPool pool, Jedis jedis) {
-        if (jedis != null) {
-            pool.returnResource(jedis);
-        }
-    }
-
-
-    public static void returnResource(Jedis jedis) {
-        if (jedis != null) {
-            pool.returnResource(jedis);
-        }
     }
 }

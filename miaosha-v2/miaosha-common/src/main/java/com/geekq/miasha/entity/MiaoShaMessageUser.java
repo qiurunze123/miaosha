@@ -17,13 +17,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class MiaoShaMessageUser implements Serializable {
 
-    private Long id ;
+    private Long id;
 
-    private Long userId ;
+    private Long userId;
 
-    private Long messageId ;
+    private Long messageId;
 
-    private String goodId ;
+    private String goodId;
 
     private Date orderId;
 

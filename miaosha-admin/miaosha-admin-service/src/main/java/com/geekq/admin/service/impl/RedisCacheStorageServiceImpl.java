@@ -18,6 +18,23 @@ public class RedisCacheStorageServiceImpl implements RedisCacheStorageService {
 
     @Autowired
     private RedisCache redisCache;
+
+    @SuppressWarnings("unchecked")
+    public static <T> T stringToBean(String str, Class<T> clazz) {
+        if (str == null || str.length() <= 0 || clazz == null) {
+            return null;
+        }
+        if (clazz == int.class || clazz == Integer.class) {
+            return (T) Integer.valueOf(str);
+        } else if (clazz == String.class) {
+            return (T) str;
+        } else if (clazz == long.class || clazz == Long.class) {
+            return (T) Long.valueOf(str);
+        } else {
+            return JSON.toJavaObject(JSON.parseObject(str), clazz);
+        }
+    }
+
     @Override
     public boolean set(String key, Object value) {
         Jedis jedis = null;
@@ -34,7 +51,7 @@ public class RedisCacheStorageServiceImpl implements RedisCacheStorageService {
             // 获取客户端对象
             jedis = redisCache.getResource();
             // 执行插入
-            jedis.set(key,jValue);
+            jedis.set(key, jValue);
         } catch (Exception e) {
             LOG.info("client can't connect server");
             isSucess = false;
@@ -56,31 +73,13 @@ public class RedisCacheStorageServiceImpl implements RedisCacheStorageService {
     public Logininfo get(String key) {
         Jedis jedis = null;
         try {
-            jedis =  redisCache.getResource();
+            jedis = redisCache.getResource();
             //生成真正的key
-            String  str = jedis.get(key);
-            Logininfo  t =  stringToBean(str, Logininfo.class);
+            String str = jedis.get(key);
+            Logininfo t = stringToBean(str, Logininfo.class);
             return t;
-        }finally {
+        } finally {
             redisCache.returnResource(jedis);
-        }
-    }
-
-
-
-    @SuppressWarnings("unchecked")
-    public static <T> T stringToBean(String str, Class<T> clazz) {
-        if(str == null || str.length() <= 0 || clazz == null) {
-            return null;
-        }
-        if(clazz == int.class || clazz == Integer.class) {
-            return (T)Integer.valueOf(str);
-        }else if(clazz == String.class) {
-            return (T)str;
-        }else if(clazz == long.class || clazz == Long.class) {
-            return  (T)Long.valueOf(str);
-        }else {
-            return JSON.toJavaObject(JSON.parseObject(str), clazz);
         }
     }
 

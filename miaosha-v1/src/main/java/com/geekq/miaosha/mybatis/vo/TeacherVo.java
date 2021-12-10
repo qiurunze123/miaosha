@@ -11,13 +11,13 @@ public class TeacherVo implements Serializable {
 
     private String uId;
 
-    private String tId ;
+    private String tId;
 
-    private String tName ;
+    private String tName;
 
     private String name;
 
-    private Integer age ;
+    private Integer age;
 
-    private String address ;
+    private String address;
 }

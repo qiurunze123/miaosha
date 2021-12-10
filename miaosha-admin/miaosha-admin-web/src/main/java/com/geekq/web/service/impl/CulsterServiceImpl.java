@@ -1,38 +1,37 @@
 package com.geekq.web.service.impl;
 
+import com.geekq.admin.service.OrdersService;
+import com.geekq.web.service.CulsterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.geekq.admin.service.OrdersService;
-import com.geekq.web.service.CulsterService;
-
 @Service("buyService")
 public class CulsterServiceImpl implements CulsterService {
-	
-	final static Logger log = LoggerFactory.getLogger(CulsterServiceImpl.class);
-	
+
+    final static Logger log = LoggerFactory.getLogger(CulsterServiceImpl.class);
+
 //	@Autowired
 //	private ItemsService itemService;
 
-	@Autowired
-	private OrdersService ordersService;
-	
-	@Override
-	public void doBuyItem(String itemId) {
-		// 减少库存
+    @Autowired
+    private OrdersService ordersService;
+
+    @Override
+    public void doBuyItem(String itemId) {
+        // 减少库存
 //		itemService.displayReduceCounts(itemId, 1);
-		
-		// 创建订单
-		ordersService.createOrder(itemId);
-	}
-	
-	@Override
-	public boolean displayBuy(String itemId) {
-		
-		int buyCounts = 5;
-		
+
+        // 创建订单
+        ordersService.createOrder(itemId);
+    }
+
+    @Override
+    public boolean displayBuy(String itemId) {
+
+        int buyCounts = 5;
+
 //		// 1. 判断库存
 //		int stockCounts = itemService.getItemCounts(itemId);
 //		if (stockCounts < buyCounts) {
@@ -42,7 +41,7 @@ public class CulsterServiceImpl implements CulsterService {
 //		}
 //
 //		// 2. 创建订单
-		boolean isOrderCreated = ordersService.createOrder(itemId);
+        boolean isOrderCreated = ordersService.createOrder(itemId);
 //
 //		// 3. 创建订单成功后，扣除库存
 //		if (isOrderCreated) {
@@ -52,9 +51,9 @@ public class CulsterServiceImpl implements CulsterService {
 //			log.info("订单创建失败...");
 //			return false;
 //		}
-		
-		return true;
-	}
-	
+
+        return true;
+    }
+
 }
 

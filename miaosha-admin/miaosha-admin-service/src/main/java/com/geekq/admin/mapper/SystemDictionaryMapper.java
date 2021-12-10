@@ -8,19 +8,19 @@ import java.util.List;
 
 public interface SystemDictionaryMapper {
 
-	int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long id);
 
-	int insert(SystemDictionary record);
+    int insert(SystemDictionary record);
 
-	SystemDictionary selectByPrimaryKey(Long id);
+    SystemDictionary selectByPrimaryKey(Long id);
 
-	List<SystemDictionary> selectAll();
+    List<SystemDictionary> selectAll();
 
-	int updateByPrimaryKey(SystemDictionary record);
+    int updateByPrimaryKey(SystemDictionary record);
 
-	int queryForCount(SystemDictionaryQueryObject qo);
+    int queryForCount(SystemDictionaryQueryObject qo);
 
-	List<SystemDictionary> query(SystemDictionaryQueryObject qo);
+    List<SystemDictionary> query(SystemDictionaryQueryObject qo);
 
 
 }

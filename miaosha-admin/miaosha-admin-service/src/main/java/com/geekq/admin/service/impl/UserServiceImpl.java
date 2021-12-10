@@ -3,17 +3,14 @@ package com.geekq.admin.service.impl;
 import com.geekq.admin.entity.Userinfo;
 import com.geekq.admin.mapper.UserinfoMapper;
 import com.geekq.admin.service.IUserService;
-import com.geekq.admin.utils.UserContext;
-import com.geekq.common.utils.numcal.BitStatesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements IUserService {
 
-	@Autowired
-	private UserinfoMapper userinfoMapper;
+    @Autowired
+    private UserinfoMapper userinfoMapper;
 
 	/*@Autowired
 	private ISendVerifyCodeService verifyCodeService;*/
@@ -23,25 +20,25 @@ public class UserServiceImpl implements IUserService {
 	private String salt;
 */
 
-	@Override
-	public void update(Userinfo userinfo) {
+    @Override
+    public void update(Userinfo userinfo) {
 	/*	int ret = userinfoMapper.updateByPrimaryKey(userinfo,salt);
 		if (ret <= 0) {
 			throw new RuntimeException("乐观锁失败");*/
 		/*	throw new RuntimeException("Userinfo对象:" + userinfo.getId()
 					+ " 乐观锁失败!");*/
-	}
+    }
 
-	@Override
-	public Userinfo get(Long id) {
+    @Override
+    public Userinfo get(Long id) {
 
-	return  null;/*userinfoMapper.selectByPrimaryKey(id,salt);*/
-	}
+        return null;/*userinfoMapper.selectByPrimaryKey(id,salt);*/
+    }
 
-	@Override
-	public boolean bindPhone(String phoneNumber, String verifyCode) {
-		return false;
-	}
+    @Override
+    public boolean bindPhone(String phoneNumber, String verifyCode) {
+        return false;
+    }
 
 	/*@Override
 	public boolean bindPhone(String phoneNumber, String verifyCode) {
@@ -56,8 +53,8 @@ public class UserServiceImpl implements IUserService {
 		return false;
 	}*/
 
-	@Override
-	public void updateBasicInfo(Userinfo userinfo) {
+    @Override
+    public void updateBasicInfo(Userinfo userinfo) {
 	/*	Userinfo current = this.userinfoMapper.selectByPrimaryKey(UserContext
 				.getCurrent().getId(),salt);*/
 	/*	current.setEducationBackground(userinfo.getEducationBackground());
@@ -69,6 +66,6 @@ public class UserServiceImpl implements IUserService {
 			current.addState(BitStatesUtils.OP_BASE_INFO);
 		}
 		this.update(current);*/
-	}
+    }
 
 }

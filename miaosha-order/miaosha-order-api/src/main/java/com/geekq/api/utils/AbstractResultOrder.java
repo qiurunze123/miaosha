@@ -1,13 +1,14 @@
 package com.geekq.api.utils;
 
 
-
 public class AbstractResultOrder {
     private ResultStatusOrder status;
     private int code;
     private String message;
+
     protected AbstractResultOrder() {
     }
+
     protected AbstractResultOrder(ResultStatusOrder status, String message) {
         this.code = status.getCode();
         this.status = status;
@@ -45,6 +46,7 @@ public class AbstractResultOrder {
         this.status = ResultStatusOrder.SUCCESS;
         return this;
     }
+
     public ResultStatusOrder getStatus() {
         return this.status;
     }

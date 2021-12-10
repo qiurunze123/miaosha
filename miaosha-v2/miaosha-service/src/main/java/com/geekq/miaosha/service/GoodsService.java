@@ -10,26 +10,25 @@ import java.util.List;
 
 @Service
 public class GoodsService {
-	
-	@Autowired
-	GoodsMapper goodsMapper;
+
+    @Autowired
+    GoodsMapper goodsMapper;
 
 
-	public List<GoodsVo> listGoodsVo(){
-		return goodsMapper.listGoodsVo();
-	}
+    public List<GoodsVo> listGoodsVo() {
+        return goodsMapper.listGoodsVo();
+    }
 
-	public GoodsVo getGoodsVoByGoodsId(long goodsId) {
-		return goodsMapper.getGoodsVoByGoodsId(goodsId);
-	}
+    public GoodsVo getGoodsVoByGoodsId(long goodsId) {
+        return goodsMapper.getGoodsVoByGoodsId(goodsId);
+    }
 
-	public boolean reduceStock(GoodsVo goods) {
-		MiaoshaGoods g = new MiaoshaGoods();
-		g.setGoodsId(goods.getId());
-		int ret = goodsMapper.reduceStock(g);
-		return ret > 0;
-	}
-	
-	
-	
+    public boolean reduceStock(GoodsVo goods) {
+        MiaoshaGoods g = new MiaoshaGoods();
+        g.setGoodsId(goods.getId());
+        int ret = goodsMapper.reduceStock(g);
+        return ret > 0;
+    }
+
+
 }

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Documented
 @Constraint(validatedBy = {MobileValidator.class})
 public @interface MobileCheck {
-    boolean required() default true ;
+    boolean required() default true;
 
     String message() default "手机号码格式有误!";
 

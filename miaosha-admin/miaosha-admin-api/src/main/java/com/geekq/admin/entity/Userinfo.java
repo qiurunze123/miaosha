@@ -36,7 +36,7 @@ public class Userinfo extends BaseDomain {
      */
     private String email;
     /**
-     *  手机号
+     * 手机号
      */
     private String phoneNumber = "";
     /**
@@ -54,7 +54,7 @@ public class Userinfo extends BaseDomain {
      */
     private SystemDictionaryItem incomeGrade;
     /**
-     *  婚姻情况
+     * 婚姻情况
      */
     private SystemDictionaryItem marriage;
     /**
@@ -72,68 +72,15 @@ public class Userinfo extends BaseDomain {
 
     public static Userinfo empty(Long id) {
         Userinfo userinfo = new Userinfo();
-		userinfo.setId(id);
-		userinfo.setBitState(BitStatesUtils.OP_BASIC_INFO);
+        userinfo.setId(id);
+        userinfo.setBitState(BitStatesUtils.OP_BASIC_INFO);
         return userinfo;
     }
 
-    public void addState(Long state) {
-        this.bitState = BitStatesUtils.addState(this.bitState, state);
-    }
-
-    public void removeState(Long state) {
-        this.bitState = BitStatesUtils.removeState(this.bitState, state);
-    }
-
-    public boolean getIsBindPhone() {
-
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_PHONE);
-    }
-
-    public boolean getIsBindEmail() {
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_EMAIL);
-    }
-
-    public boolean getBaseInfo() {
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BASE_INFO);
-    }
-
-    public boolean getRealAuth() {
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_REAL_AUTH);
-    }
-
-    public boolean getVedioAuth() {
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_VEDIO_AUTH);
-    }
-
-    public boolean getHasBidRequest(){
-        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_HAS_BIDRQUEST);
-    }
-
     /**
      * 获取用户真实名字的隐藏字符串，只显示姓氏
      *
-     * @param 真实名字
-     * @return
-     */
-    public String getAnonymousRealName() {
-        if (StringUtils.hasLength(realName)) {
-            int len = realName.length();
-            String replace = "";
-            replace += realName.charAt(0);
-            for (int i = 1; i < len; i++) {
-                replace += "*";
-            }
-            return replace;
-        }
-        return realName;
-    }
-
-    /**
-     * 获取用户真实名字的隐藏字符串，只显示姓氏
-     *
-     * @param realName
-     *            真实名字
+     * @param realName 真实名字
      * @return
      */
     public static String getAnonymousRealName(String realName) {
@@ -171,12 +118,10 @@ public class Userinfo extends BaseDomain {
         return idNumber;
     }
 
-
     /**
      * 获取用户手机号码的隐藏字符串
      *
-     * @param phoneNumber
-     *            用户手机号码
+     * @param phoneNumber 用户手机号码
      * @return
      */
     public static String getAnonymousPhoneNumber(String phoneNumber) {
@@ -198,8 +143,7 @@ public class Userinfo extends BaseDomain {
     /**
      * 获取用户住址的隐藏字符串
      *
-     * @param currentAddress
-     *            用户住址
+     * @param currentAddress 用户住址
      * @return
      */
     public static String getAnonymousCurrentAddress(String currentAddress) {
@@ -214,5 +158,57 @@ public class Userinfo extends BaseDomain {
             return stars + last;
         }
         return currentAddress;
+    }
+
+    public void addState(Long state) {
+        this.bitState = BitStatesUtils.addState(this.bitState, state);
+    }
+
+    public void removeState(Long state) {
+        this.bitState = BitStatesUtils.removeState(this.bitState, state);
+    }
+
+    public boolean getIsBindPhone() {
+
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_PHONE);
+    }
+
+    public boolean getIsBindEmail() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BIND_EMAIL);
+    }
+
+    public boolean getBaseInfo() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_BASE_INFO);
+    }
+
+    public boolean getRealAuth() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_REAL_AUTH);
+    }
+
+    public boolean getVedioAuth() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_VEDIO_AUTH);
+    }
+
+    public boolean getHasBidRequest() {
+        return BitStatesUtils.hasState(bitState, BitStatesUtils.OP_HAS_BIDRQUEST);
+    }
+
+    /**
+     * 获取用户真实名字的隐藏字符串，只显示姓氏
+     *
+     * @param 真实名字
+     * @return
+     */
+    public String getAnonymousRealName() {
+        if (StringUtils.hasLength(realName)) {
+            int len = realName.length();
+            String replace = "";
+            replace += realName.charAt(0);
+            for (int i = 1; i < len; i++) {
+                replace += "*";
+            }
+            return replace;
+        }
+        return realName;
     }
 }

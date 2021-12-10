@@ -18,7 +18,7 @@ public class RedisLimitRateWithLUA {
                 public void run() {
                     try {
                         latch.await();
-                        System.out.println("请求是否被执行："+accquire());
+                        System.out.println("请求是否被执行：" + accquire());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -39,12 +39,12 @@ public class RedisLimitRateWithLUA {
                         " local current = tonumber(redis.call('get', key) or '0')" +
                         " if current + 1 > limit " +
                         " then  return 0 " +
-                        " else "+
+                        " else " +
                         " redis.call('INCRBY', key,'1')" +
                         " redis.call('expire', key,'2') " +
                         " end return 1 ";
 
-        String key = "ip:" + System.currentTimeMillis()/1000; // 当前秒
+        String key = "ip:" + System.currentTimeMillis() / 1000; // 当前秒
         String limit = "3"; // 最大限制
         List<String> keys = new ArrayList<String>();
         keys.add(key);
@@ -52,7 +52,7 @@ public class RedisLimitRateWithLUA {
         args.add(limit);
         jedis.auth("youxin11");
         String luaScript = jedis.scriptLoad(lua);
-        Long result = (Long)jedis.evalsha(luaScript, keys, args);
+        Long result = (Long) jedis.evalsha(luaScript, keys, args);
         return result == 1;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 @Configuration
-public class WebConfig  extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     UserArgumentResolver resolver;

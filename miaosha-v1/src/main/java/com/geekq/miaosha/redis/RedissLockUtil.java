@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * redis分布式锁帮助类
- *
  */
 public class RedissLockUtil {
     private static DistributedLocker redissLock;
@@ -23,6 +22,7 @@ public class RedissLockUtil {
 
     /**
      * 带超时的锁
+     *
      * @param lockKey
      * @param timeout 超时时间   单位：秒
      */
@@ -32,11 +32,12 @@ public class RedissLockUtil {
 
     /**
      * 带超时的锁
+     *
      * @param lockKey
-     * @param unit 时间单位
+     * @param unit    时间单位
      * @param timeout 超时时间
      */
-    public static void lock(String lockKey, TimeUnit unit , int timeout) {
+    public static void lock(String lockKey, TimeUnit unit, int timeout) {
         redissLock.lock(lockKey, unit, timeout);
     }
 }

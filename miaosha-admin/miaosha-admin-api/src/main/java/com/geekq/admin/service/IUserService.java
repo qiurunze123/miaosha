@@ -5,15 +5,16 @@ import com.geekq.admin.entity.Userinfo;
 
 public interface IUserService {
 
-	void update(Userinfo userinfo);
+    void update(Userinfo userinfo);
 
-	Userinfo get(Long id);
+    Userinfo get(Long id);
 
-	boolean bindPhone(String phoneNumber, String verifyCode);
+    boolean bindPhone(String phoneNumber, String verifyCode);
 
-	/**
-	 * 修改基本信息
-	 * @param userinfo
-	 */
-	void updateBasicInfo(Userinfo userinfo);
+    /**
+     * 修改基本信息
+     *
+     * @param userinfo
+     */
+    void updateBasicInfo(Userinfo userinfo);
 }

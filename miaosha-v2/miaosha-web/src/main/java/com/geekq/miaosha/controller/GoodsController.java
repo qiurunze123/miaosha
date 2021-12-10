@@ -35,56 +35,50 @@ import java.util.List;
 @RequestMapping("/goods")
 public class GoodsController extends BaseController {
     private static Logger log = LoggerFactory.getLogger(GoodsController.class);
-
-    @Autowired
-    private MiaoShaUserService userService;
-
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private GoodsService goodsService;
-
-    @Autowired
-    private com.geekq.api.service.GoodsService goodsServiceRpc;
-
     @Autowired
     ThymeleafViewResolver viewResolver;
-
     @Autowired
     ApplicationContext applicationContext;
+    @Autowired
+    private MiaoShaUserService userService;
+    @Autowired
+    private RedisService redisService;
+    @Autowired
+    private GoodsService goodsService;
+    @Autowired
+    private com.geekq.api.service.GoodsService goodsServiceRpc;
 
     /**
      * QPS:1267 load:15 mysql
      * 5000 * 10
      * QPS:2884, load:5
-     * */
+     */
     @RequireLogin(seconds = 5, maxCount = 5, needLogin = true)
-    @RequestMapping(value="/to_list", produces="text/html")
+    @RequestMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
-    public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user)  {
+    public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
         model.addAttribute("user", user);
 
         //订单服务化接口 miaosha-order
         ResultGeekQOrder<List<GoodsVoOrder>> resultGoods = goodsServiceRpc.listGoodsVo();
 
-        if(!AbstractResultOrder.isSuccess(resultGoods)){
-           throw new GlobleException(ResultStatus.SYSTEM_ERROR);
+        if (!AbstractResultOrder.isSuccess(resultGoods)) {
+            throw new GlobleException(ResultStatus.SYSTEM_ERROR);
         }
         List<GoodsVoOrder> goodsList = resultGoods.getData();
         model.addAttribute("goodsList", goodsList);
-        return render(request,response,model,"goods_list", GoodsKey.getGoodsList,"");
+        return render(request, response, model, "goods_list", GoodsKey.getGoodsList, "");
     }
 
-    @RequestMapping(value="/to_detail2/{goodsId}",produces="text/html")
+    @RequestMapping(value = "/to_detail2/{goodsId}", produces = "text/html")
     @ResponseBody
     public String detail2(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
-                          @PathVariable("goodsId")long goodsId) {
+                          @PathVariable("goodsId") long goodsId) {
         model.addAttribute("user", user);
 
         //取缓存
-        String html = redisService.get(GoodsKey.getGoodsDetail, ""+goodsId, String.class);
-        if(!StringUtils.isEmpty(html)) {
+        String html = redisService.get(GoodsKey.getGoodsDetail, "" + goodsId, String.class);
+        if (!StringUtils.isEmpty(html)) {
             return html;
         }
         //手动渲染
@@ -93,7 +87,7 @@ public class GoodsController extends BaseController {
          * rpc服务化接口
          */
         ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
-        if(!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)){
+        if (!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)) {
             throw new GlobleException(ResultStatus.SESSION_ERROR);
         }
         model.addAttribute("goods", goods);
@@ -104,13 +98,13 @@ public class GoodsController extends BaseController {
 
         int miaoshaStatus = 0;
         int remainSeconds = 0;
-        if(now < startAt ) {//秒杀还没开始，倒计时
+        if (now < startAt) {//秒杀还没开始，倒计时
             miaoshaStatus = 0;
-            remainSeconds = (int)((startAt - now )/1000);
-        }else  if(now > endAt){//秒杀已经结束
+            remainSeconds = (int) ((startAt - now) / 1000);
+        } else if (now > endAt) {//秒杀已经结束
             miaoshaStatus = 2;
             remainSeconds = -1;
-        }else {//秒杀进行中
+        } else {//秒杀进行中
             miaoshaStatus = 1;
             remainSeconds = 0;
         }
@@ -127,30 +121,31 @@ public class GoodsController extends BaseController {
 //                model.asMap(), applicationContext );
 
 //        html = viewResolver.getTemplateEngine().process("goods_detail", ctx);
-        if(!StringUtils.isEmpty(html)) {
-            redisService.set(GoodsKey.getGoodsDetail, ""+goodsId, html);
+        if (!StringUtils.isEmpty(html)) {
+            redisService.set(GoodsKey.getGoodsDetail, "" + goodsId, html);
         }
         return html;
     }
 
     /**
      * 数据库很少使用long的　，　id 正常使一般使用　snowflake 分布式自增id
+     *
      * @param model
      * @param user
      * @param goodsId
      * @return
      */
-    @RequestMapping(value="/detail/{goodsId}")
+    @RequestMapping(value = "/detail/{goodsId}")
     @ResponseBody
     public ResultGeekQ<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
-                                             @PathVariable("goodsId")long goodsId) {
+                                             @PathVariable("goodsId") long goodsId) {
         ResultGeekQ<GoodsDetailVo> result = ResultGeekQ.build();
 
         /**
          * 服务化rpc接口
          */
         ResultGeekQOrder<GoodsVoOrder> goodsVoOrderResultGeekQOrder = goodsServiceRpc.getGoodsVoByGoodsId(goodsId);
-        if(!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)){
+        if (!AbstractResultOrder.isSuccess(goodsVoOrderResultGeekQOrder)) {
             throw new GlobleException(ResultStatus.SESSION_ERROR);
         }
 
@@ -160,13 +155,13 @@ public class GoodsController extends BaseController {
         long now = System.currentTimeMillis();
         int miaoshaStatus = 0;
         int remainSeconds = 0;
-        if(now < startAt ) {//秒杀还没开始，倒计时
+        if (now < startAt) {//秒杀还没开始，倒计时
             miaoshaStatus = 0;
-            remainSeconds = (int)((startAt - now )/1000);
-        }else  if(now > endAt){//秒杀已经结束
+            remainSeconds = (int) ((startAt - now) / 1000);
+        } else if (now > endAt) {//秒杀已经结束
             miaoshaStatus = 2;
             remainSeconds = -1;
-        }else {//秒杀进行中
+        } else {//秒杀进行中
             miaoshaStatus = 1;
             remainSeconds = 0;
         }

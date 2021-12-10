@@ -54,20 +54,20 @@ public class RedisLua {
         try {
             jedis = RedisManager.getJedis();
 
-        String count =
-                "local num=redis.call('get',KEYS[1]) return num";
-        List<String> keys = new ArrayList<String>();
-        keys.add(key);
-        List<String> argves = new ArrayList<String>();
-        jedis.auth("youxin11");
-        String luaScript = jedis.scriptLoad(count);
-        System.out.println(luaScript);
-        object = jedis.evalsha(luaScript, keys, argves);
+            String count =
+                    "local num=redis.call('get',KEYS[1]) return num";
+            List<String> keys = new ArrayList<String>();
+            keys.add(key);
+            List<String> argves = new ArrayList<String>();
+            jedis.auth("youxin11");
+            String luaScript = jedis.scriptLoad(count);
+            System.out.println(luaScript);
+            object = jedis.evalsha(luaScript, keys, argves);
         } catch (Exception e) {
-            logger.error("统计访问次数失败！！！",e);
+            logger.error("统计访问次数失败！！！", e);
             return "0";
         }
-        return  object;
+        return object;
     }
 
     /**
@@ -89,7 +89,7 @@ public class RedisLua {
             System.out.println(luaScript);
             jedis.evalsha(luaScript, keys, argves);
         } catch (Exception e) {
-            logger.error("统计访问次数失败！！！",e);
+            logger.error("统计访问次数失败！！！", e);
         }
     }
 
@@ -106,9 +106,9 @@ public class RedisLua {
                 "local key = KEYS[1] " +
                         "local limit = tonumber(ARGV[1]) " +
                         "local current = tonumber(redis.call('get', key) or '0') " +
-            "if current + 1 > limit then return 0 " +
+                        "if current + 1 > limit then return 0 " +
                         "else redis.call('INCRBY', key,'1')" +
-            " redis.call('expire', key,'2') " +
+                        " redis.call('expire', key,'2') " +
                         "end return 1";
 
         List<String> keys = new ArrayList<String>();

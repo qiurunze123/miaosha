@@ -63,7 +63,7 @@ public class MiaoshaController implements InitializingBean {
      * get　post get 幂等　从服务端获取数据　不会产生影响　　post 对服务端产生变化
      */
     @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
-    @RequestMapping(value="/{path}/do_miaosha", method= RequestMethod.POST)
+    @RequestMapping(value = "/{path}/do_miaosha", method = RequestMethod.POST)
     @ResponseBody
     public ResultGeekQ<Integer> miaosha(Model model, MiaoshaUser user, @PathVariable("path") String path,
                                         @RequestParam("goodsId") long goodsId) {
@@ -161,7 +161,7 @@ public class MiaoshaController implements InitializingBean {
     @RequestMapping(value = "/verifyCodeRegister", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response
-                                                  ) {
+    ) {
         ResultGeekQ<String> result = ResultGeekQ.build();
         try {
             BufferedImage image = miaoshaService.createVerifyCodeRegister();
@@ -176,10 +176,11 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
     }
+
     @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,
-                                              @RequestParam("goodsId") long goodsId) {
+                                                   @RequestParam("goodsId") long goodsId) {
         ResultGeekQ<String> result = ResultGeekQ.build();
         if (user == null) {
             result.withError(SESSION_ERROR.getCode(), SESSION_ERROR.getMessage());
@@ -198,6 +199,7 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
     }
+
     /**
      * 系统初始化
      *
