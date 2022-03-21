@@ -1,4 +1,4 @@
-package com.geekq.common.utils.MD5;
+package com.geekq.common.utils.md5;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -5,10 +5,9 @@ import java.math.RoundingMode;
 
 /**
  * 计算器Util
- *
  * @author 邱润泽
  */
-public class CalculatetUtil {
+public class CalculateUtil {
 
     public static final BigDecimal ONE_HUNDRED = new BigDecimal("100.0000");
     public static final BigDecimal NUMBER_MONTHS_OF_YEAR = new BigDecimal(
@@ -221,8 +220,6 @@ public class CalculatetUtil {
      * 计算借款管理费
      *
      * @param bidRequestAmount 借款金额
-     * @param returnType       还款类型
-     * @param monthes2Return   还款期限
      * @return
      */
     public static BigDecimal calAccountManagementCharge(

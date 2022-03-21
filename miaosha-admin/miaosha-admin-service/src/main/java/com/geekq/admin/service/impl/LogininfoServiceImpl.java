@@ -12,7 +12,7 @@ import com.geekq.admin.service.ILogininfoService;
 import com.geekq.admin.service.RedisCacheStorageService;
 import com.geekq.common.enums.Constants;
 import com.geekq.common.enums.ResultStatus;
-import com.geekq.common.utils.MD5.MD5Utils;
+import com.geekq.common.utils.md5.MD5Utils;
 import com.geekq.common.utils.resultbean.ResultGeekQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

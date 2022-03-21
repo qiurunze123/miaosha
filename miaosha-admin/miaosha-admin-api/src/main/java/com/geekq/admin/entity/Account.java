@@ -1,6 +1,6 @@
 package com.geekq.admin.entity;
 
-import com.geekq.common.utils.MD5.MD5Utils;
+import com.geekq.common.utils.md5.MD5Utils;
 import com.geekq.common.utils.numcal.BidConst;
 import lombok.Getter;
 import lombok.Setter;

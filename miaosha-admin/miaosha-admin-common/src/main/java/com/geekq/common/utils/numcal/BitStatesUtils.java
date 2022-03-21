@@ -7,7 +7,7 @@ package com.geekq.common.utils.numcal;
  */
 public class BitStatesUtils {
     public final static Long OP_BASIC_INFO = 1L; //用户注册成功的标示,及为默认初始状态
-    public final static Long OP_BIND_PHONE = 2L << 0; //用户绑定手机状态码
+    public final static Long OP_BIND_PHONE = 2L; //用户绑定手机状态码
     public final static Long OP_BIND_EMAIL = 2L << 1;//用户绑定邮箱
     public final static Long OP_BASE_INFO = 2L << 2;//填写基本资料
     public final static Long OP_REAL_AUTH = 2L << 3;//用户实名认证
