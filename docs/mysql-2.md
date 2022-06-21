@@ -189,19 +189,19 @@
  
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql2.png)
      
-      有索引可用
+      无索引可用
       
       EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE  mobile='166011' ; 
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql3.png)
 
-      无索引可用
+      有索引可用
       
       EXPLAIN SELECT * FROM `miaosha_mysql_test` WHERE  userid='2222' or mobile='166011' ; 
 
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql4.png)
 
-      无索引可用
+      有索引可用
       
  ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql5.png)
 
