@@ -24,7 +24,7 @@
 ![整体流程](https://raw.githubusercontent.com/qiurunze123/imageall/master/mysql1.png)
 
      ID列：数据为一组数字表示执行select语句的顺序 
-          id值相同的时候执行顺数由上至下
+          id值相同的时候执行顺序由上至下
           id值越大优先级越高，越先被执行
           ID列中的如果数据为一组数字，表示执行SELECT语句的顺序；如果为NULL，则说明这一行数据是由另外两个SQL语句进行 UNION操作后产生的结果集
           
