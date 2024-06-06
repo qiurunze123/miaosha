@@ -210,6 +210,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <configuration>
+	           <mainClass>${start.class}</mainClass>
+		  <layout>ZIP</layout>
+	       </configuration>
                 <executions>
                     <execution>
                         <goals>
