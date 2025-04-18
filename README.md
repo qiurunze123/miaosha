@@ -4,7 +4,7 @@
 一点小建议：学习本系列知识之前，如果你完全没接触过 `[深入]Spring[不深入框架可能理解起来比较费劲]`、`MQ`、`SpringBoot`、`Redis`、`Dubbo`、`ZK` 、`Maven`,`lua`等，那么我建议你可以先在网上搜一下每一块知识的快速入门。tydeus-monito框架这个项目可以说是非常好的解决**日志**痛点
 
 ### tydeus-monito框架 
-> tydeus-monitor : [https://github.com/qiurunze123/miaosha](https://github.com/qiurunze123/miaosha)
+> tydeus-monitor : [https://github.com/qiurunze123/tydeus-monitor](https://github.com/qiurunze123/tydeus-monitor)
 一种为监控而生的日志解决方案
 
  "监控"多种多样，网上一搜，花样百出，每个公司都会有自己的监控系统，大部分的功能都为监视+报警系统，很少有业务控制和系统控制的相关功能
