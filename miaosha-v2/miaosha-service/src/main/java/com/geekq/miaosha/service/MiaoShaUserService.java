@@ -84,6 +84,7 @@ public class MiaoShaUserService {
         }
         //更新数据库
         MiaoshaUser toBeUpdate = new MiaoshaUser();
+        toBeUpdate.setId(user.getId());
         toBeUpdate.setNickname(nickName);
         toBeUpdate.setPassword(MD5Utils.formPassToDBPass(formPass, user.getSalt()));
         miaoShaUserMapper.update(toBeUpdate);
