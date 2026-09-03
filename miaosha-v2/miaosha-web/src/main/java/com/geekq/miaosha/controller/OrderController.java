@@ -46,7 +46,8 @@ public class OrderController {
             return result;
         }
         OrderInfo order = orderService.getOrderById(orderId);
-        if (order == null) {
+        if (order == null || order.getUserId() == null
+                || order.getUserId().longValue() != Long.valueOf(user.getNickname()).longValue()) {
             result.withError(ORDER_NOT_EXIST.getCode(), ORDER_NOT_EXIST.getMessage());
             return result;
         }
