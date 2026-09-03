@@ -145,7 +145,7 @@ public class MiaoshaService {
         if (codeOld == null || codeOld - verifyCode != 0) {
             return false;
         }
-        redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, "regitser");
+        redisService.delete(MiaoshaKey.getMiaoshaVerifyCodeRegister, "regitser");
         return true;
     }
 
