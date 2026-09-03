@@ -112,8 +112,11 @@ public class SnowflakeIdWorker {
      * @return
      */
     public static long getOrderId(long workerId, long datacenterId) {
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        return idWorker.nextId();
+        return IdWorkerHolder.INSTANCE.nextId();
+    }
+
+    private static class IdWorkerHolder {
+        private static final SnowflakeIdWorker INSTANCE = new SnowflakeIdWorker(0, 0);
     }
 
     // ==============================Methods==========================================

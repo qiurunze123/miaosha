@@ -66,8 +66,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             String key = request.getRequestURI();
             if (needLogin) {
                 if (user == null) {
-                    render(response, SESSION_ERROR);
-                    return false;
+                    return reject(response, SESSION_ERROR);
                 }
                 key += "_" + user.getNickname();
             } else {
@@ -80,8 +79,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             } else if (count < maxCount) {
                 redisService.incr(ak, key);
             } else {
-                render(response, ACCESS_LIMIT_REACHED);
-                return false;
+                return reject(response, ACCESS_LIMIT_REACHED);
             }
         }
         return true;
@@ -100,6 +98,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         out.write(str.getBytes("UTF-8"));
         out.flush();
         out.close();
+    }
+
+    private boolean reject(HttpServletResponse response, ResultStatus status) throws Exception {
+        try {
+            render(response, status);
+            return false;
+        } finally {
+            UserContext.removeUser();
+        }
     }
 
     private MiaoshaUser getUser(HttpServletRequest request, HttpServletResponse response) {

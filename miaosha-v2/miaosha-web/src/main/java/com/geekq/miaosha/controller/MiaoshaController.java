@@ -29,8 +29,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.geekq.miasha.enums.enums.ResultStatus.*;
 
@@ -59,7 +59,7 @@ public class MiaoshaController implements InitializingBean {
     @Autowired
     MQSender mqSender;
 
-    private HashMap<Long, Boolean> localOverMap = new HashMap<Long, Boolean>();
+    private ConcurrentHashMap<Long, Boolean> localOverMap = new ConcurrentHashMap<Long, Boolean>();
 
     /**
      * QPS:1306
@@ -96,7 +96,10 @@ public class MiaoshaController implements InitializingBean {
          * 分布式限流
          */
         try {
-            RedisLimitRateWithLUA.accquire();
+            if (!acquireRateLimitToken()) {
+                result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
+                return result;
+            }
         } catch (IOException e) {
             result.withError(EXCEPTION.getCode(), REPEATE_MIAOSHA.getMessage());
             return result;
@@ -112,8 +115,7 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
         //内存标记，减少redis访问
-        boolean over = localOverMap.get(goodsId);
-        if (over) {
+        if (isLocalSoldOut(goodsId)) {
             result.withError(EXCEPTION.getCode(), MIAO_SHA_OVER.getMessage());
             return result;
         }
@@ -129,6 +131,14 @@ public class MiaoshaController implements InitializingBean {
         mm.setUser(user);
         mqSender.sendMiaoshaMessage(mm);
         return result;
+    }
+
+    protected boolean acquireRateLimitToken() throws IOException, URISyntaxException {
+        return RedisLimitRateWithLUA.accquire();
+    }
+
+    boolean isLocalSoldOut(long goodsId) {
+        return Boolean.TRUE.equals(localOverMap.get(goodsId));
     }
 
 
