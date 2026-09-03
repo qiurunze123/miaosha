@@ -43,7 +43,7 @@ public class RedisLimitRateWithLUATest {
         Jedis jedis = mock(Jedis.class);
         when(pool.getResource()).thenReturn(jedis);
         JedisConnectionException failure = new JedisConnectionException("connection failed");
-        org.mockito.Mockito.doThrow(failure).when(jedis).auth(anyString());
+        org.mockito.Mockito.doThrow(failure).when(jedis).scriptLoad(anyString());
 
         Field field = RedisManager.class.getDeclaredField("jedisPool");
         field.setAccessible(true);

@@ -36,7 +36,6 @@ public class RedisLimitRateWithLUA {
             keys.add(key);
             List<String> args = new ArrayList<String>();
             args.add(limit);
-            resource.auth("youxin11");
             String luaScript = resource.scriptLoad(lua);
             Long result = (Long) resource.evalsha(luaScript, keys, args);
             return result == 1;

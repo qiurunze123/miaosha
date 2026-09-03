@@ -36,7 +36,6 @@ public class RedisLua {
         List<String> argves = new ArrayList<String>();
         argves.add("6000");
         argves.add("5");
-        jedis.auth("xxxx");
 //        Object evalSha = jedis.evalsha(lua);
         String luaScript = jedis.scriptLoad(lua);
         System.out.println(luaScript);
@@ -59,7 +58,6 @@ public class RedisLua {
             List<String> keys = new ArrayList<String>();
             keys.add(key);
             List<String> argves = new ArrayList<String>();
-            jedis.auth("youxin11");
             String luaScript = jedis.scriptLoad(count);
             System.out.println(luaScript);
             object = jedis.evalsha(luaScript, keys, argves);
@@ -84,7 +82,6 @@ public class RedisLua {
             List<String> keys = new ArrayList<String>();
             keys.add(key);
             List<String> argves = new ArrayList<String>();
-            jedis.auth("youxin11");
             String luaScript = jedis.scriptLoad(count);
             System.out.println(luaScript);
             jedis.evalsha(luaScript, keys, argves);
@@ -116,8 +113,6 @@ public class RedisLua {
         List<String> argves = new ArrayList<String>();
         argves.add("6000");
         argves.add("5");
-        jedis.auth("xxxx");
-
 //        Object evalSha = jedis.evalsha(lua);
         String luaScript = jedis.scriptLoad(lua);
         System.out.println(luaScript);
