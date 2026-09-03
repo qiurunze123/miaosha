@@ -26,11 +26,9 @@ public class MiaoshaUser {
 
     @Override
     public String toString() {
-        return "Logininfo{" +
+        return "MiaoshaUser{" +
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
                 ", head='" + head + '\'' +
                 ", registerDate=" + registerDate +
                 ", lastLoginDate=" + lastLoginDate +
