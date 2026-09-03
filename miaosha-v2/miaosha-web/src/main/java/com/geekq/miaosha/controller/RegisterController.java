@@ -90,6 +90,7 @@ public class RegisterController {
         if (!registerInfo) {
             result.withError(RESIGETER_FAIL.getCode(), RESIGETER_FAIL.getMessage());
             result.setData(false);
+            return result;
         }
         result.setData(true);
         return result;
