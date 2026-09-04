@@ -2,6 +2,8 @@ package com.geekq.miaosha.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -34,12 +36,21 @@ public class DruidConfig {
     private int maxOpenPreparedStatements;
 
     @Bean
-    public ServletRegistrationBean druidSverlet() {
-        ServletRegistrationBean reg = new ServletRegistrationBean();
-        reg.setServlet(new StatViewServlet());
-        reg.addUrlMappings("/druid/*");
-        reg.addInitParameter("loginUsername", "joshua");
-        reg.addInitParameter("loginPassword", "123456");
+    @ConditionalOnProperty(prefix = "management.druid", name = "enabled", havingValue = "true")
+    public ServletRegistrationBean<StatViewServlet> druidServlet(
+            @Value("${management.druid.url-pattern:/druid/*}") String urlPattern,
+            @Value("${management.druid.allow:127.0.0.1}") String allow,
+            @Value("${management.druid.username:}") String monitorUsername,
+            @Value("${management.druid.password:}") String monitorPassword) {
+        if (monitorUsername.trim().isEmpty() || monitorPassword.trim().isEmpty()) {
+            throw new IllegalStateException("Druid monitoring requires a non-empty username and password");
+        }
+        ServletRegistrationBean<StatViewServlet> reg =
+                new ServletRegistrationBean<StatViewServlet>(new StatViewServlet(), urlPattern);
+        reg.addInitParameter("allow", allow);
+        reg.addInitParameter("resetEnable", "false");
+        reg.addInitParameter("loginUsername", monitorUsername);
+        reg.addInitParameter("loginPassword", monitorPassword);
         reg.addInitParameter("logSlowSql", "true");
         reg.addInitParameter("slowSqlMillis", "1000");
         return reg;
