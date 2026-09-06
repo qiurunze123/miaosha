@@ -50,7 +50,7 @@
     </insert>
 
     <select id="selectOrderStatusByCreateTime" resultMap="BaseResultMap" >
-        select * from order_info where status=#{status} and create_Date $lt;=#{createDate}
+        select * from order_info where status=#{status} and create_Date &lt;=#{createDate}
     </select>
 
 

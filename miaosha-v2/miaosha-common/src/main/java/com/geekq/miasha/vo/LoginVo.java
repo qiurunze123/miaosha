@@ -34,7 +34,6 @@ public class LoginVo {
     public String toString() {
         return "LoginVo{" +
                 "nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

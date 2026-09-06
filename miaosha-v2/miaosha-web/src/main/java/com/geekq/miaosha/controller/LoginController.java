@@ -34,8 +34,6 @@ public class LoginController {
 
     @RequestMapping("/to_login")
     public String tologin(LoginVo loginVo, Model model) {
-        logger.info(loginVo.toString());
-
         //未完成
         RedisLua.vistorCount(COUNTLOGIN);
         String count = RedisLua.getVistorCount(COUNTLOGIN).toString();
@@ -48,7 +46,6 @@ public class LoginController {
     @ResponseBody
     public ResultGeekQ<String> dologin(HttpServletResponse response, @Valid LoginVo loginVo) {
         ResultGeekQ<String> result = ResultGeekQ.build();
-        logger.info(loginVo.toString());
         userService.login(response, loginVo);
         return result;
     }
@@ -57,7 +54,6 @@ public class LoginController {
     @RequestMapping("/create_token")
     @ResponseBody
     public String createToken(HttpServletResponse response, @Valid LoginVo loginVo) {
-        logger.info(loginVo.toString());
         String token = userService.createToken(response, loginVo);
         return token;
     }
